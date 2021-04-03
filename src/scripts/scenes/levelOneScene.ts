@@ -1,16 +1,26 @@
 import PhaserLogo from '../objects/phaserLogo'
 
-export default class MainScene extends Phaser.Scene {
+export default class LevelOneScene extends Phaser.Scene {
   player:PhaserLogo;
+  private camera;
 
   constructor() {
     super({ key: 'LevelOneScene' })
   }
   create() {
+	//Create map from Tiled
 	const map = this.make.tilemap({key: "sewer1"})
-    const tileset = map.addTilesetImage('Pipes', 'pipes');
-    map.createLayer('Tile Layer 1', tileset)
-    this.player = new PhaserLogo(this, this.cameras.main.width / 2, 0);
+    const tileset = map.addTilesetImage('Pipes', 'pipes')
+	const background = map.createLayer('Tile Layer 1', tileset)
+	background.setCollisionFromCollisionGroup(true)
+	//Create player (temp)
+	this.player = new PhaserLogo(this, 0, 0)
+	this.player.setScale(0.15)
+	this.player.setCollideWorldBounds(true)
+	//Initialize cameras to follow player
+	//this.cameras.main.setBounds(0, 0,this.game.config.maxWidth, this.game.config.maxHeight)
+	//this.physics.world.setBounds(0, 0,512, 512)
+	this.cameras.main.startFollow(this.player)
   }
 
   update(){
