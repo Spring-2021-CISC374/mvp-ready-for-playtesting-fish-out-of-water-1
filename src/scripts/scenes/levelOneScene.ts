@@ -1,13 +1,15 @@
 import PhaserLogo from '../objects/phaserLogo'
 
 export default class MainScene extends Phaser.Scene {
-  private background;
   player:PhaserLogo;
 
   constructor() {
-    super({ key: 'MainScene' })
+    super({ key: 'LevelOneScene' })
   }
   create() {
+	const map = this.make.tilemap({key: "sewer1"})
+    const tileset = map.addTilesetImage('Pipes', 'pipes');
+    map.createLayer('Tile Layer 1', tileset)
     this.player = new PhaserLogo(this, this.cameras.main.width / 2, 0);
   }
 
