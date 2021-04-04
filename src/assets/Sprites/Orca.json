@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "Orca.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 623,
+				"h": 195
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Whale 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 312,
+						"h": 195
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 312,
+						"h": 195
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 312,
+						"h": 195
+					}
+				},
+				{
+					"filename": "Whale 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 311,
+						"h": 195
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 311,
+						"h": 195
+					},
+					"frame": {
+						"x": 312,
+						"y": 0,
+						"w": 311,
+						"h": 195
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:6555ae37f2c16abfefdf951370c88309:fa3a7a3435c29cd7c8d629a681899cf0:47bc7d4f43e9f48ec4e3832428919127$"
+	}
+}

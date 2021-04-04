@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "PurpleFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 414,
+				"h": 168
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Purple Fish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 207,
+						"h": 168
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 207,
+						"h": 168
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 207,
+						"h": 168
+					}
+				},
+				{
+					"filename": "Purple Fish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 207,
+						"h": 168
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 207,
+						"h": 168
+					},
+					"frame": {
+						"x": 207,
+						"y": 0,
+						"w": 207,
+						"h": 168
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:90d8544bd49daa78654b3f87e48276ba:5eaf25f234ee70c406cbf409240fd5fc:07d25498e6f1b5a6c7bcebd4684eed68$"
+	}
+}

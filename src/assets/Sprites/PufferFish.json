@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "PufferFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 390,
+				"h": 187
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Puffer Fish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 195,
+						"h": 187
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 195,
+						"h": 187
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 195,
+						"h": 187
+					}
+				},
+				{
+					"filename": "Puffer Fish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 195,
+						"h": 187
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 195,
+						"h": 187
+					},
+					"frame": {
+						"x": 195,
+						"y": 0,
+						"w": 195,
+						"h": 187
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:ff74c8f82f1b50374ebe152f818c983c:95d9cbbaae5a7e1b4953b68a09a68904:250defe656d9cca08854af6be39565dc$"
+	}
+}

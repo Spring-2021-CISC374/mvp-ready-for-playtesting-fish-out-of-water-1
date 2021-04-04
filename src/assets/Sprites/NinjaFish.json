@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "NinjaFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 406,
+				"h": 177
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Ninja Fish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 203,
+						"h": 177
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 203,
+						"h": 177
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 203,
+						"h": 177
+					}
+				},
+				{
+					"filename": "Ninja Fish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 203,
+						"h": 177
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 203,
+						"h": 177
+					},
+					"frame": {
+						"x": 203,
+						"y": 0,
+						"w": 203,
+						"h": 177
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:39eec21820b72a0cd36f7652590f8016:c00580c6a987f20cb13db1ae6638604d:683ed7e6bf96651fa799ba7329a506c4$"
+	}
+}

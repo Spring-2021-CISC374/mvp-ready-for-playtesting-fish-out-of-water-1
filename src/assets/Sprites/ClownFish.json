@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "ClownFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 402,
+				"h": 165
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Clownfish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 201,
+						"h": 165
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 201,
+						"h": 165
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 201,
+						"h": 165
+					}
+				},
+				{
+					"filename": "Clownfish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 201,
+						"h": 165
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 201,
+						"h": 165
+					},
+					"frame": {
+						"x": 201,
+						"y": 0,
+						"w": 201,
+						"h": 165
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:243c94a53d7be7e2a7442448ce454d52:844d8d79a16dd0c5b8dad5e0b3b830c1:cc4ca0e04cd3964de65b08fa63e0b268$"
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "SwordFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 273,
+				"h": 409
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Swordfish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 273,
+						"h": 205
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 273,
+						"h": 205
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 273,
+						"h": 205
+					}
+				},
+				{
+					"filename": "Swordfish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 272,
+						"h": 204
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 272,
+						"h": 204
+					},
+					"frame": {
+						"x": 0,
+						"y": 205,
+						"w": 272,
+						"h": 204
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:39b512c555f47ac68c4638848b48bfb4:7be5711a8f9bfeec73971c74d36c909d:7f114971db049228b43e404361ed0a69$"
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "Flounder.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 420,
+				"h": 189
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Flounder 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 210,
+						"h": 189
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 210,
+						"h": 189
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 210,
+						"h": 189
+					}
+				},
+				{
+					"filename": "Flounder 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 210,
+						"h": 189
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 210,
+						"h": 189
+					},
+					"frame": {
+						"x": 210,
+						"y": 0,
+						"w": 210,
+						"h": 189
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:d56fec912570a5e0bc14adff060c006b:2330c304e2c74fed00c7c0fa9083a573:656f81fee2e5e73400f4c8a15a280101$"
+	}
+}

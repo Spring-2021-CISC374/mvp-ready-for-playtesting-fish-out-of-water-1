@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "PatternFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 406,
+				"h": 177
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Pattern Fish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 203,
+						"h": 177
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 203,
+						"h": 177
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 203,
+						"h": 177
+					}
+				},
+				{
+					"filename": "Pattern Fish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 203,
+						"h": 177
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 203,
+						"h": 177
+					},
+					"frame": {
+						"x": 203,
+						"y": 0,
+						"w": 203,
+						"h": 177
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:06fee8dcdb94ab16b9c5b00c88cbde80:e977dcec686f60876a2e8c32f0918136:5b17dda59501f7b00bb581ffce2fdb67$"
+	}
+}
