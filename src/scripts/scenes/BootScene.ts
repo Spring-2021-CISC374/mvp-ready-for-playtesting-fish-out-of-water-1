@@ -1,3 +1,5 @@
+// BootScene meant for Alpha of Combat sequence
+
 class BootScene extends Phaser.Scene {
     constructor() {
         super({ key: "BootScene" });

@@ -1,10 +1,13 @@
 class Menu extends Phaser.GameObjects.Container {
+    menuItems: MenuItem[];
+    menuItemIndex: number;
+    heroes: any;
     
-    constructor (x, y, scene, heroes) {
+    constructor (x, y, scene) {
         super(scene, x, y);
         this.menuItems = [];
         this.menuItemIndex = 0;
-        this.heroes = heroes;
+        //this.heroes = heroes;
         this.x = x;
         this.y = y;
     }

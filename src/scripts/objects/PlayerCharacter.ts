@@ -1,4 +1,7 @@
-class PlayerCharacter extends Unit {
+import Unit from "./Unit";
+
+
+export default class PlayerCharacter extends Unit {
     constructor(scene, x, y, texture, frame, type, hp, damage) {
         super(scene, x, y, texture, frame, type, hp, damage);
         // flip the image so I don"t have to edit it manually

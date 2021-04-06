@@ -1,10 +1,21 @@
-class UIScene extends Phaser.Scene {
+import BattleScene from "./BattleScene";
+
+export default class UIScene extends Phaser.Scene {
+    graphics: Phaser.GameObjects.Graphics;
+    menus: Phaser.GameObjects.Container;
+    heroesMenu: HeroesMenu;
+    actionsMenu: ActionsMenu;
+    enemiesMenu: EnemiesMenu;
+    currentMenu: any;
+    battleScene: BattleScene;
+    message: Message;
 
     constructor() {
         super({ key: "UIScene" });
     }
 
     create() {    
+
         this.graphics = this.add.graphics();
         this.graphics.lineStyle(1, 0xffffff);
         this.graphics.fillStyle(0x031f4c, 1);   
@@ -35,7 +46,7 @@ class UIScene extends Phaser.Scene {
         this.menus.add(this.actionsMenu);
         this.menus.add(this.enemiesMenu);
         
-        this.battleScene = this.scene.get("BattleScene");
+        var battleScene = this.scene.get("BattleScene");
         
         this.remapHeroes();
         this.remapEnemies();

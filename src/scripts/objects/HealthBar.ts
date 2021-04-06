@@ -1,4 +1,10 @@
 class HealthBar {
+    bar: Phaser.GameObjects.Graphics;
+    x: any;
+    y: any;
+    value: number;
+    p: number;
+    color: any;
 
     constructor (scene, x, y, color) {
         this.bar = new Phaser.GameObjects.Graphics(scene);

@@ -1,6 +1,8 @@
 import 'phaser'
 import LevelOneScene from './scenes/levelOneScene'
 import PreloadScene from './scenes/preloadScene'
+import BattleScene from './scenes/BattleScene'
+import UIScene from './scenes/UIScene'
 
 const DEFAULT_WIDTH = 512
 const DEFAULT_HEIGHT = 512
@@ -15,7 +17,7 @@ const config = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, LevelOneScene],
+  scene: [PreloadScene, LevelOneScene, BattleScene, UIScene],
   physics: {
     default: 'arcade',
     arcade: {

@@ -1,4 +1,14 @@
-class BattleScene extends Phaser.Scene {
+import Enemy from "../objects/Enemy";
+import PlayerCharacter from "../objects/PlayerCharacter";
+
+export default class BattleScene extends Phaser.Scene {
+    heroes: PlayerCharacter[];
+    activeID: number;
+    activeHero: any;
+    enemies: Enemy[];
+    units: any[];
+    index: number;
+    exitBattle: Function | undefined;
 
     constructor() {
         super({ key: "BattleScene" });
@@ -18,16 +28,16 @@ class BattleScene extends Phaser.Scene {
         var playerHealth = new HealthBar(this, 160, 0, 0xB5D99C);
         var enemyHealth = new HealthBar(this, 0,0,0xE65F5C);
 
-        var fish = new PlayerCharacter(this, 250, 100, "player", 1, "Fish", 100, 20);        
+        var fish = new PlayerCharacter(this, 250, 100, "combat-flounder", 1, "Fish", 100, 20);        
         this.add.existing(fish);
 
         // player character - mage
-        var enemy = new Enemy(this, 50, 100, "player", 4, "Enemy", 100, 15); 
+        var enemy = new Enemy(this, 50, 100, "enemy-jellyfish", 4, "Jelly", 100, 15); 
         this.add.existing(enemy);       
 
-        var shark = new PlayerCharacter(this, 250, 100, "dragonblue", null, "Shark", 50, 40);
+        var shark = new PlayerCharacter(this, 250, 100, "shift-orca", null, "Orca", 50, 40);
 
-        var shrimp = new PlayerCharacter(this, 250, 100, "dragonorrange", null,"Shrimp", 50, 5);
+        var shrimp = new PlayerCharacter(this, 250, 100, "shift-shrimp", null,"Shrimp", 50, 5);
 
         // array with heroes
         this.heroes = [ fish, shark, shrimp ];
