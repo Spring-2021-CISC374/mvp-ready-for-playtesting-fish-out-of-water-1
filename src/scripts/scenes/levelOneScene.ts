@@ -1,9 +1,15 @@
 
 export default class LevelOneScene extends Phaser.Scene {
   flounder: Phaser.Physics.Arcade.Sprite
+  music:Phaser.Sound.BaseSound;
 
   constructor() {
     super({ key: 'LevelOneScene' })
+  }
+
+  preload(){
+	  this.music = this.sound.add('sewermusic', {loop: true, volume: 0.5});
+	  this.music.play();
   }
   create() {
 	//Create map from Tiled and add necessary collisions

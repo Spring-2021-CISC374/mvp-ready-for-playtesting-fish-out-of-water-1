@@ -12,6 +12,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.atlas('jellyfish', 'assets/Sprites/Jellyfish.png', 'assets/Sprites/Jellyfish.json')
     this.load.atlas('orca', 'assets/Sprites/Orca.png', 'assets/Sprites/Orca.json')
     this.load.atlas('shrimp', 'assets/Sprites/PurpleFish.png', 'assets/Sprites/PurpleFish.json')
+    this.load.audio('sewermusic','assets/sound/sewermusic.mp3')
     
   }
   create() {
