@@ -1,4 +1,6 @@
-class Menu extends Phaser.GameObjects.Container {
+import MenuItem from "./MenuItem";
+
+export default class Menu extends Phaser.GameObjects.Container {
     menuItems: MenuItem[];
     menuItemIndex: number;
     heroes: any;

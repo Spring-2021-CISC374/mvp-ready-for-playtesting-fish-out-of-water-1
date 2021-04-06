@@ -1,4 +1,4 @@
-class Message extends Phaser.GameObjects.Container {
+export default class Message extends Phaser.GameObjects.Container {
     text: Phaser.GameObjects.Text;
     hideEvent: any;
 

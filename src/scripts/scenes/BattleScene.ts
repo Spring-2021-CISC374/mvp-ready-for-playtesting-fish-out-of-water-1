@@ -1,11 +1,12 @@
 import Enemy from "../objects/Enemy";
 import PlayerCharacter from "../objects/PlayerCharacter";
+import Unit from "../objects/Unit";
 
 export default class BattleScene extends Phaser.Scene {
-    heroes: PlayerCharacter[];
+    heroes: Unit[];
     activeID: number;
     activeHero: any;
-    enemies: Enemy[];
+    enemies: Unit[];
     units: any[];
     index: number;
     exitBattle: Function | undefined;
@@ -25,8 +26,8 @@ export default class BattleScene extends Phaser.Scene {
 
     startBattle() {
         // player character - warrior
-        var playerHealth = new HealthBar(this, 160, 0, 0xB5D99C);
-        var enemyHealth = new HealthBar(this, 0,0,0xE65F5C);
+        //var playerHealth = new HealthBar(this, 160, 0, 0xB5D99C);
+        //var enemyHealth = new HealthBar(this, 0,0,0xE65F5C);
 
         var fish = new PlayerCharacter(this, 250, 100, "combat-flounder", 1, "Fish", 100, 20);        
         this.add.existing(fish);
@@ -140,5 +141,9 @@ export default class BattleScene extends Phaser.Scene {
         this.units.length = 0;
         // sleep the UI
         this.scene.sleep('UIScene');
+    }
+
+    getHeroes() {
+        return this.heroes;
     }
 }
