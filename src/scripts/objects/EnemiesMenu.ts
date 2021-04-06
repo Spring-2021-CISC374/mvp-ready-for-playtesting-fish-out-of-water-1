@@ -1,4 +1,6 @@
-class EnemiesMenu extends Menu {
+import Menu from "./Menu";
+
+export class EnemiesMenu extends Menu {
     
     constructor(x, y, scene) {
         super(x, y, scene);        
