@@ -42,14 +42,14 @@ export default class LevelOneScene extends Phaser.Scene {
 	this.npc.anims.play('flounder-idle')
 	this.physics.add.collider(this.npc, foreground)
 	this.npc.angle = 180;
-	this.input.on('Sprite', this.talk,this)
-
+	this.physics.add.collider(this.flounder, this.npc);
+	this.physics.add.overlap(this.flounder, this.npc, this.process);
 }
 
-talk(pointer, Sprite) {
-	Sprite.x = 0;
-	Sprite.y = 0;
+process(flounder, npc){
+    flounder.setTint("0x142702");
 }
+
 
   update(){
     var cursors = this.input.keyboard.createCursorKeys();
