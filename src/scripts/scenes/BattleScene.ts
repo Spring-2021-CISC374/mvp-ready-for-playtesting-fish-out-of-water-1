@@ -29,11 +29,11 @@ export default class BattleScene extends Phaser.Scene {
         //var playerHealth = new HealthBar(this, 160, 0, 0xB5D99C);
         //var enemyHealth = new HealthBar(this, 0,0,0xE65F5C);
 
-        var fish = new PlayerCharacter(this, 250, 100, "combat-flounder", 1, "Fish", 100, 20);        
+        var fish = new PlayerCharacter(this, 250, 100, "combat-flounder", 0, "Fish", 100, 20);        
         this.add.existing(fish);
 
         // player character - mage
-        var enemy = new Enemy(this, 50, 100, "enemy-jellyfish", 4, "Jelly", 100, 15); 
+        var enemy = new Enemy(this, 50, 100, "enemy-jellyfish", 0, "Jelly", 100, 15); 
         this.add.existing(enemy);       
 
         var shark = new PlayerCharacter(this, 250, 100, "shift-orca", null, "Orca", 50, 40);
