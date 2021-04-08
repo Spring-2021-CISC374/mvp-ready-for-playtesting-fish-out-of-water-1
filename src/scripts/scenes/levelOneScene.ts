@@ -31,23 +31,27 @@ export default class LevelOneScene extends Phaser.Scene {
 		faceColor: new Phaser.Display.Color(40,39,37,255)
 	})
 
-	//Create fish
-	this.flounder = this.physics.add.sprite(0,435,'flounder', 'Flounder 1.png').setScale(0.1)
+	//Create fish + test npc
+	this.flounder = this.physics.add.sprite(0,435,'flounder', 'Flounder.png').setScale(0.1).setInteractive()
+	this.npc = this.physics.add.sprite(100,435,'flounder', 'Flounder.png').setScale(0.1).setInteractive()
+	this.npc.anims.play('flounder-idle')
 	this.flounder.anims.play('flounder-idle')
+
 	this.physics.add.collider(this.flounder, foreground)
+	this.flounder.setCollideWorldBounds(true);
+	
 	//Initialize cameras to follow fish
 	this.cameras.main.startFollow(this.flounder,true)
-	//Create npc
-	this.npc = this.physics.add.sprite(300,435,'flounder', 'Flounder 1.png').setScale(0.1).setInteractive();
-	this.npc.anims.play('flounder-idle')
-	this.physics.add.collider(this.npc, foreground)
+	this.cameras.main.zoom = 3;
+
+	//this.physics.add.collider(this.npc, foreground, this.process)
 	this.npc.angle = 180;
-	this.physics.add.collider(this.flounder, this.npc);
-	this.physics.add.overlap(this.flounder, this.npc, this.process);
+	this.physics.add.collider(this.flounder, this.npc, this.process);
+	//this.physics.add.overlap(this.flounder, this.npc, this.process);
 }
 
-process(flounder, npc){
-    flounder.setTint("0x142702");
+process(flounder,npc){
+	flounder.setTint("0x142702");
 }
 
 
@@ -69,6 +73,6 @@ process(flounder, npc){
 		this.flounder.x = this.flounder.x + 1.5;
 		this.flounder.angle = 0;
 	}
-
+	this.physics.world.collide(this.flounder,this.npc)
   }
 }
