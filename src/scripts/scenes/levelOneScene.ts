@@ -1,6 +1,8 @@
+import { GameObjects } from "phaser";
 
 export default class LevelOneScene extends Phaser.Scene {
   flounder: Phaser.Physics.Arcade.Sprite
+  npc: Phaser.Physics.Arcade.Sprite
   music:Phaser.Sound.BaseSound;
 
   constructor() {
@@ -12,6 +14,8 @@ export default class LevelOneScene extends Phaser.Scene {
 	  this.music.play();
   }
   create() {
+	//Background color
+	this.cameras.main.setBackgroundColor("0x142702");
 	//Create map from Tiled and add necessary collisions
 	const map = this.make.tilemap({key: "sewer1"})
 	const tileset = map.addTilesetImage('Pipes', 'pipes')
@@ -33,25 +37,38 @@ export default class LevelOneScene extends Phaser.Scene {
 	this.physics.add.collider(this.flounder, foreground)
 	//Initialize cameras to follow fish
 	this.cameras.main.startFollow(this.flounder,true)
-  }
+	//Create npc
+	this.npc = this.physics.add.sprite(300,435,'flounder', 'Flounder 1.png').setScale(0.1).setInteractive();
+	this.npc.anims.play('flounder-idle')
+	this.physics.add.collider(this.npc, foreground)
+	this.npc.angle = 180;
+	this.input.on('Sprite', this.talk,this)
+
+}
+
+talk(pointer, Sprite) {
+	Sprite.x = 0;
+	Sprite.y = 0;
+}
 
   update(){
     var cursors = this.input.keyboard.createCursorKeys();
-    if (cursors.up.isDown) {
-			this.flounder.y = this.flounder.y - 1.5;
-			this.flounder.angle = 270;
-		}
-		if (cursors.down.isDown) {
-			this.flounder.y = this.flounder.y + 1.5;
-			this.flounder.angle = 90;
-		}
-		if (cursors.left.isDown) {
-			this.flounder.x = this.flounder.x - 1.5;
-			this.flounder.angle = 180;
-		}
-		if (cursors.right.isDown) {
-			this.flounder.x = this.flounder.x + 1.5;
-			this.flounder.angle = 0;
-		}
+   	if (cursors.up.isDown) {
+		this.flounder.y = this.flounder.y - 1.5;
+		this.flounder.angle = 270;
+	}
+	if (cursors.down.isDown) {
+		this.flounder.y = this.flounder.y + 1.5;
+		this.flounder.angle = 90;
+	}
+	if (cursors.left.isDown) {
+		this.flounder.x = this.flounder.x - 1.5;
+		this.flounder.angle = 180;
+	}
+	if (cursors.right.isDown) {
+		this.flounder.x = this.flounder.x + 1.5;
+		this.flounder.angle = 0;
+	}
+
   }
 }
