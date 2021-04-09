@@ -3,11 +3,12 @@ import LevelOneScene from './scenes/levelOneScene'
 import PreloadScene from './scenes/preloadScene'
 import BattleScene from './scenes/BattleScene'
 import UIScene from './scenes/UIScene'
+import GameConfig = Phaser.Types.Core.GameConfig;
 
 const DEFAULT_WIDTH = 512
 const DEFAULT_HEIGHT = 512
 
-const config = {
+const config: GameConfig = {
   type: Phaser.AUTO,
   backgroundColor: '#ffffff',
   scale: {
@@ -24,9 +25,12 @@ const config = {
       debug: true,
       gravity: { y: 0 }
     }
-  }
+  },
+  render: {
+    pixelArt: true
+}
 }
 
 window.addEventListener('load', () => {
-  const game = new Phaser.Game(config)
-})
+  window['game'] = new Phaser.Game(config);
+});

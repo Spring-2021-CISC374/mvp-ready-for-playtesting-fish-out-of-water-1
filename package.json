@@ -48,7 +48,7 @@
     "workbox-webpack-plugin": "^6.0.2"
   },
   "dependencies": {
-    "i": "^0.3.6",
-    "phaser": "^3.54.0"
+    "phaser": "^3.22.0",
+    "reflect-metadata": "^0.1.13"
   }
 }
