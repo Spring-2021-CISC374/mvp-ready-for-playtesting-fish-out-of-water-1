@@ -36,7 +36,7 @@ export default class UIScene extends Phaser.Scene {
 
         
         // basic container to hold all menus
-        //this.menus = this.add.container();
+        this.menus = this.add.container();
                 
         this.heroesMenu = new HeroesMenu(228, 153, this);           
         this.actionsMenu = new ActionsMenu(118, 153, this);            
