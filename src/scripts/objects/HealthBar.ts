@@ -1,4 +1,4 @@
-class HealthBar {
+export default class HealthBar {
     bar: Phaser.GameObjects.Graphics;
     x: any;
     y: any;

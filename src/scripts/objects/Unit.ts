@@ -6,13 +6,15 @@ export default class Unit extends Phaser.GameObjects.Sprite {
     damage: any;
     alive: boolean;
     scene: BattleScene;
-    constructor(scene, x, y, texture, frame, type, hp, damage) {
+    name: string;
+    constructor(scene, x, y, texture, frame, type, hp, damage, name) {
         super(scene, x, y, texture, frame)
         this.scene = scene;
         this.type = type;
         this.maxHp = this.hp = hp;
         this.damage = damage; // default damage      
-        this.alive = true;        
+        this.alive = true;    
+        this.name = name;    
     }
 
     attack(target) {
@@ -47,6 +49,10 @@ export default class Unit extends Phaser.GameObjects.Sprite {
                 this.scene.endBattle();
             }
         }
+    }
+
+    surrenderDisplay() {
+        this.scene.events.emit("Message", "Player surrendered!");
     }
 
     getType() {

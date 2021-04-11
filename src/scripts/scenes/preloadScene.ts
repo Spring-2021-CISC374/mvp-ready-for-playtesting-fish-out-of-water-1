@@ -27,30 +27,30 @@ export default class PreloadScene extends Phaser.Scene {
 
     this.anims.create({
       key:'combat-flounder',
-      frames: this.anims.generateFrameNames('combat', {start: 1, end: 2, prefix: 'NinjaFish', suffix:'.png'}),
+      frames: this.anims.generateFrameNames('combat', {start: 1, end: 2, prefix: 'Ninja Fish ', suffix:'.png'}),
       repeat: -1,
-      frameRate: 15
+      frameRate: 5
     })
 
     this.anims.create({
       key: 'enemy-jellyfish',
-      frames: this.anims.generateFrameNames('jellyfish', {start: 1, end: 2, prefix: 'Jellyfish', suffix: '.png'}),
+      frames: this.anims.generateFrameNames('jellyfish', {start: 1, end: 2, prefix: 'Jellyfish ', suffix: '.png'}),
       repeat: -1,
-      frameRate: 15
+      frameRate: 5
     })
 
     this.anims.create({
       key: 'shift-orca',
-      frames: this.anims.generateFrameNames('orca', {start: 1, end: 2, prefix: 'Orca', suffix: '.png'}),
+      frames: this.anims.generateFrameNames('orca', {start: 1, end: 2, prefix: 'Whale ', suffix: '.png'}),
       repeat: -1,
-      frameRate: 15
+      frameRate: 5
     })
 
     this.anims.create({
       key: 'shift-shrimp',
-      frames: this.anims.generateFrameNames('shrimp', {start: 1, end: 2, prefix: 'PurpleFish', suffix: '.png'}),
+      frames: this.anims.generateFrameNames('shrimp', {start: 1, end: 2, prefix: 'Purple Fish ', suffix: '.png'}),
       repeat: -1,
-      frameRate: 15
+      frameRate: 5
     })
     
   }

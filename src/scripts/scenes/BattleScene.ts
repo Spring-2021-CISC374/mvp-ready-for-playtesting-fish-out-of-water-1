@@ -1,4 +1,6 @@
+import { Physics } from "phaser";
 import Enemy from "../objects/Enemy";
+//import HealthBar from "../objects/HealthBar";
 import PlayerCharacter from "../objects/PlayerCharacter";
 import Unit from "../objects/Unit";
 
@@ -29,19 +31,29 @@ export default class BattleScene extends Phaser.Scene {
         //var playerHealth = new HealthBar(this, 160, 0, 0xB5D99C);
         //var enemyHealth = new HealthBar(this, 0,0,0xE65F5C);
 
-        var fish = new PlayerCharacter(this, 250, 100, "combat-flounder", 1, "Fish", 100, 20);        
-        this.add.existing(fish);
+        let height = this.game.config.height as number;
+        let width = this.game.config.width as number;
+
+        let fightHeight = height/2 - 50;
+        let fightPos1 = width * .8;
+        let fightPos2 = width * .2;
+
+
+        var fish = new PlayerCharacter(this, fightPos1, fightHeight, "combat", null, "Fish", 100, 20, "fish");        
+        this.add.existing(fish)
+        fish.anims.play('combat-flounder');
 
         // player character - mage
-        var enemy = new Enemy(this, 50, 100, "enemy-jellyfish", 4, "Jelly", 100, 15); 
-        this.add.existing(enemy);       
+        var enemy = new Enemy(this, fightPos2, fightHeight, "enemy-jellyfish", null, "Jelly", 100, 15, "jellyfish"); 
+        this.add.existing(enemy);   
+        enemy.anims.play('enemy-jellyfish')    
 
-        var shark = new PlayerCharacter(this, 250, 100, "shift-orca", null, "Orca", 50, 40);
+        var orca = new PlayerCharacter(this, fightPos1, fightHeight, "shift-orca", null, "Orca", 50, 40, "orca");
 
-        var shrimp = new PlayerCharacter(this, 250, 100, "shift-shrimp", null,"Shrimp", 50, 5);
+        var shrimp = new PlayerCharacter(this, fightPos1, fightHeight, "shift-shrimp", null,"Shrimp", 50, 5, "shrimp");
 
         // array with heroes
-        this.heroes = [ fish, shark, shrimp ];
+        this.heroes = [ fish, orca, shrimp ];
         this.activeID = 0;
         this.activeHero = this.heroes[this.activeID];
         // array with enemies
@@ -71,6 +83,8 @@ export default class BattleScene extends Phaser.Scene {
         this.activeHero.shapeShift(tempHero);
         tempHero.destroy();
         this.add.existing(this.activeHero);
+        let tempString = this.heroes[index].name;
+        this.activeHero.anims.play('shift-' + tempString);
         
     }
 
@@ -131,7 +145,7 @@ export default class BattleScene extends Phaser.Scene {
 
     endBattle() {       
         // clear state, remove sprites
-        //this.scene.events.emit("Message", "Battle over!");
+        this.events.emit("Message", "Player surrendered!");
         this.heroes.length = 0;
         this.enemies.length = 0;
         for(var i = 0; i < this.units.length; i++) {
@@ -146,4 +160,8 @@ export default class BattleScene extends Phaser.Scene {
     getHeroes() {
         return this.heroes;
     }
+}
+
+function fish(fish: any) {
+    throw new Error("Function not implemented.");
 }
