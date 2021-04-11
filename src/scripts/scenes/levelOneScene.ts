@@ -7,11 +7,6 @@ export default class LevelOneScene extends Phaser.Scene {
 	background:Phaser.Tilemaps.TilemapLayer;
 	colls:Phaser.Tilemaps.TilemapLayer;
 	tileset: Phaser.Tilemaps.Tileset;
-	npcTalk: Phaser.GameObjects.Text;
-	inputElement: Phaser.GameObjects.DOMElement
-  	dir_msg: Phaser.GameObjects.Text;
-  	pl_model_key: string;
-	pause: boolean;
 	
   
 	constructor() {
@@ -57,16 +52,16 @@ export default class LevelOneScene extends Phaser.Scene {
   
 	  //this.physics.add.collider(this.npc, foreground, this.process)
 	  this.npc.angle = 180;
-	  this.physics.add.collider(this.player, this.npc, this.process);
+	  this.physics.add.collider(this.player, this.npc, () =>{
+		this.game.scene.start('LevelOneScene');
+	  });
 
 	  
   }
 
   //Where the collision between npc and flounder(player) take place
-  process(flounder, npc){ 
-	//proof of collision
-	npc.setTint("0x142702");
-  }
+
+
 
   update(){
 	this.npc.setVelocity(0,0);
