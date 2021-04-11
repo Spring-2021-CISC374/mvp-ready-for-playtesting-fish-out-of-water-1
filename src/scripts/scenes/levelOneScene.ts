@@ -21,23 +21,22 @@ export default class LevelOneScene extends Phaser.Scene {
 	  //Background color
 	  this.cameras.main.setBackgroundColor("0x142702");
 	  //Create map from Tiled and add necessary collisions
-	  this.map = this.make.tilemap({key: "sewer1"})
+	  this.map = this.make.tilemap({key: "sewerlevel1"})
 	  this.tileset = this.map.addTilesetImage('Pipes', 'pipes')
-	  this.colls = this.map.createLayer('Colls', this.tileset)
-	  this.background = this.map.createLayer('Sewer', this.tileset)
+	  this.colls = this.map.createLayer('Sewer', this.tileset)
 	  this.colls.setCollisionByProperty({collides: true})
-  
+	  this.physics.world.setBoundsCollision()
 	  //debug collisions
-	  const debugGraphics = this.add.graphics().setAlpha(0.7)
-	  this.colls.renderDebug(debugGraphics, {
-		  tileColor: null,
-		  collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255),
-		  faceColor: new Phaser.Display.Color(40,39,37,255)
-	  })
+	//   const debugGraphics = this.add.graphics().setAlpha(0.7)
+	//   this.colls.renderDebug(debugGraphics, {
+	// 	  tileColor: null,
+	// 	  collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255),
+	// 	  faceColor: new Phaser.Display.Color(40,39,37,255)
+	//   })
   
 	  //Create fish + test npc
-	  this.player = this.physics.add.sprite(0,435,'flounder').setScale(0.08)
-	  this.npc = this.physics.add.sprite(100,435,'flounder').setScale(0.08)
+	  this.player = this.physics.add.sprite(0,560,'flounder').setScale(0.06)
+	  this.npc = this.physics.add.sprite(100,435,'flounder').setScale(0.06)
 	  this.physics.world.enableBody(this.player)
 	  this.add.existing(this.player);
 	  this.npc.anims.play('flounder-idle')
@@ -48,7 +47,7 @@ export default class LevelOneScene extends Phaser.Scene {
 	  
 	  //Initialize cameras to follow fish
 	  this.cameras.main.startFollow(this.player,true)
-	  this.cameras.main.zoom = 3;
+	  this.cameras.main.zoom = 5;
   
 	  //this.physics.add.collider(this.npc, foreground, this.process)
 	  this.npc.angle = 180;

@@ -5,8 +5,8 @@ import BattleScene from './scenes/BattleScene'
 import UIScene from './scenes/UIScene'
 import GameConfig = Phaser.Types.Core.GameConfig;
 
-const DEFAULT_WIDTH = 512
-const DEFAULT_HEIGHT = 512
+const DEFAULT_WIDTH = 640
+const DEFAULT_HEIGHT = 640
 
 const config: GameConfig = {
   type: Phaser.AUTO,
@@ -22,7 +22,7 @@ const config: GameConfig = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      debug: false,
       gravity: { y: 0 }
     }
   },

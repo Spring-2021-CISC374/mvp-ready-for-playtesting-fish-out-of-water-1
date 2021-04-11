@@ -4,7 +4,7 @@ export default class PreloadScene extends Phaser.Scene {
     super({ key: 'PreloadScene' })
   }
   preload() {
-    this.load.tilemapTiledJSON('sewer1', 'assets/Maps/Sewer1.json')
+    this.load.tilemapTiledJSON('sewerlevel1', 'assets/Maps/sewerlevel1.json')
     this.load.image('pipes', 'assets/img/Pipes.png')
     this.load.image('phaser-logo', 'assets/img/phaser-logo.png')
     this.load.atlas('flounder', 'assets/Sprites/Flounder.png','assets/Sprites/Flounder.json' )
