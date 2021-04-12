@@ -4,17 +4,23 @@ export default class PreloadScene extends Phaser.Scene {
     super({ key: 'PreloadScene' })
   }
   preload() {
+    //Map
     this.load.tilemapTiledJSON('sewerlevel1', 'assets/Maps/sewerlevel1.json')
     this.load.image('pipes', 'assets/img/Pipes.png')
     this.load.image("messageBox", "assets/img/messageBox.png");
     this.load.image("closeButton", "assets/img/closeButton.png");
     this.load.image('PipePiece', 'assets/img/PipePiece.png')
+    this.load.image('transparent', 'assets/img/Transparent.png')
+
+    //Characters
     this.load.atlas('clown', 'assets/Sprites/ClownFish.png','assets/Sprites/ClownFish.json' )
     this.load.atlas('flounder', 'assets/Sprites/Flounder.png','assets/Sprites/Flounder.json' )
     this.load.atlas('combat', 'assets/Sprites/NinjaFish.png', 'assets/Sprites/NinjaFish.json')
     this.load.atlas('jellyfish', 'assets/Sprites/Jellyfish.png', 'assets/Sprites/Jellyfish.json')
     this.load.atlas('orca', 'assets/Sprites/Orca.png', 'assets/Sprites/Orca.json')
     this.load.atlas('shrimp', 'assets/Sprites/PurpleFish.png', 'assets/Sprites/PurpleFish.json')
+    
+    //Audio
     this.load.audio('sewermusic','assets/Music/sewermusic.mp3')
     
   }

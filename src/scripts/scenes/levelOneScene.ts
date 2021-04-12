@@ -19,6 +19,7 @@ export default class LevelOneScene extends Phaser.Scene {
 	npcpt;
 	combatpts;
 	text;
+	
 	constructor() {
 	  super({ key: 'LevelOneScene' })
 	}
@@ -88,8 +89,10 @@ export default class LevelOneScene extends Phaser.Scene {
 		})
 	});
 	this.CombatLayer.forEach(object => {
-		this.physics.add.existing(object)
-		this.physics.add.overlap(this.player, object, () =>{
+		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
+		this.physics.add.existing(image)
+		this.physics.add.overlap(this.player, image, () =>{
+			this.music.stop()
 			this.game.scene.start('BattleScene');
 		})
 	})
@@ -109,13 +112,12 @@ export default class LevelOneScene extends Phaser.Scene {
 
    }
    mouseFix(){}
-
    destroyMessageBox(){
 		this.pauseMovement = false;
     	this.pipeMsg.destroy();
     	this.messageBox.destroy();
     	this.closeButton.destroy();
-  }
+  	}
 
   update(){
 	this.npc.setVelocity(0,0);
