@@ -77137,7 +77137,6 @@
  <objectgroup id="3" name="Pipe">
   <object id="7" name="Pipe" x="234.073" y="274.658"/>
   <object id="8" name="Pipe" x="530.51" y="143.937"/>
-  <object id="13" name="Pipe" x="213.061" y="593.279"/>
  </objectgroup>
  <objectgroup id="4" name="Combat">
   <object id="10" name="Combat" x="394.173" y="15.1158"/>

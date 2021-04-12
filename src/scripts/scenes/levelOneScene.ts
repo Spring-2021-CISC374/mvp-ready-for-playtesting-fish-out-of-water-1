@@ -99,7 +99,7 @@ export default class LevelOneScene extends Phaser.Scene {
   	createMessageBox(){
     	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
     	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
-		this.pipeMsg = this.add.text(this.game.canvas.width/2 -20 , this.game.canvas.height/2 - 10, "You found a pipe piece! \n Hmm... I wonder what it's for", { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
+		this.pipeMsg = this.add.text(this.game.canvas.width/2 -25 , this.game.canvas.height/2 - 10, "			You found a pipe piece! \n Hmm... I wonder what it's for...", { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
 		this.closeButton.setInteractive();
     	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
     	this.closeButton.on('pointerup', this.mouseFix, this);
