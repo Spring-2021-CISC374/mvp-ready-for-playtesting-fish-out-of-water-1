@@ -3,6 +3,11 @@ export default class LevelOneScene extends Phaser.Scene {
 	npc: Phaser.Physics.Arcade.Sprite
 	music:Phaser.Sound.BaseSound;
 	pipeScore = 0;
+	pauseMovement = false;
+	//Pop up message box 
+	pipeMsg;
+	messageBox;
+	closeButton
 	//Map information
 	map: Phaser.Tilemaps.Tilemap;
 	background:Phaser.Tilemaps.TilemapLayer;
@@ -50,21 +55,8 @@ export default class LevelOneScene extends Phaser.Scene {
 	this.player = this.physics.add.sprite(this.startpt.x,this.startpt.y,'clown').setScale(0.06)
 	this.npc = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
 	this.pipePieces = this.physics.add.staticGroup()
-	this.PipeLayer.forEach(object => {
-		const image = this.physics.add.image(object.x, object.y, "PipePiece").setScale(0.05);
-		this.physics.add.overlap(this.player, image, () =>{
-			image.destroy()
-			this.pipeScore++
-			this.text.setText(`Pipe Pieces found : ${this.pipeScore}`)
-		})
-	});
 	this.combatpts = this.physics.add.staticGroup()
-	this.CombatLayer.forEach(object => {
-		this.physics.add.existing(object)
-		this.physics.add.overlap(this.player, object, () =>{
-			this.game.scene.start('BattleScene');
-		})
-	})
+	
 	  //Physics tasks
 	  this.physics.world.enableBody(this.player)
 	  this.add.existing(this.player);
@@ -79,17 +71,50 @@ export default class LevelOneScene extends Phaser.Scene {
 	  });
 	  
 	  //Initialize cameras to follow fish
-	  //this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
+	  this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
 	  this.cameras.main.startFollow(this.player,true)
 	  this.cameras.main.zoom = 5;
   
-	  
+	  //Add pipe and combat overlap 
+	  this.PipeLayer.forEach(object => {
+		const image = this.physics.add.image(object.x, object.y, "PipePiece").setScale(0.05);
+		this.physics.add.overlap(this.player, image, () =>{
+			image.destroy()
+			this.pipeScore++
+			this.text.setText(`Pipe Pieces found : ${this.pipeScore}`)
+			this.createMessageBox()
+			
+		})
+	});
+	this.CombatLayer.forEach(object => {
+		this.physics.add.existing(object)
+		this.physics.add.overlap(this.player, object, () =>{
+			this.game.scene.start('BattleScene');
+		})
+	})
 
 	  //score
-	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore}`).setScrollFactor(0).setFontSize(64).setColor('#ffffff').setFontSize(32).setScale(0.1);
-	  this.text.fixedToCamera = true;
+	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore}`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
   }
+  	createMessageBox(){
+    	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
+    	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
+		this.pipeMsg = this.add.text(this.game.canvas.width/2 -20 , this.game.canvas.height/2 - 10, "You found a pipe piece! \n Hmm... I wonder what it's for", { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
+		this.closeButton.setInteractive();
+    	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
+    	this.closeButton.on('pointerup', this.mouseFix, this);
+		this.closeButton.on('pointerout', this.mouseFix, this);
+		this.pauseMovement = true;
 
+   }
+   mouseFix(){}
+
+   destroyMessageBox(){
+		this.pauseMovement = false;
+    	this.pipeMsg.destroy();
+    	this.messageBox.destroy();
+    	this.closeButton.destroy();
+  }
 
   update(){
 	this.npc.setVelocity(0,0);
@@ -97,10 +122,9 @@ export default class LevelOneScene extends Phaser.Scene {
     var velocityY = 125
 	var prevDir = 0;
 	let framesPerDirection:number = 3;
-	var pauseMovement = false;
 	this.player.setVelocity(0,0);
 	  var cursors = this.input.keyboard.createCursorKeys();
-	  if(pauseMovement){
+	  if(this.pauseMovement){
 		return;
 	  }
 	 if (cursors.up.isDown) {
