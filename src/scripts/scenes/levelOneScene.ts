@@ -36,7 +36,7 @@ export default class LevelOneScene extends Phaser.Scene {
   
 	  //Create fish + test npc
 	  this.player = this.physics.add.sprite(0,560,'flounder').setScale(0.06)
-	  this.npc = this.physics.add.sprite(100,435,'flounder').setScale(0.06)
+	  this.npc = this.physics.add.sprite(50,560,'flounder').setScale(0.06)
 	  this.physics.world.enableBody(this.player)
 	  this.add.existing(this.player);
 	  this.npc.anims.play('flounder-idle')
@@ -52,7 +52,7 @@ export default class LevelOneScene extends Phaser.Scene {
 	  //this.physics.add.collider(this.npc, foreground, this.process)
 	  this.npc.angle = 180;
 	  this.physics.add.collider(this.player, this.npc, () =>{
-		this.game.scene.start('LevelOneScene');
+		this.game.scene.start('QuestionScene');
 	  });
 
 	  
@@ -96,8 +96,7 @@ export default class LevelOneScene extends Phaser.Scene {
 	  }
 	  else{
 		this.player.setVelocity(0,0);
-		this.player.setFrame(1 + (prevDir * framesPerDirection));
+		this.player.setFrame((prevDir * framesPerDirection));
 	  }
-	  this.physics.world.collide(this.player,this.colls)
 	}
   }
