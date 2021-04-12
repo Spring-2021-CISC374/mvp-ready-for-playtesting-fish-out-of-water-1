@@ -67,7 +67,8 @@ export default class LevelOneScene extends Phaser.Scene {
 	  this.npc.angle = 180;
 	  this.physics.add.collider(this.player, this.npc, () =>{
 		  this.music.stop()
-		  this.game.scene.start('LevelOneScene');
+		  //this.game.scene.start('LevelOneScene');
+		  this.game.scene.start('QuestionScene');
 	  });
 	  
 	  //Initialize cameras to follow fish
