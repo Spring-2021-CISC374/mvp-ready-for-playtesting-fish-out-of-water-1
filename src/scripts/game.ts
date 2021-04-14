@@ -1,5 +1,6 @@
 import 'phaser'
 import LevelOneScene from './scenes/levelOneScene'
+import LevelTwoScene from './scenes/levelTwoScene'
 import PreloadScene from './scenes/preloadScene'
 import BattleScene from './scenes/BattleScene'
 import QuestionScene from './scenes/QuestionScene'
@@ -19,7 +20,7 @@ const config: GameConfig = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, LevelOneScene, BattleScene, UIScene, QuestionScene],
+  scene: [PreloadScene, LevelOneScene, LevelTwoScene, BattleScene, UIScene, QuestionScene],
   physics: {
     default: 'arcade',
     arcade: {
@@ -29,7 +30,7 @@ const config: GameConfig = {
   },
   render: {
     pixelArt: true
-}
+  }
 }
 
 window.addEventListener('load', () => {

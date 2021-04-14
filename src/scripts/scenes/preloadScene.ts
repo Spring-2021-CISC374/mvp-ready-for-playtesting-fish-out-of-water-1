@@ -6,6 +6,7 @@ export default class PreloadScene extends Phaser.Scene {
   preload() {
     //Map
     this.load.tilemapTiledJSON('sewerlevel1', 'assets/Maps/sewerlevel1.json')
+    this.load.tilemapTiledJSON('sewerlevel2', 'assets/Maps/sewerlevel2.json')
     this.load.image('pipes', 'assets/img/Pipes.png')
     this.load.image("messageBox", "assets/img/messageBox.png");
     this.load.image("closeButton", "assets/img/closeButton.png");
