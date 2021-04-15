@@ -18,6 +18,10 @@
 
 ## Screenshot
 
+## Resources
+- https://ansimuz.itch.io/bulkhead-walls-environment
+- https://gamedevacademy.org/how-to-create-a-turn-based-rpg-game-in-phaser-3-part-2/
+
 
 ## Gameplay video link
 
