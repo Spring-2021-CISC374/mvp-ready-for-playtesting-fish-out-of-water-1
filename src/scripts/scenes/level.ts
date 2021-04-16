@@ -91,12 +91,16 @@ export default class Level extends Phaser.Scene {
 	  });
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.stop()	
-		this.Question = 2;	
+		this.Question = 2;
+		if(this.sceneKey == "LevelTwoScene")
+			this.Question+=3;	
 		this.game.scene.start('QuestionScene');
 	});
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.stop()
 		this.Question = 3;
+		if(this.sceneKey == "LevelTwoScene")
+			this.Question+=3;
 		this.game.scene.start('QuestionScene');
 	});
 	  
