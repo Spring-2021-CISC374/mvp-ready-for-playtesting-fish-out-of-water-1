@@ -1,6 +1,8 @@
 export default class Level extends Phaser.Scene {
 	player: Phaser.Physics.Arcade.Sprite
-	npc: Phaser.Physics.Arcade.Sprite
+	npcptCollide: Phaser.Physics.Arcade.Sprite
+	npc1Collide: Phaser.Physics.Arcade.Sprite
+	npc2Collide: Phaser.Physics.Arcade.Sprite
 	music:Phaser.Sound.BaseSound;
 	pipeScore = 0;
 	pauseMovement = false;
@@ -22,12 +24,13 @@ export default class Level extends Phaser.Scene {
 	NPCLayer;
 	startpt;
 	npcpt;
+	npc1;
+	npc2;
 	clogpt;
 	pipechecker;
 	text;
 
-	//temp 
-	npc1
+
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
 	  super({ key: sceneKey })
 	  this.sceneKey = sceneKey
@@ -52,11 +55,13 @@ export default class Level extends Phaser.Scene {
 	  //Setting object points
 	  this.startpt = this.map.findObject("Points", obj => obj.name === "StartingPoint")
 	  this.npcpt = this.map.findObject("Points", obj => obj.name === "NPCPoint")
+	  this.npc2 = this.map.findObject("NPC", obj => obj.name === "NPC2")
+	  this.npc1 = this.map.findObject("NPC", obj => obj.name === "NPC1")
+
 	  if(this.sceneKey == "LevelTwoScene") {
 		this.clogpt = this.map.findObject("Clog", obj => obj.name === "Clog")
 		this.pipechecker = this.map.findObject("PipeCheck", obj => obj.name === "PipeCheck")
 	  }
-	  this.npc1 = this.map.findObject("NPC", obj => obj.name === "NPC1")
 	  //Setting arrays of objects that contain position data
 	  this.PipeLayer = this.map.getObjectLayer('Pipe')['objects'];
 	  this.CombatLayer = this.map.getObjectLayer('Combat')['objects'];
@@ -65,21 +70,30 @@ export default class Level extends Phaser.Scene {
 	  this.WrongSpawnLayer = this.map.getObjectLayer('WrongSpawn')['objects']; //Hopefully in order
   
 	//Create all players on the map
-	this.player = this.physics.add.sprite(this.startpt.x,this.startpt.y,'clown').setScale(0.06)
-	this.npc = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
-	const npctemp = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06)
+	this.player = this.physics.add.sprite(this.startpt.x, this.startpt.y,'clown').setScale(0.06)
+	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
+	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06)
+	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06)
 	  //Physics tasks
 	  this.physics.world.enableBody(this.player)
 	  this.add.existing(this.player);
-	  this.npc.anims.play('flounder-idle')
+	  this.npcptCollide.anims.play('flounder-idle')
 	  this.player.anims.play('clown-idle')
 	  this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
-	  this.npc.angle = 180;
-	  this.physics.add.collider(this.player, this.npc, () =>{
+	  this.npcptCollide.angle = 180;
+	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.stop()
 		  this.game.scene.start('QuestionScene');
 	  });
+	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
+		this.music.stop()
+		this.game.scene.start('QuestionScene');
+	});
+	this.physics.add.collider(this.player, this.npc2Collide, () =>{
+		this.music.stop()
+		this.game.scene.start('QuestionScene');
+	});
 	  
 	  //Initialize cameras to follow fish
 	  this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
@@ -132,7 +146,9 @@ export default class Level extends Phaser.Scene {
   	}
 
   update(){
-	this.npc.setVelocity(0,0);
+	this.npc1Collide.setVelocity(0,0);
+	this.npc2Collide.setVelocity(0,0);
+	this.npcptCollide.setVelocity(0,0);
 	var velocityX = 125; 
     var velocityY = 125
 	var prevDir = 0;

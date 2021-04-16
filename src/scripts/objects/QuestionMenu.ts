@@ -4,10 +4,10 @@ export class QuestionMenu extends Menu {
     
     constructor(x, y, scene) {
         super(x, y, scene);   
-        this.addMenuItem("Answer A");
-        this.addMenuItem("Answer B")
-        this.addMenuItem("Answer C");
-        this.addMenuItem("Answer D");
+        this.addMenuItem("Soap");
+        this.addMenuItem("Oil")
+        this.addMenuItem("Grease");
+        this.addMenuItem("Motor oil");
 
     }
 
