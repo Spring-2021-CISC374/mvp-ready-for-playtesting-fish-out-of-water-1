@@ -9,7 +9,8 @@ export default class Level extends Phaser.Scene {
 	//Pop up message box 
 	pipeMsg;
 	messageBox;
-	closeButton
+	closeButton;
+	text;
 	//Map information
 	map: Phaser.Tilemaps.Tilemap;
 	background:Phaser.Tilemaps.TilemapLayer;
@@ -19,18 +20,19 @@ export default class Level extends Phaser.Scene {
 	nextSceneKey
 	PipeLayer;
 	CombatLayer;
-	RightSpawnLayer;
-	WrongSpawnLayer;
-	NPCLayer;
 	startpt;
 	npcpt;
 	npc1;
 	npc2;
 	clogpt;
 	pipechecker;
-	text;
 	Question;
-
+	//Spawn points
+	wrongspawn1;
+	wrongspawn2;
+	wrongspawn3;
+	rightspawn2;
+	rightspawn3;
 
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
 	  super({ key: sceneKey })
@@ -59,6 +61,12 @@ export default class Level extends Phaser.Scene {
 	  this.npcpt = this.map.findObject("Points", obj => obj.name === "NPCPoint")
 	  this.npc2 = this.map.findObject("NPC", obj => obj.name === "NPC2")
 	  this.npc1 = this.map.findObject("NPC", obj => obj.name === "NPC1")
+	  //Adding in spawn point objects
+	  this.rightspawn2 = this.map.findObject("RightSpawn", obj => obj.name === "RightSpawn2")
+	  this.rightspawn3 = this.map.findObject("RightSpawn", obj => obj.name === "RightSpawn3")
+	  this.wrongspawn1 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn1")
+	  this.wrongspawn2 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn2")
+	  this.wrongspawn3 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn3")
 
 	  if(this.sceneKey == "LevelTwoScene") {
 		this.clogpt = this.map.findObject("Clog", obj => obj.name === "Clog")
@@ -67,9 +75,6 @@ export default class Level extends Phaser.Scene {
 	  //Setting arrays of objects that contain position data
 	  this.PipeLayer = this.map.getObjectLayer('Pipe')['objects'];
 	  this.CombatLayer = this.map.getObjectLayer('Combat')['objects'];
-	  this.NPCLayer = this.map.getObjectLayer('NPC')['objects']; //Only two NPCs here (the final NPC for now is in the npcpt)
-	  this.RightSpawnLayer = this.map.getObjectLayer('RightSpawn')['objects']; //Hopefully in order
-	  this.WrongSpawnLayer = this.map.getObjectLayer('WrongSpawn')['objects']; //Hopefully in order
   
 	//Create all players on the map
 	this.player = this.physics.add.sprite(this.startpt.x, this.startpt.y,'clown').setScale(0.06)
@@ -137,9 +142,6 @@ export default class Level extends Phaser.Scene {
 			this.music.stop()
 			//this.scene.launch("BattleScene")
 			//this.scene.pause(this.sceneKey) //these lines i think pause the current scene and can launch battlescene
-			if(this.nextSceneKey != '')
-				//this.scene.start(this.nextSceneKey); // use this to launch the next scene
-				//need an else here (maybe start over game)
 			image.destroy()
 		})
 	})
@@ -226,37 +228,39 @@ export default class Level extends Phaser.Scene {
 
 	QuestionOne(){
 		if (this.registry.get("A1") == 'A'){
-			this.player.x = this.RightSpawnLayer.RightSpawn2.x
-			this.player.y = this.RightSpawnLayer.RightSpawn2.y
+			this.player.x = this.rightspawn2.x
+			this.player.y = this.rightspawn2.y
 			this.registry.set("A1", "Done")
 		}
 		if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
-  
+			this.player.x = this.wrongspawn1.x
+			this.player.y = this.wrongspawn1.y
 		}
 	}
 
 	QuestionTwo(){
 		if (this.registry.get("B1") == 'D'){
-			this.player.x = this.RightSpawnLayer[0].x
-			this.player.y = this.RightSpawnLayer[0].y
+			this.player.x = this.rightspawn3.x
+			this.player.y = this.rightspawn3.y
 			this.registry.set("B1", "Done")
 		}
 		if (this.registry.get("B1") == 'B' || this.registry.get("B1") == 'C' || this.registry.get("B1") == 'A'){
-			this.player.x = this.WrongSpawnLayer[0].x
-			this.player.y = this.WrongSpawnLayer[0].y
+			this.player.x = this.wrongspawn2.x
+			this.player.y = this.wrongspawn2.y
   
 		}
 	}
 
 	QuestionThree(){
 		if (this.registry.get("C1") == 'B'){
-			this.player.x = this.RightSpawnLayer[1].x
-			this.player.y = this.RightSpawnLayer[1].y
+			if(this.nextSceneKey != '')
+				this.scene.start(this.nextSceneKey); // use this to launch the next scene
+				//need an else here (maybe start over game)
 			this.registry.set("C1", "Done")
 		}
 		if (this.registry.get("C1") == 'A' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
-			this.player.x = this.WrongSpawnLayer[1].x
-			this.player.y = this.WrongSpawnLayer[1].y
+			this.player.x = this.wrongspawn3.x
+			this.player.y = this.wrongspawn3.y
 		}
 		
 	}
