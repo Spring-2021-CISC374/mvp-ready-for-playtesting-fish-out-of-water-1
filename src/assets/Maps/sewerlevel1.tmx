@@ -77139,17 +77139,17 @@
   <object id="24" name="Pipe" x="577.746" y="165.07"/>
  </objectgroup>
  <objectgroup id="5" name="NPC">
-  <object id="15" name="NPC" x="115.759" y="416.922"/>
-  <object id="19" name="NPC" x="379.152" y="367.395"/>
+  <object id="15" name="NPC1" x="115.759" y="416.922"/>
+  <object id="19" name="NPC2" x="379.152" y="367.395"/>
  </objectgroup>
  <objectgroup id="6" name="WrongSpawn">
-  <object id="16" name="WrongSpawn" x="57.4385" y="110.596"/>
-  <object id="20" name="WrongSpawn" x="623.102" y="316.449"/>
-  <object id="22" name="WrongSpawn" x="241.268" y="275.316"/>
+  <object id="16" name="WrongSpawn1" x="57.4385" y="110.596"/>
+  <object id="20" name="WrongSpawn2" x="623.102" y="316.449"/>
+  <object id="22" name="WrongSpawn3" x="241.268" y="275.316"/>
  </objectgroup>
  <objectgroup id="7" name="RightSpawn">
-  <object id="18" name="RightSpawn" x="414.421" y="570.197"/>
-  <object id="21" name="RightSpawn" x="220.437" y="239.052"/>
+  <object id="18" name="RightSpawn2" x="414.421" y="570.197"/>
+  <object id="21" name="RightSpawn3" x="220.437" y="239.052"/>
  </objectgroup>
  <objectgroup id="4" name="Combat">
   <object id="10" name="Combat" x="394.173" y="15.1158"/>

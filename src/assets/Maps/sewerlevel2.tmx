@@ -77131,17 +77131,17 @@
 </data>
  </layer>
  <objectgroup id="7" name="RightSpawn">
-  <object id="27" name="RightSpawn" x="335.729" y="623.247"/>
-  <object id="31" name="RightSpawn" x="289.935" y="195.97"/>
+  <object id="27" name="RightSpawn2" x="335.729" y="623.247"/>
+  <object id="31" name="RightSpawn3" x="289.935" y="195.97"/>
  </objectgroup>
  <objectgroup id="8" name="WrongSpawn">
-  <object id="23" name="WrongSpawn" x="261.22" y="627.693"/>
-  <object id="29" name="WrongSpawn" x="182.427" y="167.846"/>
-  <object id="32" name="WrongSpawn" x="367.396" y="556.018"/>
+  <object id="23" name="WrongSpawn1" x="261.22" y="627.693"/>
+  <object id="29" name="WrongSpawn2" x="182.427" y="167.846"/>
+  <object id="32" name="WrongSpawn3" x="367.396" y="556.018"/>
  </objectgroup>
  <objectgroup id="9" name="NPC">
-  <object id="25" name="NPC" x="26.5229" y="398.285"/>
-  <object id="30" name="NPC" x="262.146" y="298.065"/>
+  <object id="25" name="NPC1" x="26.5229" y="398.285"/>
+  <object id="30" name="NPC2" x="262.146" y="298.065"/>
  </objectgroup>
  <objectgroup id="11" name="Clog">
   <object id="38" name="Clog" x="501.046" y="528.93"/>
