@@ -1,23 +1,23 @@
-import { QuestionMenu } from "../objects/QuestionMenu";
+import { QuestionMenu3 } from "../objects/QuestionMenu3";
 export default class QuestionScene extends Phaser.Scene {
     menus: Phaser.GameObjects.Container;
     currentMenu: any;
     txt: Phaser.GameObjects.Text;
-    QuestionMenu: QuestionMenu;
+    QuestionMenu3: QuestionMenu3;
 
     constructor() {
-        super({ key: 'QuestionScene' });
+        super({ key: 'QuestionScene3' });
     }
 
     create(){
         this.cameras.main.setBackgroundColor("0x8B8BAE");
         //font, color, etc. can be changed later
-        this.txt = this.add.text(0,100,'Which of these items CAN go through the drain?');
+        this.txt = this.add.text(0,100,'How far should a tree be planted from a sewer line?');
         //menu for selecting answer
         this.menus = this.add.container();
-        this.QuestionMenu = new QuestionMenu(118, 153, this);  
-        this.currentMenu = this.QuestionMenu;
-        this.menus.add(this.QuestionMenu);
+        this.QuestionMenu3 = new QuestionMenu3(118, 153, this);  
+        this.currentMenu = this.QuestionMenu3;
+        this.menus.add(this.QuestionMenu3);
 
         this.input.keyboard.on("keydown", this.onKeyInput, this);               
     }
@@ -33,8 +33,8 @@ export default class QuestionScene extends Phaser.Scene {
             } else if(event.code === "ArrowRight") {
             } else if(event.code === "Space") {
                 this.currentMenu.confirm();
-                this.game.scene.stop('QuestionScene');
-                this.registry.set("Question","1");
+                this.game.scene.stop('QuestionScene3');
+                this.registry.set("Question","3");
 
 
             } 

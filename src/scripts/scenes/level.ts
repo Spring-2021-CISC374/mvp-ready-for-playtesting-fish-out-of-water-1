@@ -72,7 +72,7 @@ export default class Level extends Phaser.Scene {
 	  this.WrongSpawnLayer = this.map.getObjectLayer('WrongSpawn')['objects']; //Hopefully in order
   
 	//Create all players on the map
-	this.player = this.physics.add.sprite(110, 380,'clown').setScale(0.06)
+	this.player = this.physics.add.sprite(100, 450,'clown').setScale(0.06)
 	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
 	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06)
 	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06)
@@ -87,21 +87,17 @@ export default class Level extends Phaser.Scene {
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.stop()
 		  this.Question = 1;
-		  this.game.scene.start('QuestionScene');
+		  this.game.scene.start('QuestionScene1');
 	  });
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.stop()	
-		this.Question = 2;
-		if(this.sceneKey == "LevelTwoScene")
-			this.Question+=3;	
-		this.game.scene.start('QuestionScene');
+		this.Question = 2;	
+		this.game.scene.start('QuestionScene2');
 	});
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.stop()
 		this.Question = 3;
-		if(this.sceneKey == "LevelTwoScene")
-			this.Question+=3;
-		this.game.scene.start('QuestionScene');
+		this.game.scene.start('QuestionScene3');
 	});
 	  
 	  //Initialize cameras to follow fish

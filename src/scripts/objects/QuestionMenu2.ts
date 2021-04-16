@@ -2,14 +2,14 @@ import { Events } from "matter";
 import Level from "../scenes/level";
 import Menu from "./Menu";
 
-export class QuestionMenu extends Menu  {
+export class QuestionMenu2 extends Menu  {
     
     constructor(x, y, scene) {
         super(x, y, scene);   
-        this.addMenuItem("Soap");
-        this.addMenuItem("Oil")
-        this.addMenuItem("Grease");
-        this.addMenuItem("Motor oil");
+        this.addMenuItem("Bad odor");
+        this.addMenuItem("Collapsing pipes")
+        this.addMenuItem("None, trees don't affest sewers");
+        this.addMenuItem("Both a. & b.");
 
     }
 
@@ -17,16 +17,16 @@ export class QuestionMenu extends Menu  {
         var index = this.getMenuItemIndex();
         switch (index) {
             case 0:
-                this.scene.registry.set("A1","A");
+                this.scene.registry.set("B1","A");
                 break;
             case 1:
-                this.scene.registry.set("A1","B");
+                this.scene.registry.set("B1","B");
                 break;
             case 2:
-                this.scene.registry.set("A1","C");
+                this.scene.registry.set("B1","C");
                 break;
             case 3:
-                this.scene.registry.set("A1","D");
+                this.scene.registry.set("B1","D");
                 break;
         }        
     }
