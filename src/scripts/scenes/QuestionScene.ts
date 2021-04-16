@@ -34,6 +34,7 @@ export default class QuestionScene extends Phaser.Scene {
             } else if(event.code === "Space") {
                 this.currentMenu.confirm();
                 this.game.scene.stop('QuestionScene');
+                this.registry.set("Question","1");
 
 
             } 

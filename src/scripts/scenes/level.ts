@@ -29,6 +29,7 @@ export default class Level extends Phaser.Scene {
 	clogpt;
 	pipechecker;
 	text;
+	Question;
 
 
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
@@ -42,6 +43,7 @@ export default class Level extends Phaser.Scene {
 		this.music = this.sound.add('sewermusic', {loop: true, volume: 0.5});
 		this.music.play();
 	}
+	
 	create() {
 	  //Background color
 	  this.cameras.main.setBackgroundColor("0x142702");
@@ -70,7 +72,7 @@ export default class Level extends Phaser.Scene {
 	  this.WrongSpawnLayer = this.map.getObjectLayer('WrongSpawn')['objects']; //Hopefully in order
   
 	//Create all players on the map
-	this.player = this.physics.add.sprite(this.startpt.x, this.startpt.y,'clown').setScale(0.06)
+	this.player = this.physics.add.sprite(110, 380,'clown').setScale(0.06)
 	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
 	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06)
 	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06)
@@ -84,14 +86,17 @@ export default class Level extends Phaser.Scene {
 	  this.npcptCollide.angle = 180;
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.stop()
+		  this.Question = 1;
 		  this.game.scene.start('QuestionScene');
 	  });
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
-		this.music.stop()
+		this.music.stop()	
+		this.Question = 2;	
 		this.game.scene.start('QuestionScene');
 	});
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.stop()
+		this.Question = 3;
 		this.game.scene.start('QuestionScene');
 	});
 	  
@@ -146,6 +151,18 @@ export default class Level extends Phaser.Scene {
   	}
 
   update(){
+	  if (this.registry.get("Question") == 1){
+		  this.QuestionOne()
+		  this.registry.set("Question", 0)
+	  }
+	  if (this.registry.get("Question") == 2){
+		this.QuestionTwo()
+		this.registry.set("Question", 0)
+	}
+	if (this.registry.get("Question") == 3){
+		this.QuestionThree()
+		this.registry.set("Question", 0)
+	}
 	this.npc1Collide.setVelocity(0,0);
 	this.npc2Collide.setVelocity(0,0);
 	this.npcptCollide.setVelocity(0,0);
@@ -182,5 +199,36 @@ export default class Level extends Phaser.Scene {
 		this.player.setVelocity(0,0);
 		this.player.setFrame( (prevDir * framesPerDirection));
 	  }
+	}
+
+	QuestionOne(){
+		if (this.registry.get("A1") == 'A'){
+			this.player.x = 200;
+			this.registry.set("A1", "Done")
+		}
+		if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
+  
+		}
+	}
+
+	QuestionTwo(){
+		if (this.registry.get("B1") == 'A'){
+			this.player.x = 0;
+			this.registry.set("B1", "Done")
+		}
+		if (this.registry.get("B1") == 'B' || this.registry.get("B1") == 'C' || this.registry.get("B1") == 'D'){
+  
+		}
+	}
+
+	QuestionThree(){
+		if (this.registry.get("C1") == 'A'){
+			this.player.x = 0;
+			this.registry.set("C1", "Done")
+		}
+		if (this.registry.get("C1") == 'B' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
+  
+		}
+		
 	}
   }

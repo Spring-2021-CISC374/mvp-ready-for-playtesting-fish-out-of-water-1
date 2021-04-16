@@ -1,6 +1,8 @@
+import { Events } from "matter";
+import Level from "../scenes/level";
 import Menu from "./Menu";
 
-export class QuestionMenu extends Menu {
+export class QuestionMenu extends Menu  {
     
     constructor(x, y, scene) {
         super(x, y, scene);   
@@ -15,16 +17,16 @@ export class QuestionMenu extends Menu {
         var index = this.getMenuItemIndex();
         switch (index) {
             case 0:
-                this.scene.events.emit("A");
+                this.scene.registry.set("A1","A");
                 break;
             case 1:
-                this.scene.events.emit("B");
+                this.scene.registry.set("A1","B");
                 break;
             case 2:
-                this.scene.events.emit("C");
+                this.scene.registry.set("A1","C");
                 break;
             case 3:
-                this.scene.events.emit("D");
+                this.scene.registry.set("A1","D");
                 break;
         }        
     }
