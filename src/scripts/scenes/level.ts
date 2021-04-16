@@ -78,14 +78,17 @@ export default class Level extends Phaser.Scene {
   
 	//Create all players on the map
 	this.player = this.physics.add.sprite(this.startpt.x, this.startpt.y,'clown').setScale(0.06)
-	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
-	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06)
-	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06)
+	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06).setBounce(0)
+	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06).setBounce(0)
+	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06).setBounce(0)
 	  //Physics tasks
 	  this.physics.world.enableBody(this.player)
 	  this.add.existing(this.player);
 	  this.npcptCollide.anims.play('flounder-idle')
 	  this.player.anims.play('clown-idle')
+	  this.npcptCollide.anims.play('flounder-idle')
+	  this.npc1Collide.anims.play('flounder-idle')
+	  this.npc2Collide.anims.play('flounder-idle')
 	  this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
@@ -126,7 +129,7 @@ export default class Level extends Phaser.Scene {
 	  //Initialize cameras to follow fish
 	  this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
 	  this.cameras.main.startFollow(this.player,true)
-	  //this.cameras.main.zoom = 5;
+	  this.cameras.main.zoom = 5;
   
 	  //Add pipe and combat overlap 
 	  this.PipeLayer.forEach(object => {
