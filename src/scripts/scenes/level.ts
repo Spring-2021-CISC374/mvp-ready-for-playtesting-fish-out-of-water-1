@@ -26,6 +26,8 @@ export default class Level extends Phaser.Scene {
 	pipechecker;
 	text;
 
+	//temp 
+	npc1
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
 	  super({ key: sceneKey })
 	  this.sceneKey = sceneKey
@@ -54,6 +56,7 @@ export default class Level extends Phaser.Scene {
 		this.clogpt = this.map.findObject("Clog", obj => obj.name === "Clog")
 		this.pipechecker = this.map.findObject("PipeCheck", obj => obj.name === "PipeCheck")
 	  }
+	  this.npc1 = this.map.findObject("NPC", obj => obj.name === "NPC1")
 	  //Setting arrays of objects that contain position data
 	  this.PipeLayer = this.map.getObjectLayer('Pipe')['objects'];
 	  this.CombatLayer = this.map.getObjectLayer('Combat')['objects'];
@@ -64,7 +67,7 @@ export default class Level extends Phaser.Scene {
 	//Create all players on the map
 	this.player = this.physics.add.sprite(this.startpt.x,this.startpt.y,'clown').setScale(0.06)
 	this.npc = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
-	
+	const npctemp = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06)
 	  //Physics tasks
 	  this.physics.world.enableBody(this.player)
 	  this.add.existing(this.player);
@@ -81,7 +84,7 @@ export default class Level extends Phaser.Scene {
 	  //Initialize cameras to follow fish
 	  this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
 	  this.cameras.main.startFollow(this.player,true)
-	  this.cameras.main.zoom = 5;
+	  //this.cameras.main.zoom = 5;
   
 	  //Add pipe and combat overlap 
 	  this.PipeLayer.forEach(object => {
