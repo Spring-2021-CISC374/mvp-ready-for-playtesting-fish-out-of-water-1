@@ -1,12 +1,12 @@
-import { QuestionMenu5 } from "../objects/QuestionMenu5";
-export default class QuestionScene5 extends Phaser.Scene {
+import { QuestionMenu6 } from "../objects/QuestionMenu6";
+export default class QuestionScene6 extends Phaser.Scene {
     menus: Phaser.GameObjects.Container;
     currentMenu: any;
     txt: Phaser.GameObjects.Text;
-    QuestionMenu5: QuestionMenu5;
+    QuestionMenu6: QuestionMenu6;
 
     constructor() {
-        super({ key: 'QuestionScene5' });
+        super({ key: 'QuestionScene6' });
     }
 
     create(){
@@ -15,9 +15,9 @@ export default class QuestionScene5 extends Phaser.Scene {
         this.txt = this.add.text(0,100,'What can you flush down the toilet?');
         //menu for selecting answer
         this.menus = this.add.container();
-        this.QuestionMenu5 = new QuestionMenu5(118, 153, this);  
-        this.currentMenu = this.QuestionMenu5;
-        this.menus.add(this.QuestionMenu5);
+        this.QuestionMenu6 = new QuestionMenu6(118, 153, this);  
+        this.currentMenu = this.QuestionMenu6;
+        this.menus.add(this.QuestionMenu6);
 
         this.input.keyboard.on("keydown", this.onKeyInput, this);               
     }
@@ -33,8 +33,8 @@ export default class QuestionScene5 extends Phaser.Scene {
             } else if(event.code === "ArrowRight") {
             } else if(event.code === "Space") {
                 this.currentMenu.confirm();
-                this.game.scene.stop('QuestionScene5');
-                this.registry.set("Question","5");
+                this.game.scene.stop('QuestionScene6');
+                this.registry.set("Question","6");
 
 
             } 

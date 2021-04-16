@@ -92,8 +92,13 @@ export default class Level extends Phaser.Scene {
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.stop()
 		  this.Question = 1;
-		  this.game.scene.start('QuestionScene1');
-		  this.scene.pause(this.sceneKey)
+		  if(this.sceneKey == "LevelTwoScene"){
+			  this.Question+=2;
+			  this.game.scene.start('QuestionScene6')
+		  }
+		  else{
+			this.game.scene.start('QuestionScene1');
+		  }
 	  });
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.stop()	
@@ -105,7 +110,6 @@ export default class Level extends Phaser.Scene {
 		else{
 			this.game.scene.start('QuestionScene2');
 		}
-		this.scene.pause(this.sceneKey)
 	});
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.stop()
@@ -117,7 +121,6 @@ export default class Level extends Phaser.Scene {
 		else{
 			this.game.scene.start('QuestionScene3');
 		}
-		this.scene.pause(this.sceneKey)
 	});
 	  
 	  //Initialize cameras to follow fish
@@ -188,6 +191,10 @@ export default class Level extends Phaser.Scene {
 		this.QuestionFive()
 		this.registry.set("Question", 0)
 	}
+	if (this.registry.get("Question") == 6){
+		this.QuestionSix()
+		this.registry.set("Question", 0)
+	}
 	this.npc1Collide.setVelocity(0,0);
 	this.npc2Collide.setVelocity(0,0);
 	this.npcptCollide.setVelocity(0,0);
@@ -226,64 +233,89 @@ export default class Level extends Phaser.Scene {
 	  }
 	}
 
-	QuestionOne(){
-		if (this.registry.get("A1") == 'A'){
-			this.player.x = this.rightspawn2.x
-			this.player.y = this.rightspawn2.y
-			this.registry.set("A1", "Done")
-		}
-		if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
-			this.player.x = this.wrongspawn1.x
-			this.player.y = this.wrongspawn1.y
-		}
-	}
-
+	//npc1 (I know I know Im sorry)
 	QuestionTwo(){
 		if (this.registry.get("B1") == 'D'){
-			this.player.x = this.rightspawn3.x
-			this.player.y = this.rightspawn3.y
+			//right answer
+			this.player.x = 415
+			this.player.y = 580
 			this.registry.set("B1", "Done")
 		}
 		if (this.registry.get("B1") == 'B' || this.registry.get("B1") == 'C' || this.registry.get("B1") == 'A'){
-			this.player.x = this.wrongspawn2.x
-			this.player.y = this.wrongspawn2.y
+			//wrong answer
+			this.player.x = 50
+			this.player.y = 110
   
 		}
 	}
 
+	//npc2
 	QuestionThree(){
 		if (this.registry.get("C1") == 'B'){
-			if(this.nextSceneKey != '')
-				this.scene.start(this.nextSceneKey); // use this to launch the next scene
-				//need an else here (maybe start over game)
+			//right answer
+			this.player.x = 220
+			this.player.y = 245
 			this.registry.set("C1", "Done")
 		}
 		if (this.registry.get("C1") == 'A' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
-			this.player.x = this.wrongspawn3.x
-			this.player.y = this.wrongspawn3.y
+			//wrong answer
+			this.player.x = 625
+			this.player.y = 325
 		}
 		
 	}
 
+		//npc 3
+		QuestionOne(){
+			if (this.registry.get("A1") == 'A'){
+				if(this.nextSceneKey != '')
+					this.scene.start(this.nextSceneKey); // use this to launch the next scene
+				this.registry.set("A1", "Done")
+			}
+			if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
+				this.player.x = 220
+				this.player.y = 275
+			}
+		}
+
+	//npc 1
 	QuestionFour(){
-		if (this.registry.get("D1") == 'A'){
-			this.player.x = 0;
+		if (this.registry.get("D1") == 'D'){
+			this.player.x = 335
+			this.player.y = 630
 			this.registry.set("D1", "Done")
 		}
-		if (this.registry.get("D1") == 'B' || this.registry.get("D1") == 'C' || this.registry.get("D1") == 'D'){
-  
+		if (this.registry.get("D1") == 'B' || this.registry.get("D1") == 'C' || this.registry.get("D1") == 'A'){
+			this.player.x = 295
+			this.player.y = 630
 		}
-		
 	}
 
+	//npc 2
 	QuestionFive(){
-		if (this.registry.get("E1") == 'A'){
-			this.player.x = 0;
+		if (this.registry.get("E1") == 'B'){
+			this.player.x = 290
+			this.player.y = 195
 			this.registry.set("E1", "Done")
 		}
-		if (this.registry.get("E1") == 'B' || this.registry.get("E1") == 'C' || this.registry.get("E1") == 'D'){
-  
+		if (this.registry.get("E1") == 'A' || this.registry.get("E1") == 'C' || this.registry.get("E1") == 'D'){
+			this.player.x = 180
+			this.player.y = 170
 		}
-		
 	}
+		//npc 3 (last, if right go to boss or end or whatever)
+		QuestionSix(){
+			if (this.registry.get("F1") == 'A'){
+				if(this.nextSceneKey != '')
+				/*
+				//this.scene.start(this.nextSceneKey); // use this to launch the next scene (Boss)
+				*/
+				this.registry.set("F1", "Done")
+			}
+			if (this.registry.get("F1") == 'B' || this.registry.get("F1") == 'C' || this.registry.get("F1") == 'D'){
+				this.player.x = 370
+				this.player.y = 560
+			}
+		}
+
   }

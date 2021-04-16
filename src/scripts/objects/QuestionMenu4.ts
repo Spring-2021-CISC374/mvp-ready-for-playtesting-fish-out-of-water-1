@@ -17,16 +17,16 @@ export class QuestionMenu4 extends Menu  {
         var index = this.getMenuItemIndex();
         switch (index) {
             case 0:
-                this.scene.registry.set("A1","A");
+                this.scene.registry.set("D1","A");
                 break;
             case 1:
-                this.scene.registry.set("A1","B");
+                this.scene.registry.set("D1","B");
                 break;
             case 2:
-                this.scene.registry.set("A1","C");
+                this.scene.registry.set("D1","C");
                 break;
             case 3:
-                this.scene.registry.set("A1","D");
+                this.scene.registry.set("D1","D");
                 break;
         }        
     }
