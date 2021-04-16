@@ -92,12 +92,24 @@ export default class Level extends Phaser.Scene {
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.stop()	
 		this.Question = 2;	
-		this.game.scene.start('QuestionScene2');
+		if(this.sceneKey == "LevelTwoScene"){
+			this.Question+=2;
+			this.game.scene.start('QuestionScene4');
+		}
+		else{
+			this.game.scene.start('QuestionScene2');
+		}
 	});
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.stop()
-		this.Question = 3;
-		this.game.scene.start('QuestionScene3');
+		this.Question = 3;		
+		if(this.sceneKey == "LevelTwoScene"){
+			this.Question+=2;
+			this.game.scene.start('QuestionScene5');
+		}
+		else{
+			this.game.scene.start('QuestionScene3');
+		}
 	});
 	  
 	  //Initialize cameras to follow fish
@@ -161,6 +173,14 @@ export default class Level extends Phaser.Scene {
 	}
 	if (this.registry.get("Question") == 3){
 		this.QuestionThree()
+		this.registry.set("Question", 0)
+	}
+	if (this.registry.get("Question") == 4){
+		this.QuestionFour()
+		this.registry.set("Question", 0)
+	}
+	if (this.registry.get("Question") == 5){
+		this.QuestionFive()
 		this.registry.set("Question", 0)
 	}
 	this.npc1Collide.setVelocity(0,0);
@@ -227,6 +247,28 @@ export default class Level extends Phaser.Scene {
 			this.registry.set("C1", "Done")
 		}
 		if (this.registry.get("C1") == 'B' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
+  
+		}
+		
+	}
+
+	QuestionFour(){
+		if (this.registry.get("D1") == 'A'){
+			this.player.x = 0;
+			this.registry.set("D1", "Done")
+		}
+		if (this.registry.get("D1") == 'B' || this.registry.get("D1") == 'C' || this.registry.get("D1") == 'D'){
+  
+		}
+		
+	}
+
+	QuestionFive(){
+		if (this.registry.get("E1") == 'A'){
+			this.player.x = 0;
+			this.registry.set("E1", "Done")
+		}
+		if (this.registry.get("E1") == 'B' || this.registry.get("E1") == 'C' || this.registry.get("E1") == 'D'){
   
 		}
 		
