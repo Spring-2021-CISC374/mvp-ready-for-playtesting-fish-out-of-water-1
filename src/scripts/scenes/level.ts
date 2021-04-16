@@ -10,17 +10,20 @@ export default class Level extends Phaser.Scene {
 	closeButton
 	//Map information
 	map: Phaser.Tilemaps.Tilemap;
+	background:Phaser.Tilemaps.TilemapLayer;
+	tileset: Phaser.Tilemaps.Tileset;
 	mapKey
 	sceneKey
 	nextSceneKey
-	background:Phaser.Tilemaps.TilemapLayer;
-	tileset: Phaser.Tilemaps.Tileset;
-	pipePieces;
 	PipeLayer;
 	CombatLayer;
+	RightSpawnLayer;
+	WrongSpawnLayer;
+	NPCLayer;
 	startpt;
 	npcpt;
-	combatpts;
+	clogpt;
+	pipechecker;
 	text;
 
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
@@ -47,22 +50,20 @@ export default class Level extends Phaser.Scene {
 	  //Setting object points
 	  this.startpt = this.map.findObject("Points", obj => obj.name === "StartingPoint")
 	  this.npcpt = this.map.findObject("Points", obj => obj.name === "NPCPoint")
+	  if(this.sceneKey == "LevelTwoScene") {
+		this.clogpt = this.map.findObject("Clog", obj => obj.name === "Clog")
+		this.pipechecker = this.map.findObject("PipeCheck", obj => obj.name === "PipeCheck")
+	  }
+	  //Setting arrays of objects that contain position data
 	  this.PipeLayer = this.map.getObjectLayer('Pipe')['objects'];
 	  this.CombatLayer = this.map.getObjectLayer('Combat')['objects'];
-	
-	//debug collisions
-	//    const debugGraphics = this.add.graphics().setAlpha(0.7)
-	//    this.background.renderDebug(debugGraphics, {
-	// 	  tileColor: null,
-	// 	  collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255),
-	//  	  faceColor: new Phaser.Display.Color(40,39,37,255)
-	//    })
+	  this.NPCLayer = this.map.getObjectLayer('NPC')['objects']; //Only two NPCs here (the final NPC for now is in the npcpt)
+	  this.RightSpawnLayer = this.map.getObjectLayer('RightSpawn')['objects']; //Hopefully in order
+	  this.WrongSpawnLayer = this.map.getObjectLayer('WrongSpawn')['objects']; //Hopefully in order
   
-	//Create all images on the map
+	//Create all players on the map
 	this.player = this.physics.add.sprite(this.startpt.x,this.startpt.y,'clown').setScale(0.06)
 	this.npc = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
-	this.pipePieces = this.physics.add.staticGroup()
-	this.combatpts = this.physics.add.staticGroup()
 	
 	  //Physics tasks
 	  this.physics.world.enableBody(this.player)
