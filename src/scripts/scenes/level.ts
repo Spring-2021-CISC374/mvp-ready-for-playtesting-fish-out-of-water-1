@@ -72,7 +72,7 @@ export default class Level extends Phaser.Scene {
 	  this.WrongSpawnLayer = this.map.getObjectLayer('WrongSpawn')['objects']; //Hopefully in order
   
 	//Create all players on the map
-	this.player = this.physics.add.sprite(100, 450,'clown').setScale(0.06)
+	this.player = this.physics.add.sprite(this.startpt.x, this.startpt.y,'clown').setScale(0.06)
 	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06)
 	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06)
 	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06)
@@ -135,7 +135,7 @@ export default class Level extends Phaser.Scene {
 			//this.scene.launch("BattleScene")
 			//this.scene.pause(this.sceneKey) //these lines i think pause the current scene and can launch battlescene
 			if(this.nextSceneKey != '')
-				this.scene.start(this.nextSceneKey); // use this to launch the next scene
+				//this.scene.start(this.nextSceneKey); // use this to launch the next scene
 				//need an else here (maybe start over game)
 			image.destroy()
 		})
@@ -223,7 +223,8 @@ export default class Level extends Phaser.Scene {
 
 	QuestionOne(){
 		if (this.registry.get("A1") == 'A'){
-			this.player.x = 200;
+			this.player.x = this.RightSpawnLayer.RightSpawn2.x
+			this.player.y = this.RightSpawnLayer.RightSpawn2.y
 			this.registry.set("A1", "Done")
 		}
 		if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
@@ -232,22 +233,27 @@ export default class Level extends Phaser.Scene {
 	}
 
 	QuestionTwo(){
-		if (this.registry.get("B1") == 'A'){
-			this.player.x = 0;
+		if (this.registry.get("B1") == 'D'){
+			this.player.x = this.RightSpawnLayer[0].x
+			this.player.y = this.RightSpawnLayer[0].y
 			this.registry.set("B1", "Done")
 		}
-		if (this.registry.get("B1") == 'B' || this.registry.get("B1") == 'C' || this.registry.get("B1") == 'D'){
+		if (this.registry.get("B1") == 'B' || this.registry.get("B1") == 'C' || this.registry.get("B1") == 'A'){
+			this.player.x = this.WrongSpawnLayer[0].x
+			this.player.y = this.WrongSpawnLayer[0].y
   
 		}
 	}
 
 	QuestionThree(){
-		if (this.registry.get("C1") == 'A'){
-			this.player.x = 0;
+		if (this.registry.get("C1") == 'B'){
+			this.player.x = this.RightSpawnLayer[1].x
+			this.player.y = this.RightSpawnLayer[1].y
 			this.registry.set("C1", "Done")
 		}
-		if (this.registry.get("C1") == 'B' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
-  
+		if (this.registry.get("C1") == 'A' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
+			this.player.x = this.WrongSpawnLayer[1].x
+			this.player.y = this.WrongSpawnLayer[1].y
 		}
 		
 	}
