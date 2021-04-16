@@ -88,6 +88,7 @@ export default class Level extends Phaser.Scene {
 		  this.music.stop()
 		  this.Question = 1;
 		  this.game.scene.start('QuestionScene1');
+		  this.scene.pause(this.sceneKey)
 	  });
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.stop()	
@@ -99,6 +100,7 @@ export default class Level extends Phaser.Scene {
 		else{
 			this.game.scene.start('QuestionScene2');
 		}
+		this.scene.pause(this.sceneKey)
 	});
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.stop()
@@ -110,6 +112,7 @@ export default class Level extends Phaser.Scene {
 		else{
 			this.game.scene.start('QuestionScene3');
 		}
+		this.scene.pause(this.sceneKey)
 	});
 	  
 	  //Initialize cameras to follow fish
