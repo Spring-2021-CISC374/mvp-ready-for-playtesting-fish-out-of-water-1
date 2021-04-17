@@ -96,9 +96,11 @@ export default class Level extends Phaser.Scene {
 	  this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
+
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.pause()
 		  this.questionMusic.resume();
+		  this.pauseMovement = true;
 		  this.Question = 1;
 		  if(this.sceneKey == "LevelTwoScene"){
 			  this.Question+=2;
@@ -111,6 +113,7 @@ export default class Level extends Phaser.Scene {
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.pause()	
 		this.questionMusic.resume();
+		this.pauseMovement = true;
 		this.Question = 2;	
 		if(this.sceneKey == "LevelTwoScene"){
 			this.Question+=2;
@@ -123,6 +126,7 @@ export default class Level extends Phaser.Scene {
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.pause()
 		this.questionMusic.resume();
+		this.pauseMovement = true;
 		this.Question = 3;		
 		if(this.sceneKey == "LevelTwoScene"){
 			this.Question+=2;
@@ -172,6 +176,29 @@ export default class Level extends Phaser.Scene {
 		this.closeButton.on('pointerout', this.mouseFix, this);
 		this.pauseMovement = true;
    }
+
+   createRightMessageBox(){
+	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
+	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
+	this.pipeMsg = this.add.text(this.game.canvas.width/2 -30 , this.game.canvas.height/2 - 10, "*Gasp!* You have been teleported! \n Good job! Right answer!", { font: "20px Arial", align: "center" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
+	this.closeButton.setInteractive();
+	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
+	this.closeButton.on('pointerup', this.mouseFix, this);
+	this.closeButton.on('pointerout', this.mouseFix, this);
+	this.pauseMovement = true;
+}
+
+createWrongMessageBox(){
+	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.125).setScrollFactor(0)
+	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
+	this.pipeMsg = this.add.text(this.game.canvas.width/2 -37.5 , this.game.canvas.height/2 - 10, "You have been teleported... but to where? \n Sorry! Wrong answer!", { font: "20px Arial", align: "center" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
+	this.closeButton.setInteractive();
+	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
+	this.closeButton.on('pointerup', this.mouseFix, this);
+	this.closeButton.on('pointerout', this.mouseFix, this);
+	this.pauseMovement = true;
+}
+
    mouseFix(){}
    destroyMessageBox(){
 		this.pauseMovement = false;
@@ -184,36 +211,42 @@ export default class Level extends Phaser.Scene {
 	  if (this.registry.get("Question") == 1){
 		this.questionMusic.pause();
 		  this.music.resume()
+		  this.pauseMovement = false;
 		  this.QuestionOne()
 		  this.registry.set("Question", 0)
 	  }
 	  if (this.registry.get("Question") == 2){
 		this.questionMusic.pause();
 		this.music.resume()
+		this.pauseMovement = false;
 		this.QuestionTwo()
 		this.registry.set("Question", 0)
 	}
 	if (this.registry.get("Question") == 3){
 		this.questionMusic.pause();
 		this.music.resume()
+		this.pauseMovement = false;
 		this.QuestionThree()
 		this.registry.set("Question", 0)
 	}
 	if (this.registry.get("Question") == 4){
 		this.questionMusic.pause();
 		this.music.resume()
+		this.pauseMovement = false;
 		this.QuestionFour()
 		this.registry.set("Question", 0)
 	}
 	if (this.registry.get("Question") == 5){
 		this.questionMusic.pause();
 		this.music.resume()
+		this.pauseMovement = false;
 		this.QuestionFive()
 		this.registry.set("Question", 0)
 	}
 	if (this.registry.get("Question") == 6){
 		this.questionMusic.pause();
 		this.music.resume()
+		this.pauseMovement = false;
 		this.QuestionSix()
 		this.registry.set("Question", 0)
 	}
@@ -242,11 +275,13 @@ export default class Level extends Phaser.Scene {
 	  else if (cursors.left.isDown) {
 		this.player.setVelocityX(-velocityX);
 		this.player.angle = 180;
+		this.player.flipY = true;
 		prevDir = 1;
 	  }
 	  else if (cursors.right.isDown) {
 		this.player.setVelocityX(velocityX);
 		this.player.angle = 0;
+		this.player.flipY = false;
 		prevDir = 2;
 	  }
 	  else{
@@ -262,12 +297,13 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 415
 			this.player.y = 580
 			this.registry.set("B1", "Done")
+			this.createRightMessageBox()
 		}
 		if (this.registry.get("B1") == 'B' || this.registry.get("B1") == 'C' || this.registry.get("B1") == 'A'){
 			//wrong answer
 			this.player.x = 50
 			this.player.y = 110
-  
+			this.createWrongMessageBox()
 		}
 	}
 
@@ -278,11 +314,13 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 220
 			this.player.y = 245
 			this.registry.set("C1", "Done")
+			this.createRightMessageBox()
 		}
 		if (this.registry.get("C1") == 'A' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
 			//wrong answer
 			this.player.x = 625
 			this.player.y = 325
+			this.createWrongMessageBox()
 		}
 		
 	}
@@ -290,45 +328,58 @@ export default class Level extends Phaser.Scene {
 		//npc 3
 		QuestionOne(){
 			if (this.registry.get("A1") == 'A'){
+				//right answer
 				if(this.nextSceneKey != '')
 					this.scene.start(this.nextSceneKey); // use this to launch the next scene
 					this.music.destroy()
 				this.registry.set("A1", "Done")
+				this.createRightMessageBox()
 			}
 			if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
+				//wrong answer				
 				this.player.x = 220
 				this.player.y = 275
+				this.createWrongMessageBox()
 			}
 		}
 
 	//npc 1
 	QuestionFour(){
 		if (this.registry.get("D1") == 'D'){
+			//right answer
 			this.player.x = 335
 			this.player.y = 630
 			this.registry.set("D1", "Done")
+			this.createRightMessageBox()
 		}
 		if (this.registry.get("D1") == 'B' || this.registry.get("D1") == 'C' || this.registry.get("D1") == 'A'){
+			//wrong answer
 			this.player.x = 295
 			this.player.y = 630
+			this.createWrongMessageBox()
 		}
 	}
 
 	//npc 2
 	QuestionFive(){
 		if (this.registry.get("E1") == 'B'){
+			//right answer
 			this.player.x = 290
 			this.player.y = 195
 			this.registry.set("E1", "Done")
+			this.createRightMessageBox()
 		}
 		if (this.registry.get("E1") == 'A' || this.registry.get("E1") == 'C' || this.registry.get("E1") == 'D'){
+			//wrong answer		
 			this.player.x = 180
 			this.player.y = 170
+			this.createWrongMessageBox()
 		}
 	}
 		//npc 3 (last, if right go to boss or end or whatever)
 		QuestionSix(){
 			if (this.registry.get("F1") == 'A'){
+				//right answer
 				if(this.nextSceneKey != '')
 				/*
 				//this.scene.start(this.nextSceneKey); // use this to launch the next scene (Boss)
@@ -336,8 +387,10 @@ export default class Level extends Phaser.Scene {
 				this.registry.set("F1", "Done")
 			}
 			if (this.registry.get("F1") == 'B' || this.registry.get("F1") == 'C' || this.registry.get("F1") == 'D'){
+				//wrong answer				
 				this.player.x = 370
 				this.player.y = 560
+				this.createWrongMessageBox()
 			}
 		}
 
