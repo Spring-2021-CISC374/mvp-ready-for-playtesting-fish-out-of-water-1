@@ -4,6 +4,7 @@ export default class Level extends Phaser.Scene {
 	npc1Collide: Phaser.Physics.Arcade.Sprite
 	npc2Collide: Phaser.Physics.Arcade.Sprite
 	music:Phaser.Sound.BaseSound;
+	questionMusic:Phaser.Sound.BaseSound;
 	pipeScore = 0;
 	pauseMovement = false;
 	//Pop up message box 
@@ -43,10 +44,13 @@ export default class Level extends Phaser.Scene {
   
 	preload(){
 		this.music = this.sound.add('sewermusic', {loop: true, volume: 0.5});
-		this.music.play();
+		this.questionMusic = this.sound.add('questionmusic', {loop: true, volume: 0.5});
 	}
 	
 	create() {
+		this.music.play();
+		this.questionMusic.play();
+		this.questionMusic.pause();
 	  //Background color
 	  this.cameras.main.setBackgroundColor("0x142702");
 	  //Create map from Tiled and add necessary collisions
@@ -93,7 +97,8 @@ export default class Level extends Phaser.Scene {
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
-		  this.music.stop()
+		  this.music.pause()
+		  this.questionMusic.resume();
 		  this.Question = 1;
 		  if(this.sceneKey == "LevelTwoScene"){
 			  this.Question+=2;
@@ -104,7 +109,8 @@ export default class Level extends Phaser.Scene {
 		  }
 	  });
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
-		this.music.stop()	
+		this.music.pause()	
+		this.questionMusic.resume();
 		this.Question = 2;	
 		if(this.sceneKey == "LevelTwoScene"){
 			this.Question+=2;
@@ -115,7 +121,8 @@ export default class Level extends Phaser.Scene {
 		}
 	});
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
-		this.music.stop()
+		this.music.pause()
+		this.questionMusic.resume();
 		this.Question = 3;		
 		if(this.sceneKey == "LevelTwoScene"){
 			this.Question+=2;
@@ -145,7 +152,7 @@ export default class Level extends Phaser.Scene {
 		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
 		this.physics.add.existing(image)
 		this.physics.add.overlap(this.player, image, () =>{
-			this.music.stop()
+			//this.music.pause()
 			//this.scene.launch("BattleScene")
 			//this.scene.pause(this.sceneKey) //these lines i think pause the current scene and can launch battlescene
 			image.destroy()
@@ -175,26 +182,38 @@ export default class Level extends Phaser.Scene {
 
   update(){
 	  if (this.registry.get("Question") == 1){
+		this.questionMusic.pause();
+		  this.music.resume()
 		  this.QuestionOne()
 		  this.registry.set("Question", 0)
 	  }
 	  if (this.registry.get("Question") == 2){
+		this.questionMusic.pause();
+		this.music.resume()
 		this.QuestionTwo()
 		this.registry.set("Question", 0)
 	}
 	if (this.registry.get("Question") == 3){
+		this.questionMusic.pause();
+		this.music.resume()
 		this.QuestionThree()
 		this.registry.set("Question", 0)
 	}
 	if (this.registry.get("Question") == 4){
+		this.questionMusic.pause();
+		this.music.resume()
 		this.QuestionFour()
 		this.registry.set("Question", 0)
 	}
 	if (this.registry.get("Question") == 5){
+		this.questionMusic.pause();
+		this.music.resume()
 		this.QuestionFive()
 		this.registry.set("Question", 0)
 	}
 	if (this.registry.get("Question") == 6){
+		this.questionMusic.pause();
+		this.music.resume()
 		this.QuestionSix()
 		this.registry.set("Question", 0)
 	}
@@ -273,6 +292,7 @@ export default class Level extends Phaser.Scene {
 			if (this.registry.get("A1") == 'A'){
 				if(this.nextSceneKey != '')
 					this.scene.start(this.nextSceneKey); // use this to launch the next scene
+					this.music.destroy()
 				this.registry.set("A1", "Done")
 			}
 			if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){

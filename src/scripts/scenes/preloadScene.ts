@@ -23,6 +23,7 @@ export default class PreloadScene extends Phaser.Scene {
     
     //Audio
     this.load.audio('sewermusic','assets/Music/sewermusic.mp3')
+    this.load.audio('questionmusic','assets/Music/questionmusic.mp3')
     
   }
   create() {
