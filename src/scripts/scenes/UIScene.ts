@@ -20,27 +20,41 @@ export default class UIScene extends Phaser.Scene {
 
     create() {    
 
+        let width = this.game.config.width as number;
+        let height = this.game.config.height as number;
+        height = height * 3/5;
+
+        let bound1 =  width / 3 - 10;
+        let bound2 = bound1 + 20;
+        let bound3 = width / 3 * 2 - 10;
+        let bound4 = bound3 + 20;
+
+        let fill1 = bound1;
+        let fill2 = bound3 - bound2;
+        let fill3 = width - bound4;
+        let vfill = height * 3/5;
+
         this.graphics = this.add.graphics();
         this.graphics.lineStyle(1, 0xffffff);
         this.graphics.fillStyle(0x031f4c, 1);   
         // enemies block     
-        this.graphics.strokeRect(0, 150, 100, 100);
-        this.graphics.fillRect(0, 150, 100, 100);
+        this.graphics.strokeRect(0, height, fill1, vfill);
+        this.graphics.fillRect(0, height, fill1, vfill);
         // actions block
-        this.graphics.strokeRect(110, 150, 100, 100);
-        this.graphics.fillRect(110, 150, 100, 100);
+        this.graphics.strokeRect(bound2, height, fill2, vfill);
+        this.graphics.fillRect(bound2, height, fill2, vfill);
         // shapeshifting block
-        this.graphics.strokeRect(220, 150, 100, 100);
-        this.graphics.fillRect(220, 150, 100, 100);
+        this.graphics.strokeRect(bound4, height, fill3, vfill);
+        this.graphics.fillRect(bound4, height, fill3, vfill);
 
 
         
         // basic container to hold all menus
         this.menus = this.add.container();
                 
-        this.heroesMenu = new HeroesMenu(228, 153, this);           
-        this.actionsMenu = new ActionsMenu(118, 153, this);            
-        this.enemiesMenu = new EnemiesMenu(8, 153, this);   
+        this.heroesMenu = new HeroesMenu(bound4 + 8, height + 8, this);           
+        this.actionsMenu = new ActionsMenu(bound2 + 8, height + 8, this);            
+        this.enemiesMenu = new EnemiesMenu(8, height + 8, this);   
         
         // the currently selected menu 
         this.currentMenu = this.actionsMenu;
@@ -51,9 +65,6 @@ export default class UIScene extends Phaser.Scene {
         this.menus.add(this.enemiesMenu);
         
         this.battleScene = this.scene.get("BattleScene");
-        
-        this.remapHeroes();
-        this.remapEnemies();
         
         this.input.keyboard.on("keydown", this.onKeyInput, this);
         
@@ -73,8 +84,18 @@ export default class UIScene extends Phaser.Scene {
         
         this.message = new Message(this, this.battleScene.events);
         this.add.existing(this.message);        
-        
-        this.battleScene.nextTurn();                
+
+        this.sys.events.on('wake', this.createMenu, this);
+
+        this.createMenu();            
+    }
+    createMenu() {
+        // map hero menu items to heroes
+        this.remapHeroes();
+        // map enemies menu items to enemies
+        this.remapEnemies();
+        // first move
+        this.battleScene.nextTurn(); 
     }
 
     onEnemy(index) {
@@ -100,7 +121,8 @@ export default class UIScene extends Phaser.Scene {
     }
     
     onSurrender() {
-        this.battleScene.endBattle();
+        //this.battleScene.activeHero.surrenderDisplay();
+        this.battleScene.receivePlayerSelection("surrender", null);
     }
 
     onSelectShapes() {

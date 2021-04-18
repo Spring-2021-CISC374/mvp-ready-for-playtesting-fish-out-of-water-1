@@ -1,51 +1,53 @@
-class HealthBar {
-    bar: Phaser.GameObjects.Graphics;
-    x: any;
-    y: any;
-    value: number;
-    p: number;
-    color: any;
+import { Scene } from "phaser";
+import Enemy from "./Enemy";
+import PlayerCharacter from "./PlayerCharacter";
+import Unit from "./Unit";
 
-    constructor (scene, x, y, color) {
-        this.bar = new Phaser.GameObjects.Graphics(scene);
+export default class HealthBar extends Phaser.GameObjects.Container {
+    healthGauge: Phaser.GameObjects.Image;
+    healthBar: Phaser.GameObjects.Image;
+    nameText: Phaser.GameObjects.Text;
+    barDisplace: number = 395;
+    fullBar: number = 110;
+    xCoord: number;
+    yCoord: number;
 
-        this.x = x;
-        this.y = y;
-        this.value = 100;
-        this.p = 76 / 100;
-        this.color = color;
+    constructor(scene: Phaser.Scene, x, y, entity)
+    {
+        super(scene);
+        this.scene.add.existing(this);
 
-        this.draw();
+        this.xCoord = x;
+        this.yCoord = y;
 
-        scene.add.existing(this.bar);
-    }
+        this.healthGauge = new Phaser.GameObjects.Image(scene, x + 5, y, 'shadowbar');
+        this.healthBar = new Phaser.GameObjects.Image(scene, x + 5, y + 22, 'healthbar');
+        this.nameText = new Phaser.GameObjects.Text(scene, -150, -140, "", { color:'#000000', fontSize: '30pt', fontStyle: 'bold', fontFamily: 'Aniron' } );
 
-    decrease (amount) {
-        this.value -= amount;
+        this.healthGauge.setScale(1.5);
+        this.healthBar.setScale(1.5);
 
-        if (this.value < 0)
-        {
-            this.value = 0;
+        if (entity instanceof Enemy) {
+            this.healthBar.setTintFill(0xbf0a00);
+            this.barDisplace = 85;
+        } else {
+            this.healthBar.setTintFill(0x4feb70);
         }
 
-        this.draw();
-        return (this.value === 0);
+        this.healthBar.setCrop(this.xCoord - this.barDisplace, 0, this.fullBar, this.yCoord);
+
+        this.add(this.healthGauge);
+        this.add(this.healthBar);
+        this.add(this.nameText);
+
     }
 
-    draw () {
-        this.bar.clear();
+    update(character: Unit)
+    {
+        this.nameText.text = character.name;
 
-        //  BG
-        this.bar.fillStyle(0x000000);
-        this.bar.fillRect(this.x, this.y, 160, 50);
-
-        //  Health
-
-        this.bar.fillStyle(this.color);
-
-        var d = Math.floor(this.p * this.value);
-
-        this.bar.fillRect(this.x + 2, this.y + 2, d, 12);
+        var healthPercentage = character.getHP() / character.getMaxHP();
+        this.healthBar.setCrop(this.xCoord - this.barDisplace, 0, this.fullBar * healthPercentage, this.yCoord);
     }
 
 }

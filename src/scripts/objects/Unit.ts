@@ -1,22 +1,36 @@
 import BattleScene from "../scenes/BattleScene";
+import Enemy from "./Enemy";
+import HealthBar from "./HealthBar";
 
 export default class Unit extends Phaser.GameObjects.Sprite {
-    maxHp: any;
-    hp: any;
+    maxHP: number;
+    hp: number;
     damage: any;
     alive: boolean;
     scene: BattleScene;
-    constructor(scene, x, y, texture, frame, type, hp, damage) {
+    name: string;
+    healthBar: HealthBar;
+
+    constructor(scene, x, y, texture, frame, type, hp, damage, name) {
         super(scene, x, y, texture, frame)
         this.scene = scene;
         this.type = type;
-        this.maxHp = this.hp = hp;
+        this.maxHP = hp;
+        this.hp = hp;
         this.damage = damage; // default damage      
-        this.alive = true;        
+        this.alive = true;    
+        this.name = name;    
     }
 
     attack(target) {
         target.takeDamage(this.damage);
+
+        if (target instanceof Enemy) {
+            this.scene.enemyHealth.update(target);
+        } else {
+            this.scene.playerHealth.update(this.scene.activeHero);
+        }
+
         this.scene.events.emit("Message", this.type + " attacks " + target.type + " for " + this.damage + " damage");
     }
 
@@ -40,6 +54,10 @@ export default class Unit extends Phaser.GameObjects.Sprite {
         return this.hp;
     }
 
+    getMaxHP() {
+        return this.maxHP;
+    }
+
     isAlive() {
         if (!this.alive) {
             this.scene.events.emit("Message", this.type + " faints! Battle is over!");
@@ -49,12 +67,12 @@ export default class Unit extends Phaser.GameObjects.Sprite {
         }
     }
 
-    getType() {
-        return this.type;
+    surrenderDisplay() {
+        this.scene.events.emit("Message", "Player surrendered!");
     }
 
-    getHealth() {
-        return this.hp;
+    getType() {
+        return this.type;
     }
 
     getDamage() {

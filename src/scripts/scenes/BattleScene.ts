@@ -1,23 +1,33 @@
+import { Physics } from "phaser";
 import Enemy from "../objects/Enemy";
+import HealthBar from "../objects/HealthBar";
+//import HealthBar from "../objects/HealthBar";
 import PlayerCharacter from "../objects/PlayerCharacter";
 import Unit from "../objects/Unit";
 
 export default class BattleScene extends Phaser.Scene {
     heroes: Unit[];
     activeID: number;
-    activeHero: any;
+    activeHero: Unit;
+    activeHeroHP: number;
+    activeEnemy: Unit;
     enemies: Unit[];
     units: any[];
     index: number;
     exitBattle: Function | undefined;
+    victory: boolean;
+    surrenderFlag: boolean;
+    playerHealth: HealthBar;
+    enemyHealth: HealthBar;
 
     constructor() {
         super({ key: "BattleScene" });
     }
 
     create() {
-        // change the background to green
-        this.cameras.main.setBackgroundColor("0x8B8BAE");
+        // load background image
+        //this.cameras.main.("0x8B8BAE");
+        this.add.image(0,0,'sewer-combat').setOrigin(0);
         
         this.startBattle();
 
@@ -26,29 +36,48 @@ export default class BattleScene extends Phaser.Scene {
 
     startBattle() {
         // player character - warrior
-        //var playerHealth = new HealthBar(this, 160, 0, 0xB5D99C);
-        //var enemyHealth = new HealthBar(this, 0,0,0xE65F5C);
 
-        var fish = new PlayerCharacter(this, 250, 100, "combat-flounder", 0, "Fish", 100, 20);        
-        this.add.existing(fish);
+        let height = this.game.config.height as number;
+        let width = this.game.config.width as number;
+
+        let fightHeight = height/2 - 50;
+        let fightPos1 = width * .8;
+        let fightPos2 = width * .2;
+
+        this.victory = false;
+        this.surrenderFlag = false;
+
+        var fish = new PlayerCharacter(this, fightPos1, fightHeight, "combat", null, "Fish", 100, 20, "fish");        
+        this.add.existing(fish)
+        fish.anims.play('combat-flounder');
 
         // player character - mage
-        var enemy = new Enemy(this, 50, 100, "enemy-jellyfish", 0, "Jelly", 100, 15); 
-        this.add.existing(enemy);       
+        var enemy = new Enemy(this, fightPos2, fightHeight, "enemy-jellyfish", null, "Jelly", 100, 15, "jellyfish"); 
+        this.add.existing(enemy);   
+        enemy.anims.play('enemy-jellyfish')   
 
-        var shark = new PlayerCharacter(this, 250, 100, "shift-orca", null, "Orca", 50, 40);
+        var orca = new PlayerCharacter(this, fightPos1, fightHeight, "shift-orca", null, "Orca", 50, 40, "orca");
+        this.add.existing(orca)
+        orca.visible = false;
 
-        var shrimp = new PlayerCharacter(this, 250, 100, "shift-shrimp", null,"Shrimp", 50, 5);
+        var shrimp = new PlayerCharacter(this, fightPos1, fightHeight, "shift-shrimp", null,"Shrimp", 50, 5, "shrimp");
+        this.add.existing(shrimp)
+        shrimp.visible = false;
 
         // array with heroes
-        this.heroes = [ fish, shark, shrimp ];
+        this.heroes = [ fish, orca, shrimp ];
         this.activeID = 0;
         this.activeHero = this.heroes[this.activeID];
+        this.activeHeroHP = this.activeHero.getHP();
+        this.activeEnemy = enemy;
         // array with enemies
         this.enemies = [ enemy ];
         // array with both parties, who will attack
         this.units = [this.activeHero];
         this.units = this.units.concat(this.enemies);
+        
+        this.playerHealth = new HealthBar(this, fightPos1, fish.y - 100, this.activeHero);
+        this.enemyHealth = new HealthBar(this, fightPos2, enemy.y - 100, this.activeEnemy);
 
         this.index = -1;      
 
@@ -58,20 +87,41 @@ export default class BattleScene extends Phaser.Scene {
     }
 
     wake() {
-        this.scene.run('UIScene');  
+        this.scene.run('UIScene'); 
+        this.activeID = 0;
+        this.activeHero = this.heroes[this.activeID];
+        this.activeHero.visible = true;
+        //this.activeEnemy = this.decideEnemy();
+        this.activeEnemy = this.enemies[0];
+
+        // reset HP
+        for(var i = 0; i < this.units.length; i++) {
+            this.units[i].setHP(this.units[i].getMaxHP());            
+        }
         this.time.addEvent({delay: 2000, callback: this.exitBattle, callbackScope: this});        
     }
+
+    // randomizing enemy; instance in startBattle and wake
+    /*decideEnemy() {
+        var enemyIndex = 0;
+
+
+        return enemyPick;
+    }*/
 
     shapeShiftHero(index) {
         var tempHP = this.activeHero.getHP();
         var tempHero = this.activeHero;
-        this.activeHero = this.heroes[index];
-        this.activeHero.setHP(tempHP);
+        this.activeID = index;
+        this.heroes[this.activeID].setHP(tempHP);
+        this.activeHero = this.heroes[this.activeID];
+        //this.activeHero.setHP(tempHP);
         this.updateUnits();
         this.activeHero.shapeShift(tempHero);
-        tempHero.destroy();
-        this.add.existing(this.activeHero);
-        
+        tempHero.visible = false;
+        this.activeHero.visible = true;
+        let tempString = this.activeHero.name;
+        this.activeHero.anims.play('shift-' + tempString);
     }
 
     updateUnits() {
@@ -79,11 +129,10 @@ export default class BattleScene extends Phaser.Scene {
     }
 
     nextTurn() {
-        if(this.checkEndBattle()) {           
-            this.endBattle();
+        if(this.checkEndBattle() || this.surrenderFlag) {           
+            this.endBattleDisplay();
             return;
         }
-
         this.index++;
         // if there are no more units, we start again from the first one
         if(this.index >= this.units.length) {
@@ -109,16 +158,38 @@ export default class BattleScene extends Phaser.Scene {
         else if (action == "shapeshift") {
             this.shapeShiftHero(target);
         }
+        else if (action == "surrender") {
+            this.surrenderDisplay();
+        }
         // next turn in 3 seconds
         this.time.addEvent({ delay: 3000, callback: this.nextTurn, callbackScope: this });        
     }
 
-    checkEndBattle() {        
-        var victory = true;
+    surrenderDisplay() {
+        this.events.emit("Message", "Player surrendered!");
+        this.victory = false;
+        this.surrenderFlag = true;
+    }
+
+    endBattleDisplay() {
+        var endMessage;
+        if (this.victory) {
+            endMessage = "You defeated the enemy!"
+        }
+        else {
+            endMessage = "You fainted!"
+        }
+
+        this.events.emit("Message", endMessage);
+        this.time.addEvent({ delay: 3000, callback: this.endBattle, callbackScope: this });   
+    }
+
+    checkEndBattle() {     
+        var vict = true;   
         // if all enemies are dead we have victory
         for(var i = 0; i < this.enemies.length; i++) {
             if(this.enemies[i].alive)
-                victory = false;
+                vict = false;
         }
         var loss = true;
         // if all heroes are dead we have game over
@@ -126,19 +197,23 @@ export default class BattleScene extends Phaser.Scene {
             if(this.heroes[i].alive)
                 loss = false;
         }
-        return victory || loss;
+
+        if (vict) {
+            this.victory = true;
+        }
+        if (loss) {
+            this.victory = false;
+        }
+        return vict || loss;
     }
 
     endBattle() {       
         // clear state, remove sprites
-        //this.scene.events.emit("Message", "Battle over!");
-        this.heroes.length = 0;
-        this.enemies.length = 0;
         for(var i = 0; i < this.units.length; i++) {
             // link item
-            this.units[i].destroy();            
+            this.units[i].visible = false;            
         }
-        this.units.length = 0;
+
         // sleep the UI
         this.scene.sleep('UIScene');
     }

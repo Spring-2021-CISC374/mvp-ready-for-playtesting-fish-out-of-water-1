@@ -1,3 +1,5 @@
+import HealthBar from "../objects/HealthBar"
+
 export default class PreloadScene extends Phaser.Scene {
   
   constructor() {
@@ -8,6 +10,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('sewerlevel1', 'assets/Maps/sewerlevel1.json')
     this.load.tilemapTiledJSON('sewerlevel2', 'assets/Maps/sewerlevel2.json')
     this.load.image('pipes', 'assets/img/Pipes.png')
+<<<<<<< HEAD
     this.load.image("messageBox", "assets/img/messageBox.png");
     this.load.image("closeButton", "assets/img/closeButton.png");
     this.load.image('PipePiece', 'assets/img/PipePiece.png')
@@ -15,6 +18,14 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('clog', 'assets/img/Clog.png')
     //Characters
     this.load.atlas('clown', 'assets/Sprites/ClownFish.png','assets/Sprites/ClownFish.json' )
+=======
+    this.load.image('phaser-logo', 'assets/img/phaser-logo.png')
+    this.load.image('sewer-combat', 'assets/img/SewerCombat.png')
+
+    this.load.image('healthbar', 'assets/img/healthbar.png')
+    this.load.image('shadowbar', 'assets/img/shadowbar.png')
+
+>>>>>>> combat-adapting
     this.load.atlas('flounder', 'assets/Sprites/Flounder.png','assets/Sprites/Flounder.json' )
     this.load.atlas('combat', 'assets/Sprites/NinjaFish.png', 'assets/Sprites/NinjaFish.json')
     this.load.atlas('jellyfish', 'assets/Sprites/Jellyfish.png', 'assets/Sprites/Jellyfish.json')
@@ -48,28 +59,28 @@ export default class PreloadScene extends Phaser.Scene {
       key:'combat-flounder',
       frames: this.anims.generateFrameNames('combat', {start: 1, end: 2, prefix: 'Ninja Fish ', suffix:'.png'}),
       repeat: -1,
-      frameRate: 15
+      frameRate: 5
     })
 
     this.anims.create({
       key: 'enemy-jellyfish',
       frames: this.anims.generateFrameNames('jellyfish', {start: 1, end: 2, prefix: 'Jellyfish ', suffix: '.png'}),
       repeat: -1,
-      frameRate: 15
+      frameRate: 5
     })
 
     this.anims.create({
       key: 'shift-orca',
       frames: this.anims.generateFrameNames('orca', {start: 1, end: 2, prefix: 'Whale ', suffix: '.png'}),
       repeat: -1,
-      frameRate: 15
+      frameRate: 5
     })
 
     this.anims.create({
       key: 'shift-shrimp',
       frames: this.anims.generateFrameNames('shrimp', {start: 1, end: 2, prefix: 'Purple Fish ', suffix: '.png'}),
       repeat: -1,
-      frameRate: 15
+      frameRate: 5
     })
     
   }
