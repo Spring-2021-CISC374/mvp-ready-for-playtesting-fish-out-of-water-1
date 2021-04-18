@@ -54,7 +54,7 @@ export default class BattleScene extends Phaser.Scene {
         // player character - mage
         var enemy = new Enemy(this, fightPos2, fightHeight, "enemy-jellyfish", null, "Jelly", 100, 15, "jellyfish"); 
         this.add.existing(enemy);   
-        enemy.anims.play('enemy-jellyfish')    
+        enemy.anims.play('enemy-jellyfish')   
 
         var orca = new PlayerCharacter(this, fightPos1, fightHeight, "shift-orca", null, "Orca", 50, 40, "orca");
         this.add.existing(orca)
@@ -87,9 +87,27 @@ export default class BattleScene extends Phaser.Scene {
     }
 
     wake() {
-        this.scene.run('UIScene');  
+        this.scene.run('UIScene'); 
+        this.activeID = 0;
+        this.activeHero = this.heroes[this.activeID];
+        this.activeHero.visible = true;
+        //this.activeEnemy = this.decideEnemy();
+        this.activeEnemy = this.enemies[0];
+
+        // reset HP
+        for(var i = 0; i < this.units.length; i++) {
+            this.units[i].setHP(this.units[i].getMaxHP());            
+        }
         this.time.addEvent({delay: 2000, callback: this.exitBattle, callbackScope: this});        
     }
+
+    // randomizing enemy; instance in startBattle and wake
+    /*decideEnemy() {
+        var enemyIndex = 0;
+
+
+        return enemyPick;
+    }*/
 
     shapeShiftHero(index) {
         var tempHP = this.activeHero.getHP();
