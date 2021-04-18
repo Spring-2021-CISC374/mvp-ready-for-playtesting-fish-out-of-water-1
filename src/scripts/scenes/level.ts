@@ -1,3 +1,4 @@
+import PipesFound from "../objects/PipeFound"
 export default class Level extends Phaser.Scene {
 	player: Phaser.Physics.Arcade.Sprite
 	npcptCollide: Phaser.Physics.Arcade.Sprite
@@ -5,7 +6,7 @@ export default class Level extends Phaser.Scene {
 	npc2Collide: Phaser.Physics.Arcade.Sprite
 	music:Phaser.Sound.BaseSound;
 	questionMusic:Phaser.Sound.BaseSound;
-	pipeScore = 0;
+	pipeScore: PipesFound;
 	pauseMovement = false;
 	//Pop up message box 
 	pipeMsg;
@@ -15,6 +16,8 @@ export default class Level extends Phaser.Scene {
 	//Map information
 	map: Phaser.Tilemaps.Tilemap;
 	background:Phaser.Tilemaps.TilemapLayer;
+	insufficientLayer: Phaser.Tilemaps.TilemapLayer;
+	sufficientLayer: Phaser.Tilemaps.TilemapLayer;
 	tileset: Phaser.Tilemaps.Tileset;
 	mapKey
 	sceneKey
@@ -28,18 +31,14 @@ export default class Level extends Phaser.Scene {
 	clogpt;
 	pipechecker;
 	Question;
-	//Spawn points
-	wrongspawn1;
-	wrongspawn2;
-	wrongspawn3;
-	rightspawn2;
-	rightspawn3;
+	clog;
 
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
 	  super({ key: sceneKey })
 	  this.sceneKey = sceneKey
 	  this.mapKey = mapKey
 	  this.nextSceneKey = nextSceneKey
+	  this.pipeScore = new PipesFound()
 	}
   
 	preload(){
@@ -65,16 +64,11 @@ export default class Level extends Phaser.Scene {
 	  this.npcpt = this.map.findObject("Points", obj => obj.name === "NPCPoint")
 	  this.npc2 = this.map.findObject("NPC", obj => obj.name === "NPC2")
 	  this.npc1 = this.map.findObject("NPC", obj => obj.name === "NPC1")
-	  //Adding in spawn point objects
-	  this.rightspawn2 = this.map.findObject("RightSpawn", obj => obj.name === "RightSpawn2")
-	  this.rightspawn3 = this.map.findObject("RightSpawn", obj => obj.name === "RightSpawn3")
-	  this.wrongspawn1 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn1")
-	  this.wrongspawn2 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn2")
-	  this.wrongspawn3 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn3")
 
 	  if(this.sceneKey == "LevelTwoScene") {
 		this.clogpt = this.map.findObject("Clog", obj => obj.name === "Clog")
 		this.pipechecker = this.map.findObject("PipeCheck", obj => obj.name === "PipeCheck")
+		this.clog = this.physics.add.image(this.clogpt.x, this.clogpt.y,'clog').setScale(0.025)
 	  }
 	  //Setting arrays of objects that contain position data
 	  this.PipeLayer = this.map.getObjectLayer('Pipe')['objects'];
@@ -85,18 +79,30 @@ export default class Level extends Phaser.Scene {
 	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06).setBounce(0)
 	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06).setBounce(0)
 	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06).setBounce(0)
-	  //Physics tasks
-	  this.physics.world.enableBody(this.player)
-	  this.add.existing(this.player);
+	  //animations
 	  this.npcptCollide.anims.play('flounder-idle')
 	  this.player.anims.play('clown-idle')
 	  this.npcptCollide.anims.play('flounder-idle')
 	  this.npc1Collide.anims.play('flounder-idle')
 	  this.npc2Collide.anims.play('flounder-idle')
+	  //physics collider
 	  this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
-
+	  this.physics.add.collider(this.player, this.clog, () =>{
+		this.createMessageBox("			You found the clog, \n and saved Sewer-topia!")
+		if(this.pipeScore.getPipesFound() > 3) {
+			this.sufficientLayer = this.map.createLayer('SufficientPipes', this.tileset).setDepth(-1)
+			this.sufficientLayer.setCollisionByProperty({collides: true})
+			this.physics.add.collider(this.player, this.sufficientLayer)
+		}
+		else {
+			this.insufficientLayer = this.map.createLayer('InsufficientPipes', this.tileset).setDepth(-1)
+			this.insufficientLayer.setCollisionByProperty({collides: true})
+			this.physics.add.collider(this.player, this.insufficientLayer)
+		}
+		this.clog.destroy()
+	  })
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.pause()
 		  this.questionMusic.resume();
@@ -109,7 +115,7 @@ export default class Level extends Phaser.Scene {
 		  else{
 			this.game.scene.start('QuestionScene1');
 		  }
-	  });
+	  })
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.pause()	
 		this.questionMusic.resume();
@@ -122,7 +128,7 @@ export default class Level extends Phaser.Scene {
 		else{
 			this.game.scene.start('QuestionScene2');
 		}
-	});
+	})
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.pause()
 		this.questionMusic.resume();
@@ -147,9 +153,9 @@ export default class Level extends Phaser.Scene {
 		const image = this.physics.add.image(object.x, object.y, "PipePiece").setScale(0.05);
 		this.physics.add.overlap(this.player, image, () =>{
 			image.destroy()
-			this.pipeScore++
-			this.text.setText(`Pipe Pieces found : ${this.pipeScore}`)
-			this.createMessageBox()
+			this.pipeScore.incrementPipesFound()
+			this.text.setText(`Pipe Pieces found : ${this.pipeScore.getPipesFound()}`)
+			this.createMessageBox("			You found a pipe piece! \n Hmm... I wonder what it's for...")
 		})
 	});
 	this.CombatLayer.forEach(object => {
@@ -158,18 +164,18 @@ export default class Level extends Phaser.Scene {
 		this.physics.add.overlap(this.player, image, () =>{
 			//this.music.pause()
 			//this.scene.launch("BattleScene")
-			//this.scene.pause(this.sceneKey) //these lines i think pause the current scene and can launch battlescene
+			//this.scene.pause(this.sceneKey)
 			image.destroy()
 		})
 	})
 
 	  //score
-	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore}`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore.getPipesFound()}`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
   }
-  	createMessageBox(){
+  	createMessageBox(message){
     	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
     	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
-		this.pipeMsg = this.add.text(this.game.canvas.width/2 -25 , this.game.canvas.height/2 - 10, "			You found a pipe piece! \n Hmm... I wonder what it's for...", { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
+		this.pipeMsg = this.add.text(this.game.canvas.width/2 -25 , this.game.canvas.height/2 - 10, message, { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
 		this.closeButton.setInteractive();
     	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
     	this.closeButton.on('pointerup', this.mouseFix, this);
@@ -381,10 +387,11 @@ createWrongMessageBox(){
 			if (this.registry.get("F1") == 'A'){
 				//right answer
 				if(this.nextSceneKey != '')
-				/*
-				//this.scene.start(this.nextSceneKey); // use this to launch the next scene (Boss)
-				*/
-				this.registry.set("F1", "Done")
+					this.registry.set("F1", "Done")
+				else {
+					this.npcptCollide.setActive(false).setVisible(false)
+					this.npcptCollide.body.enable = false;
+				}
 			}
 			if (this.registry.get("F1") == 'B' || this.registry.get("F1") == 'C' || this.registry.get("F1") == 'D'){
 				//wrong answer				

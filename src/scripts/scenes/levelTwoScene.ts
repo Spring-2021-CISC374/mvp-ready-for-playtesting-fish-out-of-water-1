@@ -1,7 +1,6 @@
 import Level from './level';
 
 export default class LevelTwoScene extends Level{
-
     constructor(){
         // Name this scene LevelTwoScene,
         // Use json map with key 'sewerlevel2'
