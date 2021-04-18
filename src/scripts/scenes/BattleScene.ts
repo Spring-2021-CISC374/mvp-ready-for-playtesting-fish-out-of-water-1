@@ -9,6 +9,7 @@ export default class BattleScene extends Phaser.Scene {
     heroes: Unit[];
     activeID: number;
     activeHero: Unit;
+    activeHeroHP: number;
     activeEnemy: Unit;
     enemies: Unit[];
     units: any[];
@@ -67,6 +68,7 @@ export default class BattleScene extends Phaser.Scene {
         this.heroes = [ fish, orca, shrimp ];
         this.activeID = 0;
         this.activeHero = this.heroes[this.activeID];
+        this.activeHeroHP = this.activeHero.getHP();
         this.activeEnemy = enemy;
         // array with enemies
         this.enemies = [ enemy ];
@@ -93,15 +95,15 @@ export default class BattleScene extends Phaser.Scene {
         var tempHP = this.activeHero.getHP();
         var tempHero = this.activeHero;
         this.activeID = index;
+        this.heroes[this.activeID].setHP(tempHP);
         this.activeHero = this.heroes[this.activeID];
-        this.activeHero.setHP(tempHP);
+        //this.activeHero.setHP(tempHP);
         this.updateUnits();
         this.activeHero.shapeShift(tempHero);
         tempHero.visible = false;
         this.activeHero.visible = true;
         let tempString = this.activeHero.name;
         this.activeHero.anims.play('shift-' + tempString);
-        
     }
 
     updateUnits() {
@@ -189,14 +191,10 @@ export default class BattleScene extends Phaser.Scene {
 
     endBattle() {       
         // clear state, remove sprites
-        this.heroes.length = 0;
-        this.enemies.length = 0;
         for(var i = 0; i < this.units.length; i++) {
             // link item
-            this.units[i].destroy();            
+            this.units[i].visible = false;            
         }
-        this.units.length = 0;
-
 
         // sleep the UI
         this.scene.sleep('UIScene');
