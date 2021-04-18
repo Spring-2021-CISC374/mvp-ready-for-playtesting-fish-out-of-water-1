@@ -1,4 +1,3 @@
-
 export default class PipeFound {
     pipesFound;
     constructor() {

@@ -15,6 +15,8 @@ export default class Level extends Phaser.Scene {
 	//Map information
 	map: Phaser.Tilemaps.Tilemap;
 	background:Phaser.Tilemaps.TilemapLayer;
+	insufficientLayer: Phaser.Tilemaps.TilemapLayer;
+	sufficientLayer: Phaser.Tilemaps.TilemapLayer;
 	tileset: Phaser.Tilemaps.Tileset;
 	mapKey
 	sceneKey
@@ -29,12 +31,6 @@ export default class Level extends Phaser.Scene {
 	pipechecker;
 	Question;
 	clog;
-	//Spawn points
-	wrongspawn1;
-	wrongspawn2;
-	wrongspawn3;
-	rightspawn2;
-	rightspawn3;
 
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
 	  super({ key: sceneKey })
@@ -64,12 +60,6 @@ export default class Level extends Phaser.Scene {
 	  this.npcpt = this.map.findObject("Points", obj => obj.name === "NPCPoint")
 	  this.npc2 = this.map.findObject("NPC", obj => obj.name === "NPC2")
 	  this.npc1 = this.map.findObject("NPC", obj => obj.name === "NPC1")
-	  //Adding in spawn point objects
-	  this.rightspawn2 = this.map.findObject("RightSpawn", obj => obj.name === "RightSpawn2")
-	  this.rightspawn3 = this.map.findObject("RightSpawn", obj => obj.name === "RightSpawn3")
-	  this.wrongspawn1 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn1")
-	  this.wrongspawn2 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn2")
-	  this.wrongspawn3 = this.map.findObject("WrongSpawn", obj => obj.name === "WrongSpawn3")
 
 	  if(this.sceneKey == "LevelTwoScene") {
 		this.clogpt = this.map.findObject("Clog", obj => obj.name === "Clog")
@@ -85,19 +75,28 @@ export default class Level extends Phaser.Scene {
 	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06).setBounce(0)
 	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06).setBounce(0)
 	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06).setBounce(0)
-	  //Physics tasks
-	  this.physics.world.enableBody(this.player)
-	  this.add.existing(this.player);
+	  //animations
 	  this.npcptCollide.anims.play('flounder-idle')
 	  this.player.anims.play('clown-idle')
 	  this.npcptCollide.anims.play('flounder-idle')
 	  this.npc1Collide.anims.play('flounder-idle')
 	  this.npc2Collide.anims.play('flounder-idle')
+	  //physics collider
 	  this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
 	  this.physics.add.collider(this.player, this.clog, () =>{
-		this.createMessageBox("			You found the clog, and saved Sewer-topia!")
+		this.createMessageBox("			You found the clog, \n and saved Sewer-topia!")
+		if(this.pipeScore.getPipesFound() > 3) {
+			this.sufficientLayer = this.map.createLayer('SufficientPipes', this.tileset).setDepth(-1)
+			this.sufficientLayer.setCollisionByProperty({collides: true})
+			this.physics.add.collider(this.player, this.sufficientLayer)
+		}
+		else {
+			this.insufficientLayer = this.map.createLayer('InsufficientPipes', this.tileset).setDepth(-1)
+			this.insufficientLayer.setCollisionByProperty({collides: true})
+			this.physics.add.collider(this.player, this.insufficientLayer)
+		}
 		this.clog.destroy()
 	  })
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
@@ -110,7 +109,7 @@ export default class Level extends Phaser.Scene {
 		  else{
 			this.game.scene.start('QuestionScene1');
 		  }
-	  }).name = 'last_npc'
+	  })
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.stop()	
 		this.Question = 2;	
