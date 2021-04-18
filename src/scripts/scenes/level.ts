@@ -271,6 +271,8 @@ export default class Level extends Phaser.Scene {
 	  }
 	}
 
+	width: number = 0; 
+
 	//npc1 (I know I know Im sorry)
 	QuestionTwo(){
 		if (this.registry.get("B1") == 'D'){
@@ -279,12 +281,56 @@ export default class Level extends Phaser.Scene {
 			this.player.y = 580
 			this.registry.set("B1", "Done")
 			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+			//var width = 0;
+			var elem = document.getElementById('pmeterBar');
+
+			if (this.width < 0) {
+				this.width = 0;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById("pmeterBar");
+				var p = 17;
+				this.width = this.width - p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
 		}
+	
 		if (this.registry.get("B1") == 'B' || this.registry.get("B1") == 'C' || this.registry.get("B1") == 'A'){
 			//wrong answer
 			this.player.x = 50
 			this.player.y = 110
 			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width >= 100) {
+				this.width = 100;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById('pmeterBar');
+				var p = 17;
+				this.width = this.width + p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 	}
 
@@ -296,12 +342,55 @@ export default class Level extends Phaser.Scene {
 			this.player.y = 245
 			this.registry.set("C1", "Done")
 			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width < 0) {
+				this.width = 0;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById("pmeterBar");
+				var p = 17;
+				this.width = this.width - p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 		if (this.registry.get("C1") == 'A' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
 			//wrong answer
 			this.player.x = 625
 			this.player.y = 325
 			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width >= 100) {
+				this.width = 100;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById('pmeterBar');
+				var p = 17;
+				this.width = this.width + p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+
+			}
 		}
 		
 	}
@@ -315,12 +404,54 @@ export default class Level extends Phaser.Scene {
 					this.music.destroy()
 				this.registry.set("A1", "Done")
 				this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+				//var width = 0;
+				var elem = document.getElementById("pmeterBar");
+
+				if (this.width < 0) {
+					this.width = 0;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
+				
+				else {
+					var elem = document.getElementById("pmeterBar");
+					var p = 17;
+					this.width = this.width - p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
 			}
 			if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
 				//wrong answer				
 				this.player.x = 220
 				this.player.y = 275
 				this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+				//var width = 0;
+				var elem = document.getElementById("pmeterBar");
+
+				if (this.width >= 100) {
+					this.width = 100;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
+			
+				else {
+					var elem = document.getElementById('pmeterBar');
+					var p = 17;
+					this.width = this.width + p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
 			}
 		}
 
@@ -332,12 +463,54 @@ export default class Level extends Phaser.Scene {
 			this.player.y = 630
 			this.registry.set("D1", "Done")
 			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width < 0) {
+				this.width = 0;
+				if (elem != null) {
+				elem.style.width = this.width + "%";
+				elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById("pmeterBar");
+				var p = 17;
+				this.width = this.width - p;
+				if (elem != null) {
+				elem.style.width = this.width + "%";
+				elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 		if (this.registry.get("D1") == 'B' || this.registry.get("D1") == 'C' || this.registry.get("D1") == 'A'){
 			//wrong answer
 			this.player.x = 295
 			this.player.y = 630
 			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width >= 100) {
+				this.width = 100;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById('pmeterBar');
+				var p = 17;
+				this.width = this.width + p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 	}
 
@@ -349,12 +522,54 @@ export default class Level extends Phaser.Scene {
 			this.player.y = 195
 			this.registry.set("E1", "Done")
 			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width < 0) {
+				this.width = 0;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById("pmeterBar");
+				var p = 17;
+				this.width = this.width - p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 		if (this.registry.get("E1") == 'A' || this.registry.get("E1") == 'C' || this.registry.get("E1") == 'D'){
 			//wrong answer		
 			this.player.x = 180
 			this.player.y = 170
 			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width >= 100) {
+				this.width = 100;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById('pmeterBar');
+				var p = 17;
+				this.width = this.width + p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 	}
 		//npc 3 (last, if right go to boss or end or whatever)
@@ -367,12 +582,54 @@ export default class Level extends Phaser.Scene {
 					this.npcptCollide.setActive(false).setVisible(false)
 					this.npcptCollide.body.enable = false;
 				}
+
+				//var width = 0;
+				var elem = document.getElementById("pmeterBar");
+
+				if (this.width < 0) {
+					this.width = 0;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
+				
+				else {
+					var elem = document.getElementById("pmeterBar");
+					var p = 17;
+					this.width = this.width - p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
 			}
 			if (this.registry.get("F1") == 'B' || this.registry.get("F1") == 'C' || this.registry.get("F1") == 'D'){
 				//wrong answer				
 				this.player.x = 370
 				this.player.y = 560
 				this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+				//var width = 0;
+				var elem = document.getElementById("pmeterBar");
+
+				if (this.width >= 100) {
+					this.width = 100;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
+			
+				else {
+					var elem = document.getElementById('pmeterBar');
+					var p = 17;
+					this.width = this.width + p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
 			}
 		}
 
