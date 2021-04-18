@@ -12,7 +12,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image("closeButton", "assets/img/closeButton.png");
     this.load.image('PipePiece', 'assets/img/PipePiece.png')
     this.load.image('transparent', 'assets/img/Transparent.png')
-
+    this.load.image('clog', 'assets/img/Clog.png')
     //Characters
     this.load.atlas('clown', 'assets/Sprites/ClownFish.png','assets/Sprites/ClownFish.json' )
     this.load.atlas('flounder', 'assets/Sprites/Flounder.png','assets/Sprites/Flounder.json' )
