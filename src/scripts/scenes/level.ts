@@ -287,16 +287,20 @@ export default class Level extends Phaser.Scene {
 
 			if (this.width < 0) {
 				this.width = 0;
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 			
 			else {
 				var elem = document.getElementById("pmeterBar");
 				var p = 17;
 				this.width = this.width - p;
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 			
 		}
@@ -312,18 +316,20 @@ export default class Level extends Phaser.Scene {
 
 			if (this.width >= 100) {
 				this.width = 100;
-				if (elem)
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 			
 			else {
 				var elem = document.getElementById('pmeterBar');
 				var p = 17;
 				this.width = this.width + p;
-				if (elem)
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 		}
 	}
@@ -342,16 +348,20 @@ export default class Level extends Phaser.Scene {
 
 			if (this.width < 0) {
 				this.width = 0;
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 			
 			else {
 				var elem = document.getElementById("pmeterBar");
 				var p = 17;
 				this.width = this.width - p;
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 		}
 		if (this.registry.get("C1") == 'A' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
@@ -365,18 +375,21 @@ export default class Level extends Phaser.Scene {
 
 			if (this.width >= 100) {
 				this.width = 100;
-				if (elem)
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 			
 			else {
 				var elem = document.getElementById('pmeterBar');
 				var p = 17;
 				this.width = this.width + p;
-				if (elem)
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+
 			}
 		}
 		
@@ -397,16 +410,20 @@ export default class Level extends Phaser.Scene {
 
 				if (this.width < 0) {
 					this.width = 0;
-					elem.style.width = this.width + "%";
-					elem.innerHTML = this.width + "%";
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
 				}
 				
 				else {
 					var elem = document.getElementById("pmeterBar");
 					var p = 17;
 					this.width = this.width - p;
-					elem.style.width = this.width + "%";
-					elem.innerHTML = this.width + "%";
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
 				}
 			}
 			if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
@@ -420,18 +437,20 @@ export default class Level extends Phaser.Scene {
 
 				if (this.width >= 100) {
 					this.width = 100;
-					if (elem)
-					elem.style.width = this.width + "%";
-					elem.innerHTML = this.width + "%";
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
 				}
 			
 				else {
 					var elem = document.getElementById('pmeterBar');
 					var p = 17;
 					this.width = this.width + p;
-					if (elem)
-					elem.style.width = this.width + "%";
-					elem.innerHTML = this.width + "%";
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
 				}
 			}
 		}
@@ -450,16 +469,20 @@ export default class Level extends Phaser.Scene {
 
 			if (this.width < 0) {
 				this.width = 0;
+				if (elem != null) {
 				elem.style.width = this.width + "%";
 				elem.innerHTML = this.width + "%";
+				}
 			}
 			
 			else {
 				var elem = document.getElementById("pmeterBar");
 				var p = 17;
 				this.width = this.width - p;
+				if (elem != null) {
 				elem.style.width = this.width + "%";
 				elem.innerHTML = this.width + "%";
+				}
 			}
 		}
 		if (this.registry.get("D1") == 'B' || this.registry.get("D1") == 'C' || this.registry.get("D1") == 'A'){
@@ -473,18 +496,20 @@ export default class Level extends Phaser.Scene {
 
 			if (this.width >= 100) {
 				this.width = 100;
-				if (elem)
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 			
 			else {
 				var elem = document.getElementById('pmeterBar');
 				var p = 17;
 				this.width = this.width + p;
-				if (elem)
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 		}
 	}
@@ -503,16 +528,20 @@ export default class Level extends Phaser.Scene {
 
 			if (this.width < 0) {
 				this.width = 0;
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 			
 			else {
 				var elem = document.getElementById("pmeterBar");
 				var p = 17;
 				this.width = this.width - p;
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 		}
 		if (this.registry.get("E1") == 'A' || this.registry.get("E1") == 'C' || this.registry.get("E1") == 'D'){
@@ -526,18 +555,20 @@ export default class Level extends Phaser.Scene {
 
 			if (this.width >= 100) {
 				this.width = 100;
-				if (elem)
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 			
 			else {
 				var elem = document.getElementById('pmeterBar');
 				var p = 17;
 				this.width = this.width + p;
-				if (elem)
-				elem.style.width = this.width + "%";
-				elem.innerHTML = this.width + "%";
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
 			}
 		}
 	}
@@ -557,16 +588,20 @@ export default class Level extends Phaser.Scene {
 
 				if (this.width < 0) {
 					this.width = 0;
-					elem.style.width = this.width + "%";
-					elem.innerHTML = this.width + "%";
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
 				}
 				
 				else {
 					var elem = document.getElementById("pmeterBar");
 					var p = 17;
-					width = this.width - p;
-					elem.style.width = this.width + "%";
-					elem.innerHTML = this.width + "%";
+					this.width = this.width - p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
 				}
 			}
 			if (this.registry.get("F1") == 'B' || this.registry.get("F1") == 'C' || this.registry.get("F1") == 'D'){
@@ -580,18 +615,20 @@ export default class Level extends Phaser.Scene {
 
 				if (this.width >= 100) {
 					this.width = 100;
-					if (elem)
-					elem.style.width = this.width + "%";
-					elem.innerHTML = this.width + "%";
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
 				}
 			
 				else {
 					var elem = document.getElementById('pmeterBar');
 					var p = 17;
 					this.width = this.width + p;
-					if (elem)
-					elem.style.width = this.width + "%";
-					elem.innerHTML = this.width + "%";
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
 				}
 			}
 		}
