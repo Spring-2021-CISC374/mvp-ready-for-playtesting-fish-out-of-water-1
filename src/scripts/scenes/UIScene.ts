@@ -115,7 +115,7 @@ export default class UIScene extends Phaser.Scene {
     
     onSurrender() {
         //this.battleScene.activeHero.surrenderDisplay();
-        this.battleScene.endBattle();
+        this.battleScene.receivePlayerSelection("surrender", null);
     }
 
     onSelectShapes() {

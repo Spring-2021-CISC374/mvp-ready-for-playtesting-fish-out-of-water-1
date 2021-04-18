@@ -1,3 +1,5 @@
+import HealthBar from "../objects/HealthBar"
+
 export default class PreloadScene extends Phaser.Scene {
   
   constructor() {
@@ -7,6 +9,11 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('sewer1', 'assets/Maps/Sewer1.json')
     this.load.image('pipes', 'assets/img/Pipes.png')
     this.load.image('phaser-logo', 'assets/img/phaser-logo.png')
+    this.load.image('sewer-combat', 'assets/img/SewerCombat.png')
+
+    this.load.image('healthbar', 'assets/img/healthbar.png')
+    this.load.image('shadowbar', 'assets/img/shadowbar.png')
+
     this.load.atlas('flounder', 'assets/Sprites/Flounder.png','assets/Sprites/Flounder.json' )
     this.load.atlas('combat', 'assets/Sprites/NinjaFish.png', 'assets/Sprites/NinjaFish.json')
     this.load.atlas('jellyfish', 'assets/Sprites/Jellyfish.png', 'assets/Sprites/Jellyfish.json')
