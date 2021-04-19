@@ -6,10 +6,10 @@ export class QuestionMenu6 extends Menu  {
     
     constructor(x, y, scene) {
         super(x, y, scene);   
-        this.addMenuItem("a");
-        this.addMenuItem("b")
-        this.addMenuItem("c");
-        this.addMenuItem("d");
+        this.addMenuItem("To contain dangerous wastewater");
+        this.addMenuItem("We don't")
+        this.addMenuItem("No one knows");
+        this.addMenuItem("Sewer systems aren't real");
 
     }
 

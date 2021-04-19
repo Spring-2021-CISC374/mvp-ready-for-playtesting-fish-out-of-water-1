@@ -5,6 +5,8 @@ export default class Level extends Phaser.Scene {
 	npc2Collide: Phaser.Physics.Arcade.Sprite
 	music:Phaser.Sound.BaseSound;
 	questionMusic:Phaser.Sound.BaseSound;
+	combatMusic:Phaser.Sound.BaseSound;
+	bumpSound:Phaser.Sound.BaseSound;
 	pipeScore = 0;
 	pauseMovement = false;
 	//Pop up message box 
@@ -42,12 +44,18 @@ export default class Level extends Phaser.Scene {
 	preload(){
 		this.music = this.sound.add('sewermusic', {loop: true, volume: 0.5});
 		this.questionMusic = this.sound.add('questionmusic', {loop: true, volume: 0.5});
+		this.combatMusic = this.sound.add('combatmusic', {loop: true, volume: 0.5});
+		this.bumpSound = this.sound.add('bumpsound', {loop: false, volume: 0.5});
+
 	}
 	
 	create() {
+		//music
 		this.music.play();
 		this.questionMusic.play();
 		this.questionMusic.pause();
+		this.combatMusic.play();
+		this.combatMusic.pause();
 	  //Background color
 	  this.cameras.main.setBackgroundColor("0x142702");
 	  //Create map from Tiled and add necessary collisions
@@ -103,6 +111,7 @@ export default class Level extends Phaser.Scene {
 	  })
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.pause()
+		  this.bumpSound.play();
 		  this.questionMusic.resume();
 		  this.pauseMovement = true;
 		  this.Question = 1;
@@ -116,6 +125,7 @@ export default class Level extends Phaser.Scene {
 	  })
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.pause()	
+		this.bumpSound.play();
 		this.questionMusic.resume();
 		this.pauseMovement = true;
 		this.Question = 2;	
@@ -129,6 +139,7 @@ export default class Level extends Phaser.Scene {
 	})
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.pause()
+		this.bumpSound.play();
 		this.questionMusic.resume();
 		this.pauseMovement = true;
 		this.Question = 3;		
@@ -161,6 +172,8 @@ export default class Level extends Phaser.Scene {
 		this.physics.add.existing(image)
 		this.physics.add.overlap(this.player, image, () =>{
 			//this.music.pause()
+			//this.bumpSound.play()
+			//this.combatMusic.resume()
 			//this.scene.pause(this.sceneKey)
 			//this.scene.launch("BattleScene")
 			image.destroy()

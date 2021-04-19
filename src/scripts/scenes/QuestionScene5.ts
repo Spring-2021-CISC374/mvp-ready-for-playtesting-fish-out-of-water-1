@@ -12,7 +12,7 @@ export default class QuestionScene5 extends Phaser.Scene {
     create(){
         this.cameras.main.setBackgroundColor("0x8B8BAE");
         //font, color, etc. can be changed later
-        this.txt = this.add.text(0,100,'What can you flush down the toilet?');
+        this.txt = this.add.text(0,100,'What SHOULD you flush down the toilet?');
         //menu for selecting answer
         this.menus = this.add.container();
         this.QuestionMenu5 = new QuestionMenu5(118, 153, this);  
