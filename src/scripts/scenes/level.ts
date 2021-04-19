@@ -167,6 +167,8 @@ export default class Level extends Phaser.Scene {
 			this.createMessageBox("			You found a pipe piece! \n Hmm... I wonder what it's for...")
 		})
 	});
+
+	// switching scenes to combat
 	this.CombatLayer.forEach(object => {
 		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
 		this.physics.add.existing(image)
@@ -176,6 +178,7 @@ export default class Level extends Phaser.Scene {
 			//this.combatMusic.resume()
 			//this.scene.pause(this.sceneKey)
 			//this.scene.launch("BattleScene")
+			this.scene.switch('BattleScene');
 			image.destroy()
 		})
 	})

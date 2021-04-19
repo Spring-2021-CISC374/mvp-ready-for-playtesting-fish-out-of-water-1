@@ -218,6 +218,7 @@ export default class BattleScene extends Phaser.Scene {
 
         // sleep the UI
         this.scene.sleep('UIScene');
+        this.scene.switch('LevelOneScene');
     }
 
     getHeroes() {
