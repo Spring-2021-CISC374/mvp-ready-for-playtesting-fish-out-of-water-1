@@ -28,10 +28,10 @@ export default class BattleScene extends Phaser.Scene {
         // load background image
         //this.cameras.main.("0x8B8BAE");
         this.add.image(0,0,'sewer-combat').setOrigin(0);
-        
-        this.startBattle();
 
-        this.sys.events.on('wake', this.wake, this);      
+        this.sys.events.on('wake', this.wake, this);   
+        
+        this.startBattle();   
     }
 
     startBattle() {
@@ -93,6 +93,8 @@ export default class BattleScene extends Phaser.Scene {
         this.activeHero.visible = true;
         //this.activeEnemy = this.decideEnemy();
         this.activeEnemy = this.enemies[0];
+        this.victory = false;
+        this.surrenderFlag = false;
 
         // reset HP
         for(var i = 0; i < this.units.length; i++) {
@@ -220,5 +222,9 @@ export default class BattleScene extends Phaser.Scene {
 
     getHeroes() {
         return this.heroes;
+    }
+
+    getVictory() {
+        return this.victory;
     }
 }

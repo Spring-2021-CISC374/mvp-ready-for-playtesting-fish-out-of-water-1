@@ -15,7 +15,7 @@ export default class UIScene extends Phaser.Scene {
     message: Message;
 
     constructor() {
-        super({ key: 'UIScene' });
+        super({ key: "UIScene" });
     }
 
     create() {    
