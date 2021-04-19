@@ -7,4 +7,7 @@ export default class LevelTwoScene extends Level{
         // 'LevelThreeScene' indicates which scene to jump to after.
         super('LevelTwoScene', 'sewerlevel2', '')
     }
+    init(data){
+        this.pipeScore = data.pipeScore;
+      }
 }

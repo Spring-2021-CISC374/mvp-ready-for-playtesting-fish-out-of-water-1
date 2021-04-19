@@ -8,7 +8,7 @@ export class QuestionMenu2 extends Menu  {
         super(x, y, scene);   
         this.addMenuItem("Bad odor");
         this.addMenuItem("Collapsing pipes")
-        this.addMenuItem("None, trees don't affest sewers");
+        this.addMenuItem("None, trees don't affect sewers");
         this.addMenuItem("Both a. & b.");
 
     }

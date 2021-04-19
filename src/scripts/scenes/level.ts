@@ -1,4 +1,3 @@
-import PipesFound from "../objects/PipeFound"
 export default class Level extends Phaser.Scene {
 	player: Phaser.Physics.Arcade.Sprite
 	npcptCollide: Phaser.Physics.Arcade.Sprite
@@ -6,7 +5,9 @@ export default class Level extends Phaser.Scene {
 	npc2Collide: Phaser.Physics.Arcade.Sprite
 	music:Phaser.Sound.BaseSound;
 	questionMusic:Phaser.Sound.BaseSound;
-	pipeScore: PipesFound;
+	combatMusic:Phaser.Sound.BaseSound;
+	bumpSound:Phaser.Sound.BaseSound;
+	pipeScore = 0;
 	pauseMovement = false;
 	//Pop up message box 
 	pipeMsg;
@@ -38,18 +39,23 @@ export default class Level extends Phaser.Scene {
 	  this.sceneKey = sceneKey
 	  this.mapKey = mapKey
 	  this.nextSceneKey = nextSceneKey
-	  this.pipeScore = new PipesFound()
 	}
   
 	preload(){
 		this.music = this.sound.add('sewermusic', {loop: true, volume: 0.5});
 		this.questionMusic = this.sound.add('questionmusic', {loop: true, volume: 0.5});
+		this.combatMusic = this.sound.add('combatmusic', {loop: true, volume: 0.5});
+		this.bumpSound = this.sound.add('bumpsound', {loop: false, volume: 0.5});
+
 	}
 	
 	create() {
+		//music
 		this.music.play();
 		this.questionMusic.play();
 		this.questionMusic.pause();
+		this.combatMusic.play();
+		this.combatMusic.pause();
 	  //Background color
 	  this.cameras.main.setBackgroundColor("0x142702");
 	  //Create map from Tiled and add necessary collisions
@@ -91,7 +97,7 @@ export default class Level extends Phaser.Scene {
 	  this.npcptCollide.angle = 180;
 	  this.physics.add.collider(this.player, this.clog, () =>{
 		this.createMessageBox("			You found the clog, \n and saved Sewer-topia!")
-		if(this.pipeScore.getPipesFound() > 3) {
+		if(this.pipeScore > 3) {
 			this.sufficientLayer = this.map.createLayer('SufficientPipes', this.tileset).setDepth(-1)
 			this.sufficientLayer.setCollisionByProperty({collides: true})
 			this.physics.add.collider(this.player, this.sufficientLayer)
@@ -105,6 +111,7 @@ export default class Level extends Phaser.Scene {
 	  })
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.pause()
+		  this.bumpSound.play();
 		  this.questionMusic.resume();
 		  this.pauseMovement = true;
 		  this.Question = 1;
@@ -118,6 +125,7 @@ export default class Level extends Phaser.Scene {
 	  })
 	  this.physics.add.collider(this.player, this.npc1Collide, () =>{
 		this.music.pause()	
+		this.bumpSound.play();
 		this.questionMusic.resume();
 		this.pauseMovement = true;
 		this.Question = 2;	
@@ -131,6 +139,7 @@ export default class Level extends Phaser.Scene {
 	})
 	this.physics.add.collider(this.player, this.npc2Collide, () =>{
 		this.music.pause()
+		this.bumpSound.play();
 		this.questionMusic.resume();
 		this.pauseMovement = true;
 		this.Question = 3;		
@@ -153,8 +162,8 @@ export default class Level extends Phaser.Scene {
 		const image = this.physics.add.image(object.x, object.y, "PipePiece").setScale(0.05);
 		this.physics.add.overlap(this.player, image, () =>{
 			image.destroy()
-			this.pipeScore.incrementPipesFound()
-			this.text.setText(`Pipe Pieces found : ${this.pipeScore.getPipesFound()}`)
+			this.pipeScore++
+			this.text.setText(`Pipe Pieces found : ${this.pipeScore}`)
 			this.createMessageBox("			You found a pipe piece! \n Hmm... I wonder what it's for...")
 		})
 	});
@@ -163,48 +172,27 @@ export default class Level extends Phaser.Scene {
 		this.physics.add.existing(image)
 		this.physics.add.overlap(this.player, image, () =>{
 			//this.music.pause()
-			//this.scene.launch("BattleScene")
+			//this.bumpSound.play()
+			//this.combatMusic.resume()
 			//this.scene.pause(this.sceneKey)
+			//this.scene.launch("BattleScene")
 			image.destroy()
 		})
 	})
 
 	  //score
-	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore.getPipesFound()}`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore}`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
   }
   	createMessageBox(message){
     	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
     	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
-		this.pipeMsg = this.add.text(this.game.canvas.width/2 -25 , this.game.canvas.height/2 - 10, message, { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
+		this.pipeMsg = this.add.text(this.game.canvas.width/2 -30 , this.game.canvas.height/2 - 10, message, { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
 		this.closeButton.setInteractive();
     	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
     	this.closeButton.on('pointerup', this.mouseFix, this);
 		this.closeButton.on('pointerout', this.mouseFix, this);
 		this.pauseMovement = true;
    }
-
-   createRightMessageBox(){
-	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
-	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
-	this.pipeMsg = this.add.text(this.game.canvas.width/2 -30 , this.game.canvas.height/2 - 10, "*Gasp!* You have been teleported! \n Good job! Right answer!", { font: "20px Arial", align: "center" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
-	this.closeButton.setInteractive();
-	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
-	this.closeButton.on('pointerup', this.mouseFix, this);
-	this.closeButton.on('pointerout', this.mouseFix, this);
-	this.pauseMovement = true;
-}
-
-createWrongMessageBox(){
-	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.125).setScrollFactor(0)
-	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
-	this.pipeMsg = this.add.text(this.game.canvas.width/2 -37.5 , this.game.canvas.height/2 - 10, "You have been teleported... but to where? \n Sorry! Wrong answer!", { font: "20px Arial", align: "center" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
-	this.closeButton.setInteractive();
-	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
-	this.closeButton.on('pointerup', this.mouseFix, this);
-	this.closeButton.on('pointerout', this.mouseFix, this);
-	this.pauseMovement = true;
-}
-
    mouseFix(){}
    destroyMessageBox(){
 		this.pauseMovement = false;
@@ -296,6 +284,8 @@ createWrongMessageBox(){
 	  }
 	}
 
+	width: number = 0; 
+
 	//npc1 (I know I know Im sorry)
 	QuestionTwo(){
 		if (this.registry.get("B1") == 'D'){
@@ -303,13 +293,57 @@ createWrongMessageBox(){
 			this.player.x = 415
 			this.player.y = 580
 			this.registry.set("B1", "Done")
-			this.createRightMessageBox()
+			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+			//var width = 0;
+			var elem = document.getElementById('pmeterBar');
+
+			if (this.width < 0) {
+				this.width = 0;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById("pmeterBar");
+				var p = 17;
+				this.width = this.width - p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
 		}
+	
 		if (this.registry.get("B1") == 'B' || this.registry.get("B1") == 'C' || this.registry.get("B1") == 'A'){
 			//wrong answer
 			this.player.x = 50
 			this.player.y = 110
-			this.createWrongMessageBox()
+			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width >= 100) {
+				this.width = 100;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById('pmeterBar');
+				var p = 17;
+				this.width = this.width + p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 	}
 
@@ -320,13 +354,56 @@ createWrongMessageBox(){
 			this.player.x = 220
 			this.player.y = 245
 			this.registry.set("C1", "Done")
-			this.createRightMessageBox()
+			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width < 0) {
+				this.width = 0;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById("pmeterBar");
+				var p = 17;
+				this.width = this.width - p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 		if (this.registry.get("C1") == 'A' || this.registry.get("C1") == 'C' || this.registry.get("C1") == 'D'){
 			//wrong answer
 			this.player.x = 625
 			this.player.y = 325
-			this.createWrongMessageBox()
+			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width >= 100) {
+				this.width = 100;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById('pmeterBar');
+				var p = 17;
+				this.width = this.width + p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+
+			}
 		}
 		
 	}
@@ -336,16 +413,58 @@ createWrongMessageBox(){
 			if (this.registry.get("A1") == 'A'){
 				//right answer
 				if(this.nextSceneKey != '')
-					this.scene.start(this.nextSceneKey); // use this to launch the next scene
+					this.scene.start(this.nextSceneKey, {pipeScore: this.pipeScore}); // use this to launch the next scene
 					this.music.destroy()
 				this.registry.set("A1", "Done")
-				this.createRightMessageBox()
+				this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+				//var width = 0;
+				var elem = document.getElementById("pmeterBar");
+
+				if (this.width < 0) {
+					this.width = 0;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
+				
+				else {
+					var elem = document.getElementById("pmeterBar");
+					var p = 17;
+					this.width = this.width - p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
 			}
 			if (this.registry.get("A1") == 'B' || this.registry.get("A1") == 'C' || this.registry.get("A1") == 'D'){
 				//wrong answer				
 				this.player.x = 220
 				this.player.y = 275
-				this.createWrongMessageBox()
+				this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+				//var width = 0;
+				var elem = document.getElementById("pmeterBar");
+
+				if (this.width >= 100) {
+					this.width = 100;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
+			
+				else {
+					var elem = document.getElementById('pmeterBar');
+					var p = 17;
+					this.width = this.width + p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
 			}
 		}
 
@@ -356,13 +475,55 @@ createWrongMessageBox(){
 			this.player.x = 335
 			this.player.y = 630
 			this.registry.set("D1", "Done")
-			this.createRightMessageBox()
+			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width < 0) {
+				this.width = 0;
+				if (elem != null) {
+				elem.style.width = this.width + "%";
+				elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById("pmeterBar");
+				var p = 17;
+				this.width = this.width - p;
+				if (elem != null) {
+				elem.style.width = this.width + "%";
+				elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 		if (this.registry.get("D1") == 'B' || this.registry.get("D1") == 'C' || this.registry.get("D1") == 'A'){
 			//wrong answer
 			this.player.x = 295
 			this.player.y = 630
-			this.createWrongMessageBox()
+			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width >= 100) {
+				this.width = 100;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById('pmeterBar');
+				var p = 17;
+				this.width = this.width + p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 	}
 
@@ -373,13 +534,55 @@ createWrongMessageBox(){
 			this.player.x = 290
 			this.player.y = 195
 			this.registry.set("E1", "Done")
-			this.createRightMessageBox()
+			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width < 0) {
+				this.width = 0;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById("pmeterBar");
+				var p = 17;
+				this.width = this.width - p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 		if (this.registry.get("E1") == 'A' || this.registry.get("E1") == 'C' || this.registry.get("E1") == 'D'){
 			//wrong answer		
 			this.player.x = 180
 			this.player.y = 170
-			this.createWrongMessageBox()
+			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+			//var width = 0;
+			var elem = document.getElementById("pmeterBar");
+
+			if (this.width >= 100) {
+				this.width = 100;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
+			
+			else {
+				var elem = document.getElementById('pmeterBar');
+				var p = 17;
+				this.width = this.width + p;
+				if (elem != null) {
+					elem.style.width = this.width + "%";
+					elem.innerHTML = this.width + "%";
+				}
+			}
 		}
 	}
 		//npc 3 (last, if right go to boss or end or whatever)
@@ -392,12 +595,54 @@ createWrongMessageBox(){
 					this.npcptCollide.setActive(false).setVisible(false)
 					this.npcptCollide.body.enable = false;
 				}
+
+				//var width = 0;
+				var elem = document.getElementById("pmeterBar");
+
+				if (this.width < 0) {
+					this.width = 0;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
+				
+				else {
+					var elem = document.getElementById("pmeterBar");
+					var p = 17;
+					this.width = this.width - p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
 			}
 			if (this.registry.get("F1") == 'B' || this.registry.get("F1") == 'C' || this.registry.get("F1") == 'D'){
 				//wrong answer				
 				this.player.x = 370
 				this.player.y = 560
-				this.createWrongMessageBox()
+				this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+
+				//var width = 0;
+				var elem = document.getElementById("pmeterBar");
+
+				if (this.width >= 100) {
+					this.width = 100;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
+			
+				else {
+					var elem = document.getElementById('pmeterBar');
+					var p = 17;
+					this.width = this.width + p;
+					if (elem != null) {
+						elem.style.width = this.width + "%";
+						elem.innerHTML = this.width + "%";
+					}
+				}
 			}
 		}
 
