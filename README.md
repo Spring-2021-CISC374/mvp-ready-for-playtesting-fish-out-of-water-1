@@ -27,6 +27,15 @@
 - https://twoscoopstudio.itch.io/fish-game-app-assets
 - https://benjijam.itch.io/underwater-themes
 - https://stealthix.itch.io/pipes-tileset 
+- Sneaky Snitch by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/4384-sneaky-snitch
+License: https://filmmusic.io/standard-license
+- Dangerous by Kevin MacLeod
+Link: https://incompetech.filmmusic.io/song/4384-sneaky-snitch
+License: https://filmmusic.io/standard-license 
+- 8 Bit Slam by josepharaoh99
+Link: https://freesound.org/people/josepharaoh99/sounds/361636/
+License: https://creativecommons.org/publicdomain/zero/1.0/ 
 
 ## Gameplay video link
 
