@@ -5,7 +5,7 @@ import HealthBar from "../objects/HealthBar";
 import PlayerCharacter from "../objects/PlayerCharacter";
 import Unit from "../objects/Unit";
 
-export default class BattleScene extends Phaser.Scene {
+export default class BossBattleScene extends Phaser.Scene {
     heroes: Unit[];
     activeID: number;
     activeHero: Unit;
@@ -19,11 +19,10 @@ export default class BattleScene extends Phaser.Scene {
     surrenderFlag: boolean;
     playerHealth: HealthBar;
     enemyHealth: HealthBar;
-    isFinalBoss: boolean;
     setEnemies: Enemy[];
 
     constructor() {
-        super({ key: "BattleScene" });
+        super({ key: "BossBattleScene" });
     }
 
     create() {
@@ -53,8 +52,9 @@ export default class BattleScene extends Phaser.Scene {
         this.add.existing(fish)
         fish.anims.play('combat-flounder');
 
-        // enemy options
-        var enemy = new Enemy(this, fightPos2, fightHeight, "enemy-jellyfish", null, "Jelly", 100, 15, "jellyfish"); 
+        var finalBoss = new Enemy(this, fightPos2, fightHeight, "enemy-pufferfish", null, "Puffer", 150, 20, "pufferfish");
+        this.add.existing(finalBoss);
+        finalBoss.anims.play('enemy-pufferfish');
 
         var orca = new PlayerCharacter(this, fightPos1, fightHeight, "shift-orca", null, "Orca", 50, 40, "orca");
         this.add.existing(orca)
@@ -66,14 +66,11 @@ export default class BattleScene extends Phaser.Scene {
 
         // array with heroes
         this.heroes = [ fish, orca, shrimp ];
-        this.isFinalBoss = false;
         this.activeID = 0;
         this.activeHero = this.heroes[this.activeID];
         this.activeHeroHP = this.activeHero.getHP();
         // array with enemies
-        this.activeEnemy = enemy;
-        this.add.existing(this.activeEnemy);
-        this.activeEnemy.anims.play('enemy-jellyfish');
+        this.activeEnemy = finalBoss;
         this.enemies = [ this.activeEnemy ];
         // array with both parties, who will attack
         this.units = [this.activeHero];
@@ -86,17 +83,14 @@ export default class BattleScene extends Phaser.Scene {
 
         // Run UI Scene at the same time
 
-        this.scene.launch("UIScene");
+        this.scene.launch("BossUIScene");
     }
 
     wake() {
-        this.scene.run('UIScene'); 
+        this.scene.run('BossUIScene'); 
         this.activeID = 0;
         this.activeHero = this.heroes[this.activeID];
         this.activeHero.visible = true;
-        //this.checkFinalBoss();
-        this.decideEnemy();
-
         this.activeEnemy = this.enemies[0];
         this.victory = false;
         this.surrenderFlag = false;
@@ -107,21 +101,6 @@ export default class BattleScene extends Phaser.Scene {
         }
         this.time.addEvent({delay: 2000, callback: this.exitBattle, callbackScope: this});        
     }
-
-    decideEnemy() {
-        if (this.isFinalBoss) {
-            this.enemies[0] = this.setEnemies[1];
-            this.units[1] = this.enemies[0];
-        }
-    }
-
-    // randomizing enemy; instance in startBattle and wake
-    /*decideEnemy() {
-        var enemyIndex = 0;
-
-
-        return enemyPick;
-    }*/
 
     shapeShiftHero(index) {
         var tempHP = this.activeHero.getHP();
@@ -230,7 +209,7 @@ export default class BattleScene extends Phaser.Scene {
 
         // sleep the UI
         this.scene.sleep('UIScene');
-        this.scene.switch('LevelOneScene');
+        this.scene.switch('LevelTwoScene');
     }
 
     getHeroes() {

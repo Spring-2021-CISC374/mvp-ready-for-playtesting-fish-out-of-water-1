@@ -3,6 +3,7 @@ import LevelOneScene from './scenes/levelOneScene'
 import LevelTwoScene from './scenes/levelTwoScene'
 import PreloadScene from './scenes/preloadScene'
 import BattleScene from './scenes/BattleScene'
+import BossBattleScene from './scenes/BossBattleScene'
 import QuestionScene1 from './scenes/QuestionScene1'
 import QuestionScene2 from './scenes/QuestionScene2'
 import QuestionScene3 from './scenes/QuestionScene3'
@@ -11,6 +12,7 @@ import QuestionScene5 from './scenes/QuestionScene5'
 import QuestionScene6 from './scenes/QuestionScene6'
 
 import UIScene from './scenes/UIScene'
+import BossUIScene from './scenes/BossUIScene'
 import GameConfig = Phaser.Types.Core.GameConfig;
 
 const DEFAULT_WIDTH = 640
@@ -26,7 +28,7 @@ const config: GameConfig = {
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT
   },
-  scene: [PreloadScene, LevelOneScene, LevelTwoScene, BattleScene, UIScene, 
+  scene: [PreloadScene, LevelOneScene, LevelTwoScene, BattleScene, BossBattleScene, UIScene, BossUIScene,
     QuestionScene1,QuestionScene2,QuestionScene3, QuestionScene4, QuestionScene5, QuestionScene6],
   physics: {
     default: 'arcade',
