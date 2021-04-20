@@ -114,6 +114,9 @@ export default class Level extends Phaser.Scene {
 		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
 		this.physics.add.overlap(this.player, image, () =>{
    			this.scene.switch('BossBattleScene') 
+			   this.music.pause()
+			   this.bumpSound.play()
+			   this.combatMusic.resume()
 		})
 	});
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
