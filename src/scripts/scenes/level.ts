@@ -180,9 +180,9 @@ export default class Level extends Phaser.Scene {
 		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
 		this.physics.add.existing(image)
 		this.physics.add.overlap(this.player, image, () =>{
-			//this.music.pause()
-			//this.bumpSound.play()
-			//this.combatMusic.resume()
+		this.music.pause()
+		this.bumpSound.play()
+		this.combatMusic.resume()
 			//this.scene.pause(this.sceneKey)
 			//this.scene.launch("BattleScene")
 			this.scene.switch('BattleScene');
@@ -212,6 +212,11 @@ export default class Level extends Phaser.Scene {
   	}
 
   update(){
+	if (this.registry.get("Battle") == 1){
+		this.combatMusic.pause();
+		  this.music.resume()
+		  this.registry.set("Battle", 0)
+	  }
 	  if (this.registry.get("Question") == 1){
 		this.questionMusic.pause();
 		  this.music.resume()
@@ -654,6 +659,10 @@ export default class Level extends Phaser.Scene {
 					}
 				}
 			}
+		}
+
+		getPipeScore() {
+			return this.pipeScore;
 		}
 
   }

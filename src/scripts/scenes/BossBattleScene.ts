@@ -4,6 +4,7 @@ import HealthBar from "../objects/HealthBar";
 //import HealthBar from "../objects/HealthBar";
 import PlayerCharacter from "../objects/PlayerCharacter";
 import Unit from "../objects/Unit";
+import LevelTwoScene from "./levelTwoScene";
 
 export default class BossBattleScene extends Phaser.Scene {
     heroes: Unit[];
@@ -20,6 +21,7 @@ export default class BossBattleScene extends Phaser.Scene {
     playerHealth: HealthBar;
     enemyHealth: HealthBar;
     setEnemies: Enemy[];
+    parentScene: any;
 
     constructor() {
         super({ key: "BossBattleScene" });
@@ -29,6 +31,8 @@ export default class BossBattleScene extends Phaser.Scene {
         // load background image
         //this.cameras.main.("0x8B8BAE");
         this.add.image(0,0,'sewer-combat').setOrigin(0);
+
+        this.parentScene = this.scene.get("LevelTwoScene");
 
         this.sys.events.on('wake', this.wake, this);   
         
@@ -79,7 +83,12 @@ export default class BossBattleScene extends Phaser.Scene {
         this.playerHealth = new HealthBar(this, fightPos1, fish.y - 100, this.activeHero);
         this.enemyHealth = new HealthBar(this, fightPos2, this.activeEnemy.y - 100, this.activeEnemy);
 
-        this.index = -1;      
+        this.index = -1;
+        
+        if (this.parentScene.getPipeScore() > 3) {
+            this.scene.start("PowerUpScene");
+            this.activeEnemy.setHP(100);
+        }
 
         // Run UI Scene at the same time
 
@@ -210,6 +219,7 @@ export default class BossBattleScene extends Phaser.Scene {
         // sleep the UI
         this.scene.sleep('UIScene');
         this.scene.switch('LevelTwoScene');
+        this.registry.set("Battle", 1);
     }
 
     getHeroes() {
