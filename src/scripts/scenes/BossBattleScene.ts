@@ -219,6 +219,7 @@ export default class BossBattleScene extends Phaser.Scene {
         // sleep the UI
         this.scene.sleep('BossUIScene');
         this.scene.switch('LevelTwoScene');
+        this.registry.set("Battle", 1);
     }
 
     getHeroes() {

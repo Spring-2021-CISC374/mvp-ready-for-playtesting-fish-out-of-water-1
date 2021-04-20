@@ -25,6 +25,7 @@ export default class Level extends Phaser.Scene {
 	nextSceneKey
 	PipeLayer;
 	CombatLayer;
+	bossLayer;
 	startpt;
 	npcpt;
 	npc1;
@@ -33,7 +34,7 @@ export default class Level extends Phaser.Scene {
 	pipechecker;
 	Question;
 	clog;
-
+	
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
 	  super({ key: sceneKey })
 	  this.sceneKey = sceneKey
@@ -70,6 +71,7 @@ export default class Level extends Phaser.Scene {
 	  this.npcpt = this.map.findObject("Points", obj => obj.name === "NPCPoint")
 	  this.npc2 = this.map.findObject("NPC", obj => obj.name === "NPC2")
 	  this.npc1 = this.map.findObject("NPC", obj => obj.name === "NPC1")
+	  this.bossLayer = this.map.getObjectLayer('Boss')['objects'];
 
 	  if(this.sceneKey == "LevelTwoScene") {
 		this.clogpt = this.map.findObject("Clog", obj => obj.name === "Clog")
@@ -79,7 +81,6 @@ export default class Level extends Phaser.Scene {
 	  //Setting arrays of objects that contain position data
 	  this.PipeLayer = this.map.getObjectLayer('Pipe')['objects'];
 	  this.CombatLayer = this.map.getObjectLayer('Combat')['objects'];
-  
 	//Create all players on the map
 	this.player = this.physics.add.sprite(this.startpt.x, this.startpt.y,'clown').setScale(0.06)
 	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06).setBounce(0)
@@ -109,6 +110,15 @@ export default class Level extends Phaser.Scene {
 		}
 		this.clog.destroy()
 	  })
+	this.bossLayer.forEach(object => {
+		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
+		this.physics.add.overlap(this.player, image, () =>{
+   			this.scene.switch('BossBattleScene') 
+			   this.music.pause()
+			   this.bumpSound.play()
+			   this.combatMusic.resume()
+		})
+	});
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
 		  this.music.pause()
 		  this.bumpSound.play();
@@ -165,17 +175,17 @@ export default class Level extends Phaser.Scene {
 			this.pipeScore++
 			this.text.setText(`Pipe Pieces found : ${this.pipeScore}`)
 			this.createMessageBox("			You found a pipe piece! \n Hmm... I wonder what it's for...")
-		})
-	});
+			})
+		});
 
 	// switching scenes to combat
 	this.CombatLayer.forEach(object => {
 		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
 		this.physics.add.existing(image)
 		this.physics.add.overlap(this.player, image, () =>{
-			//this.music.pause()
-			//this.bumpSound.play()
-			//this.combatMusic.resume()
+		this.music.pause()
+		this.bumpSound.play()
+		this.combatMusic.resume()
 			//this.scene.pause(this.sceneKey)
 			//this.scene.launch("BattleScene")
 			this.scene.switch('BattleScene');
@@ -205,6 +215,11 @@ export default class Level extends Phaser.Scene {
   	}
 
   update(){
+	if (this.registry.get("Battle") == 1){
+		this.combatMusic.pause();
+		  this.music.resume()
+		  this.registry.set("Battle", 0)
+	  }
 	  if (this.registry.get("Question") == 1){
 		this.questionMusic.pause();
 		  this.music.resume()
