@@ -7,7 +7,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
     healthGauge: Phaser.GameObjects.Image;
     healthBar: Phaser.GameObjects.Image;
     nameText: Phaser.GameObjects.Text;
-    barDisplace: number = 395;
+    barDisplace: number = 500;
     fullBar: number = 110;
     xCoord: number;
     yCoord: number;
@@ -29,7 +29,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
 
         if (entity instanceof Enemy) {
             this.healthBar.setTintFill(0xbf0a00);
-            this.barDisplace = 85;
+            this.barDisplace = 120;
         } else {
             this.healthBar.setTintFill(0x4feb70);
         }
