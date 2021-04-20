@@ -21,6 +21,7 @@ export default class BattleScene extends Phaser.Scene {
     enemyHealth: HealthBar;
     isFinalBoss: boolean;
     setEnemies: Enemy[];
+    timesInCombat: number;
 
     constructor() {
         super({ key: "BattleScene" });
@@ -78,6 +79,7 @@ export default class BattleScene extends Phaser.Scene {
         // array with both parties, who will attack
         this.units = [this.activeHero];
         this.units = this.units.concat(this.enemies);
+        this.timesInCombat = 1;
         
         this.playerHealth = new HealthBar(this, fightPos1, fish.y - 100, this.activeHero);
         this.enemyHealth = new HealthBar(this, fightPos2, this.activeEnemy.y - 100, this.activeEnemy);
@@ -98,6 +100,7 @@ export default class BattleScene extends Phaser.Scene {
         this.activeEnemy = this.enemies[0];
         this.victory = false;
         this.surrenderFlag = false;
+        this.timesInCombat++;
 
         // reset HP
         for(var i = 0; i < this.units.length; i++) {
@@ -220,7 +223,14 @@ export default class BattleScene extends Phaser.Scene {
 
         // sleep the UI
         this.scene.sleep('UIScene');
-        this.scene.switch('LevelOneScene');
+
+        var keymsg = ""
+        if (this.timesInCombat > 2) {
+            keymsg = 'LevelTwoScene';
+        } else {
+            keymsg = 'LevelOneScene';
+        }
+        this.scene.switch(keymsg);
     }
 
     getHeroes() {
