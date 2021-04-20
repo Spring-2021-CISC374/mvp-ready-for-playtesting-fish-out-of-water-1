@@ -94,9 +94,7 @@ export default class BattleScene extends Phaser.Scene {
         this.activeID = 0;
         this.activeHero = this.heroes[this.activeID];
         this.activeHero.visible = true;
-        //this.checkFinalBoss();
-        this.decideEnemy();
-
+        this.activeEnemy.visible = true;
         this.activeEnemy = this.enemies[0];
         this.victory = false;
         this.surrenderFlag = false;
@@ -104,15 +102,7 @@ export default class BattleScene extends Phaser.Scene {
         // reset HP
         for(var i = 0; i < this.units.length; i++) {
             this.units[i].setHP(this.units[i].getMaxHP());            
-        }
-        this.time.addEvent({delay: 2000, callback: this.exitBattle, callbackScope: this});        
-    }
-
-    decideEnemy() {
-        if (this.isFinalBoss) {
-            this.enemies[0] = this.setEnemies[1];
-            this.units[1] = this.enemies[0];
-        }
+        }       
     }
 
     // randomizing enemy; instance in startBattle and wake
