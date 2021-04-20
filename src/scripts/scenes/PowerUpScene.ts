@@ -1,7 +1,6 @@
 import PlayerCharacter from "../objects/PlayerCharacter";
 
 export default class PowerUpScene extends Phaser.Scene {
-
     constructor() {
         super({key: "PowerUpScene"});
     }
@@ -14,8 +13,11 @@ export default class PowerUpScene extends Phaser.Scene {
         var fish = new PlayerCharacter(this, 250, 250, "combat", null, "Fish", 100, 20, "fish");        
         this.add.existing(fish)
         fish.anims.play('combat-flounder');
+ 
+        this.events.emit("Message", "Power up achieved! The final boss is weak!");
+        this.time.addEvent({ delay: 2000 });  
 
-        this.events.emit("Message", "Player !");
+        this.game.scene.stop('PowerUpScene');
     }
 
 }
