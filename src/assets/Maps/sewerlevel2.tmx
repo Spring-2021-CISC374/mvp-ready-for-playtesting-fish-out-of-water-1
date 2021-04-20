@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="320" height="320" tilewidth="2" tileheight="2" infinite="0" nextlayerid="14" nextobjectid="41">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="320" height="320" tilewidth="2" tileheight="2" infinite="0" nextlayerid="15" nextobjectid="43">
  <editorsettings>
   <export target="sewerlevel2.json" format="json"/>
  </editorsettings>
@@ -77798,8 +77798,10 @@
   <object id="14" name="StartingPoint" x="227.48" y="621.688" width="0.456788"/>
   <object id="15" name="NPCPoint" x="501.553" y="491.961"/>
   <object id="16" x="523.479" y="463.64"/>
-  <object id="39" name="Boss" x="455.288" y="626.261"/>
-  <object id="40" name="Boss" x="556.143" y="627.541"/>
+ </objectgroup>
+ <objectgroup id="14" name="Boss">
+  <object id="41" name="Boss" x="454.673" y="626.056"/>
+  <object id="42" name="Boss" x="556.377" y="626.408"/>
  </objectgroup>
  <objectgroup id="10" name="PipeCheck">
   <object id="35" name="PipeCheck" x="500.439" y="553.117"/>
