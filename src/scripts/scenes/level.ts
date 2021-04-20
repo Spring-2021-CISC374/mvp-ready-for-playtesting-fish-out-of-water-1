@@ -649,4 +649,8 @@ export default class Level extends Phaser.Scene {
 			}
 		}
 
+		getPipeScore() {
+			return this.pipeScore;
+		}
+
   }
