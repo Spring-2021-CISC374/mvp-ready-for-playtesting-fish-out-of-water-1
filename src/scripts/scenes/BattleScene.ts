@@ -231,6 +231,8 @@ export default class BattleScene extends Phaser.Scene {
             keymsg = 'LevelOneScene';
         }
         this.scene.switch(keymsg);
+        this.registry.set("Battle", 1);
+
     }
 
     getHeroes() {
