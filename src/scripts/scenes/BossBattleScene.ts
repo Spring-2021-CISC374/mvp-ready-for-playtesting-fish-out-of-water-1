@@ -34,6 +34,11 @@ export default class BossBattleScene extends Phaser.Scene {
 
         this.parentScene = this.scene.get("LevelTwoScene");
 
+        if (this.parentScene.getPipeScore() > 3) {
+            this.scene.start("PowerUpScene");
+            this.activeEnemy.setHP(100);
+        }
+
         this.sys.events.on('wake', this.wake, this);   
         
         this.startBattle();   
@@ -84,11 +89,6 @@ export default class BossBattleScene extends Phaser.Scene {
         this.enemyHealth = new HealthBar(this, fightPos2, this.activeEnemy.y - 100, this.activeEnemy);
 
         this.index = -1;
-        
-        if (this.parentScene.getPipeScore() > 3) {
-            this.scene.start("PowerUpScene");
-            this.activeEnemy.setHP(100);
-        }
 
         // Run UI Scene at the same time
 
@@ -217,7 +217,7 @@ export default class BossBattleScene extends Phaser.Scene {
         }
 
         // sleep the UI
-        this.scene.sleep('UIScene');
+        this.scene.sleep('BossUIScene');
         this.scene.switch('LevelTwoScene');
     }
 

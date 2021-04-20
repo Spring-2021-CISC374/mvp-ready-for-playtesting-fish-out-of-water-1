@@ -4,6 +4,7 @@ export default class Menu extends Phaser.GameObjects.Container {
     menuItems: MenuItem[];
     menuItemIndex: number;
     heroes: any;
+    selected: boolean;
     
     constructor (x, y, scene) {
         super(scene, x, y);
@@ -12,6 +13,7 @@ export default class Menu extends Phaser.GameObjects.Container {
         //this.heroes = heroes;
         this.x = x;
         this.y = y;
+        this.selected = false;
     }
 
     addMenuItem(unit) {
@@ -43,6 +45,7 @@ export default class Menu extends Phaser.GameObjects.Container {
         //this.menuItems[this.menuItemIndex].deselect();
         this.menuItemIndex = index;
         //this.menuItems[this.menuItemIndex].select();
+        this.selected = true;
     }
 
     getMenuItemIndex() {
@@ -53,6 +56,7 @@ export default class Menu extends Phaser.GameObjects.Container {
     deselect() {        
         this.menuItems[this.menuItemIndex].deselect();
         this.menuItemIndex = 0;
+        this.selected = false;
     }
 
     confirm() {
