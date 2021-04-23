@@ -6,6 +6,11 @@
 - *Aidan Conley*
 - *Taylor Fields*
 
+## Instructions for running the game
+- # Install dependencies
+- $ npm install
+- $ npm start
+
 ## Jumpstarting Game Development
 - *Ishika Govil: Created the repository with a Phaser 3 template. Used Tiled to create map designs for our different levels. Found a variety of different sprites for fish to use for our game, and created an Atlas for those using TexturePacker. Implemented camaras so that the scene moves with the player. Created objects and locations in map that perform actions when collided with player.*
 - *Dea Harjianto: Created combat sequence, including basic attack/shapeshifting logic. Placeholder images are used and are nondescriptive of the actual gameplay; very general. Only issue is healthbar generation, but health is kept track of within game.*
