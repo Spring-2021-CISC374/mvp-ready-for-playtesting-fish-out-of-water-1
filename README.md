@@ -7,9 +7,13 @@
 - *Taylor Fields*
 
 ## Instructions for running the game
-- # Install dependencies
+- ## Install dependencies
 - $ npm install
+- ## Start the local development server (on port 8080)
 - $ npm start
+
+## Instructions for movement in game
+- Use arrow keys to move around the map. Upon entering combat, use the up and down arrow keys to pick an option, then hit space to select. If Shapeshift is selected, use the right arrow key and then hit up or down to select an animal. Then go back to using up and down arrow keys.
 
 ## Jumpstarting Game Development
 - *Ishika Govil: Created the repository with a Phaser 3 template. Used Tiled to create map designs for our different levels. Found a variety of different sprites for fish to use for our game, and created an Atlas for those using TexturePacker. Implemented camaras so that the scene moves with the player. Created objects and locations in map that perform actions when collided with player.*
