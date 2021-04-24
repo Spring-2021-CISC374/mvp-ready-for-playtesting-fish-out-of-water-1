@@ -34,6 +34,7 @@ export default class Level extends Phaser.Scene {
 	pipechecker;
 	Question;
 	clog;
+
 	
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
 	  super({ key: sceneKey })
@@ -212,7 +213,16 @@ export default class Level extends Phaser.Scene {
     	this.pipeMsg.destroy();
     	this.messageBox.destroy();
     	this.closeButton.destroy();
+		//zoom out to show more map
+		this.cameras.main.zoom = 2.5;
+		this.text.visible = false;
+		this.time.addEvent({ delay: 2000, callback: this.resetZoom, callbackScope: this });
   	}
+
+	resetZoom(){
+		this.cameras.main.zoom = 5;
+		this.text.visible = true;
+	}
 
   update(){
 	if (this.registry.get("Battle") == 1){
@@ -488,6 +498,7 @@ export default class Level extends Phaser.Scene {
 
 	//npc 1
 	QuestionFour(){
+		
 		if (this.registry.get("D1") == 'D'){
 			//right answer
 			this.player.x = 335
@@ -667,5 +678,4 @@ export default class Level extends Phaser.Scene {
 		getPipeScore() {
 			return this.pipeScore;
 		}
-
   }
