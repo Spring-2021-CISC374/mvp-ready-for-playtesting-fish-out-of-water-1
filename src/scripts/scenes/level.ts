@@ -16,6 +16,7 @@ export default class Level extends Phaser.Scene {
 	text;
 	//Map information
 	minimap
+	pressed:boolean
 	map: Phaser.Tilemaps.Tilemap;
 	background:Phaser.Tilemaps.TilemapLayer;
 	insufficientLayer: Phaser.Tilemaps.TilemapLayer;
@@ -41,6 +42,7 @@ export default class Level extends Phaser.Scene {
 	  this.sceneKey = sceneKey
 	  this.mapKey = mapKey
 	  this.nextSceneKey = nextSceneKey
+	  this.pressed = false
 	}
   
 	preload(){
@@ -58,11 +60,11 @@ export default class Level extends Phaser.Scene {
 		this.questionMusic.pause();
 		this.combatMusic.play();
 		this.combatMusic.pause();
-	  //Background color
-	  this.cameras.main.setBackgroundColor("0x142702");
+
 	  //Create map from Tiled and add necessary collisions
 	  this.map = this.make.tilemap({key: this.mapKey})
 	  this.tileset = this.map.addTilesetImage('Pipes', 'pipes')
+	  this.map.createLayer('Background', this.map.addTilesetImage('background', 'background'))
 	  this.background = this.map.createLayer('Sewer', this.tileset)
 	  this.background.setCollisionByProperty({collides: true})
 	  this.physics.world.setBoundsCollision()
@@ -167,10 +169,10 @@ export default class Level extends Phaser.Scene {
 	  this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
 	  this.cameras.main.startFollow(this.player,true)
 	  this.cameras.main.zoom = 5;
-	  this.minimap = this.cameras.add(450, 10, 640, 640).setZoom(0.2)
-	  this.minimap.setBackgroundColor(0x142702)
-	  this.minimap.scrollX = 1600 //fix this
-	  this.minimap.scrollY = 300
+	  this.minimap = this.cameras.add(0, 0, 640, 640).setZoom(0.8)
+	  this.minimap.scrollX = -20
+	  this.minimap.scrollY = -20
+	  this.minimap.setVisible(false)
 
 	  //Add pipe and combat overlap 
 	  this.PipeLayer.forEach(object => {
@@ -199,16 +201,13 @@ export default class Level extends Phaser.Scene {
 	})
 
 	  //score
-	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore}`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore} \nPress M for map`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
   }
   	createMessageBox(message){
     	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
-    	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)
-		this.pipeMsg = this.add.text(this.game.canvas.width/2 -30 , this.game.canvas.height/2 - 10, message, { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
-		this.closeButton.setInteractive();
-    	this.closeButton.on('pointerdown', this.destroyMessageBox, this);
-    	this.closeButton.on('pointerup', this.mouseFix, this);
-		this.closeButton.on('pointerout', this.mouseFix, this);
+		this.pipeMsg = this.add.text(this.game.canvas.width/2 -30 , this.game.canvas.height/2 -5, message, { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
+		this.time.addEvent({ delay: 2500, callback: this.destroyMessageBox, callbackScope: this });
+
 		this.pauseMovement = true;
    }
    mouseFix(){}
@@ -216,10 +215,24 @@ export default class Level extends Phaser.Scene {
 		this.pauseMovement = false;
     	this.pipeMsg.destroy();
     	this.messageBox.destroy();
-    	this.closeButton.destroy();
-  	}
+	  }
+	  
 
   update(){
+	if (this.input.keyboard.addKey('M').isDown) {
+		this.minimap.setVisible(true)
+		this.text.setVisible(false)
+		this.pressed = true
+		this.pauseMovement = true;
+	}
+	if (this.input.keyboard.addKey('M').isUp) {
+		if(this.pressed) {
+			this.minimap.setVisible(false)
+			this.text.setVisible(true)
+			this.pauseMovement = false;
+			this.pressed = false
+		}
+	}
 	if (this.registry.get("Battle") == 1){
 		this.combatMusic.pause();
 		  this.music.resume()
