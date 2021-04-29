@@ -15,6 +15,7 @@ export default class Level extends Phaser.Scene {
 	closeButton;
 	text;
 	//Map information
+	minimap
 	map: Phaser.Tilemaps.Tilemap;
 	background:Phaser.Tilemaps.TilemapLayer;
 	insufficientLayer: Phaser.Tilemaps.TilemapLayer;
@@ -166,7 +167,11 @@ export default class Level extends Phaser.Scene {
 	  this.cameras.main.setBounds(0, 0, this.background.displayWidth, this.background.displayHeight);
 	  this.cameras.main.startFollow(this.player,true)
 	  this.cameras.main.zoom = 5;
-  
+	  this.minimap = this.cameras.add(450, 10, 640, 640).setZoom(0.2)
+	  this.minimap.setBackgroundColor(0x142702)
+	  this.minimap.scrollX = 1600 //fix this
+	  this.minimap.scrollY = 300
+
 	  //Add pipe and combat overlap 
 	  this.PipeLayer.forEach(object => {
 		const image = this.physics.add.image(object.x, object.y, "PipePiece").setScale(0.05);
