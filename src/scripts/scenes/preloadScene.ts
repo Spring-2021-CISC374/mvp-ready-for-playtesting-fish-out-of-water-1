@@ -20,9 +20,11 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('phaser-logo', 'assets/img/phaser-logo.png')
     this.load.image('sewer-combat', 'assets/img/SewerCombat.png')
 
+    // healthbar images
     this.load.image('healthbar', 'assets/img/healthbar.png')
     this.load.image('shadowbar', 'assets/img/shadowbar.png')
 
+    // combat sprites
     this.load.atlas('flounder', 'assets/Sprites/Flounder.png','assets/Sprites/Flounder.json' )
     this.load.atlas('combat', 'assets/Sprites/NinjaFish.png', 'assets/Sprites/NinjaFish.json')
     this.load.atlas('jellyfish', 'assets/Sprites/Jellyfish.png', 'assets/Sprites/Jellyfish.json')
@@ -36,11 +38,15 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('combatmusic','assets/Music/combatmusic.mp3')
     this.load.audio('bumpsound','assets/Music/bumpsound.mp3')
 
+    // instructions images
+    this.load.image('arrowKeyHelp', 'assets/img/arrowKeys.png')
+    this.load.image('confirmHelp', 'assets/img/confirmHelp.png')
+    this.load.image('pollHelp', 'assets/img/pollHelp.png')
     
   }
   create() {
     this.add.text(20, 20, "Loading game...");
-    this.scene.start('LevelOneScene');
+    this.scene.start('InstructionScene');
 
     this.anims.create({
       key: 'clown-idle',
