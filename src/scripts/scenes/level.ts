@@ -116,7 +116,7 @@ export default class Level extends Phaser.Scene {
 	  this.physics.add.collider(this.player,this.pipecheck, () => {
 		if(this.pipeScore > 3) {
 			this.createMessageBox("You collected enough pipes \nto fix the broken pipes!")
-			this.insufficientLayer.setVisible(false)
+			this.insufficientLayer.destroy()
 			this.sufficientLayer = this.map.createLayer('SufficientPipes', this.tileset).setDepth(-1)
 			this.sufficientLayer.setCollisionByProperty({collides: true})
 			this.physics.add.collider(this.player, this.sufficientLayer)
@@ -201,10 +201,10 @@ export default class Level extends Phaser.Scene {
 		this.physics.add.overlap(this.player, image, () =>{
 			image.destroy()
 			this.pipeScore++
-			this.text.setText(`Pipe Pieces found : ${this.pipeScore}`)
+			this.text.setText(`Pipe Pieces found : ${this.pipeScore} \nPress M for map`)
 			this.createMessageBox("\t\t\t\tYou found a pipe! \n Hmm... I wonder what it's for...")
-			})
-		});
+		})
+	 });
 
 	// switching scenes to combat
 	this.CombatLayer.forEach(object => {
