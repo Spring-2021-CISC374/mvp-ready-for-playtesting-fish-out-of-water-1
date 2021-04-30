@@ -135,7 +135,7 @@ export default class Level extends Phaser.Scene {
 				this.scene.switch('PipeScene')
 			}
 			else {
-				   this.scene.switch('BossBattleScene') 
+				   this.game.scene.start('BossBattleScene', {extraDamage: false, extraHealth: false, extraLife: false}) 
 				   this.combatMusic.resume()
 			}
 			this.music.pause()
