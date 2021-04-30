@@ -1,5 +1,3 @@
-import HealthBar from "../objects/HealthBar"
-
 export default class PreloadScene extends Phaser.Scene {
   
   constructor() {
@@ -11,19 +9,27 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('sewerlevel2', 'assets/Maps/sewerlevel2.json')
     this.load.image('pipes', 'assets/img/Pipes.png')
     this.load.image('background', 'assets/img/background.png' )
+
+    //Images
     this.load.image("messageBox", "assets/img/messageBox.png");
-    this.load.image("closeButton", "assets/img/closeButton.png");
-    this.load.image('PipePiece', 'assets/img/PipePiece.png')
+    this.load.image('pipe1', 'assets/img/pipe1.png')
+    this.load.image('pipe2', 'assets/img/pipe2.png')
+    this.load.image('pipe3', 'assets/img/pipe3.png')
+    this.load.image('pipe4', 'assets/img/pipe4.png')
+    this.load.image('pipe5', 'assets/img/pipe5.png')
+
     this.load.image('transparent', 'assets/img/Transparent.png')
     this.load.image('clog', 'assets/img/Clog.png')
-    //Characters
-    this.load.atlas('clown', 'assets/Sprites/ClownFish.png','assets/Sprites/ClownFish.json' )
     this.load.image('phaser-logo', 'assets/img/phaser-logo.png')
     this.load.image('sewer-combat', 'assets/img/SewerCombat.png')
-
     this.load.image('healthbar', 'assets/img/healthbar.png')
     this.load.image('shadowbar', 'assets/img/shadowbar.png')
-
+    this.load.image('questionBox', 'assets/img/questionBox.png')
+    this.load.image('extraLife', 'assets/img/extraLife.png')
+    this.load.image('extraHealth', 'assets/img/extraHealth.png')
+    this.load.image('extraDamage', 'assets/img/extraDamage.png')
+    //Characters
+    this.load.atlas('clown', 'assets/Sprites/ClownFish.png','assets/Sprites/ClownFish.json' )
     this.load.atlas('flounder', 'assets/Sprites/Flounder.png','assets/Sprites/Flounder.json' )
     this.load.atlas('combat', 'assets/Sprites/NinjaFish.png', 'assets/Sprites/NinjaFish.json')
     this.load.atlas('jellyfish', 'assets/Sprites/Jellyfish.png', 'assets/Sprites/Jellyfish.json')

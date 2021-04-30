@@ -22,7 +22,10 @@ export default class BossBattleScene extends Phaser.Scene {
     enemyHealth: HealthBar;
     setEnemies: Enemy[];
     parentScene: any;
-
+    extraDamage:boolean;
+    extraHealth:boolean;
+    extraLife:boolean;
+    
     constructor() {
         super({ key: "BossBattleScene" });
     }

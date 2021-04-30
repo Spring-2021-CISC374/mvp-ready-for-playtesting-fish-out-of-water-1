@@ -12,8 +12,8 @@ export default class Level extends Phaser.Scene {
 	//Pop up message box 
 	pipeMsg;
 	messageBox;
-	closeButton;
 	text;
+	delay
 	//Map information
 	minimap
 	pressed:boolean
@@ -35,6 +35,7 @@ export default class Level extends Phaser.Scene {
 	npc2;
 	clogpt;
 	pipechecker;
+	pipecheck;
 	Question;
 	clog;
 
@@ -45,6 +46,7 @@ export default class Level extends Phaser.Scene {
 	  this.mapKey = mapKey
 	  this.nextSceneKey = nextSceneKey
 	  this.pressed = false
+	  this.delay = false
 	}
   
 	preload(){
@@ -62,7 +64,11 @@ export default class Level extends Phaser.Scene {
 		this.questionMusic.pause();
 		this.combatMusic.play();
 		this.combatMusic.pause();
-
+		//message box
+		this.createMessageBox("")
+	  	this.messageBox.setVisible(false)
+	  	this.pipeMsg.setVisible(false)
+		this.delay = true
 	  //Create map from Tiled and add necessary collisions
 	  this.map = this.make.tilemap({key: this.mapKey})
 	  this.tileset = this.map.addTilesetImage('Pipes', 'pipes')
@@ -79,9 +85,11 @@ export default class Level extends Phaser.Scene {
 	  this.bossLayer = this.map.getObjectLayer('Boss')['objects'];
 
 	  if(this.sceneKey == "LevelTwoScene") {
+		this.insufficientLayer = this.map.createLayer('InsufficientPipes', this.tileset).setDepth(-1)
 		this.clogpt = this.map.findObject("Clog", obj => obj.name === "Clog")
 		this.pipechecker = this.map.findObject("PipeCheck", obj => obj.name === "PipeCheck")
 		this.clog = this.physics.add.image(this.clogpt.x, this.clogpt.y,'clog').setScale(0.025)
+		this.pipecheck = this.physics.add.image(this.pipechecker.x, this.pipechecker.y, 'transparent').setScale(0.05)
 	  }
 	  //Setting arrays of objects that contain position data
 	  this.PipeLayer = this.map.getObjectLayer('Pipe')['objects'];
@@ -102,26 +110,36 @@ export default class Level extends Phaser.Scene {
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
 	  this.physics.add.collider(this.player, this.clog, () =>{
-		this.createMessageBox("			You found the clog, \n and saved Sewer-topia!")
+		this.createMessageBox("			You found the clog, \n and saved Sewer-topia!")	
+		this.clog.destroy()
+	  })
+	  this.physics.add.collider(this.player,this.pipecheck, () => {
 		if(this.pipeScore > 3) {
+			this.createMessageBox("You collected enough pipes \nto fix the broken pipes!")
+			this.insufficientLayer.setVisible(false)
 			this.sufficientLayer = this.map.createLayer('SufficientPipes', this.tileset).setDepth(-1)
 			this.sufficientLayer.setCollisionByProperty({collides: true})
 			this.physics.add.collider(this.player, this.sufficientLayer)
 		}
 		else {
-			this.insufficientLayer = this.map.createLayer('InsufficientPipes', this.tileset).setDepth(-1)
+			this.createMessageBox("Sorry, you didn't collect enough \npipes to fix the break :(")
 			this.insufficientLayer.setCollisionByProperty({collides: true})
 			this.physics.add.collider(this.player, this.insufficientLayer)
 		}
-		this.clog.destroy()
+		this.pipecheck.destroy()
 	  })
 	this.bossLayer.forEach(object => {
 		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
 		this.physics.add.overlap(this.player, image, () =>{
-   			this.scene.switch('BossBattleScene') 
-			   this.music.pause()
-			   this.bumpSound.play()
-			   this.combatMusic.resume()
+			if(this.pipeScore > 3) {
+				this.scene.switch('PipeScene')
+			}
+			else {
+				   this.scene.switch('BossBattleScene') 
+				   this.combatMusic.resume()
+			}
+			this.music.pause()
+			this.bumpSound.play()
 		})
 	});
 	  this.physics.add.collider(this.player, this.npcptCollide, () =>{
@@ -178,12 +196,13 @@ export default class Level extends Phaser.Scene {
 
 	  //Add pipe and combat overlap 
 	  this.PipeLayer.forEach(object => {
-		const image = this.physics.add.image(object.x, object.y, "PipePiece").setScale(0.05);
+		var value = Phaser.Math.Between(1, 5);
+		const image = this.physics.add.image(object.x, object.y, "pipe"+value).setScale(0.04);
 		this.physics.add.overlap(this.player, image, () =>{
 			image.destroy()
 			this.pipeScore++
 			this.text.setText(`Pipe Pieces found : ${this.pipeScore}`)
-			this.createMessageBox("			You found a pipe piece! \n Hmm... I wonder what it's for...")
+			this.createMessageBox("\t\t\t\tYou found a pipe! \n Hmm... I wonder what it's for...")
 			})
 		});
 
@@ -192,9 +211,9 @@ export default class Level extends Phaser.Scene {
 		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
 		this.physics.add.existing(image)
 		this.physics.add.overlap(this.player, image, () =>{
-		this.music.pause()
-		this.bumpSound.play()
-		this.combatMusic.resume()
+			this.music.pause()
+			this.bumpSound.play()
+			this.combatMusic.resume()
 			//this.scene.pause(this.sceneKey)
 			//this.scene.launch("BattleScene")
 			this.scene.switch('BattleScene');
@@ -208,9 +227,10 @@ export default class Level extends Phaser.Scene {
   	createMessageBox(message){
     	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
 		this.pipeMsg = this.add.text(this.game.canvas.width/2 -30 , this.game.canvas.height/2 -5, message, { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
-		this.time.addEvent({ delay: 2500, callback: this.destroyMessageBox, callbackScope: this });
-
-		this.pauseMovement = true;
+		if(this.delay) {
+			this.time.addEvent({ delay: 2500, callback: this.destroyMessageBox, callbackScope: this });
+			this.pauseMovement = true;
+		}
    }
    mouseFix(){}
    destroyMessageBox(){
@@ -229,6 +249,8 @@ export default class Level extends Phaser.Scene {
 	if (this.input.keyboard.addKey('M').isDown) {
 		this.minimap.setVisible(true)
 		this.text.setVisible(false)
+		this.messageBox.setVisible(false)
+		this.pipeMsg.setVisible(false)
 		this.pressed = true
 		this.pauseMovement = true;
 	}
