@@ -29,12 +29,18 @@ export default class BattleScene extends Phaser.Scene {
 
     create() {
         // load background image
-        //this.cameras.main.("0x8B8BAE");
-        this.add.image(0,0,'sewer-combat').setOrigin(0);
+        //this.cameras.main.("0x8B8BAE");     
+        
+        this.scene.launch("BattleIntro");  
 
         this.sys.events.on('wake', this.wake, this);   
-        
-        this.startBattle();   
+
+        this.time.addEvent({ delay: 3000, callback: this.begin, callbackScope: this });
+    }
+
+    begin() {
+        this.add.image(0,0,'sewer-combat').setOrigin(0); 
+        this.startBattle(); 
     }
 
     startBattle() {
