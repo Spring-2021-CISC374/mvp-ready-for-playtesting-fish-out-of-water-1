@@ -33,6 +33,11 @@ export default class Level extends Phaser.Scene {
 	npcpt;
 	npc1;
 	npc2;
+	helper1;
+	helper2;
+	helper3;
+	helper4;
+	helper5;
 	clogpt;
 	pipechecker;
 	pipecheck;
@@ -99,12 +104,33 @@ export default class Level extends Phaser.Scene {
 	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06).setBounce(0)
 	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06).setBounce(0)
 	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06).setBounce(0)
+	//change later, to where they need/should be
+	if(this.sceneKey == "LevelOneScene"){
+	this.helper1 = this.physics.add.sprite(this.startpt.x + 20,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
+	this.helper2 = this.physics.add.sprite(this.startpt.x + 40,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
+	this.helper3 = this.physics.add.sprite(this.startpt.x + 60,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
+	}
+	if(this.sceneKey == "LevelTwoScene"){	
+	this.helper4 = this.physics.add.sprite(this.startpt.x + 20,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
+	this.helper5 = this.physics.add.sprite(this.startpt.x + 40,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
+	}
+
 	  //animations
 	  this.npcptCollide.anims.play('flounder-idle')
 	  this.player.anims.play('clown-idle')
 	  this.npcptCollide.anims.play('flounder-idle')
 	  this.npc1Collide.anims.play('flounder-idle')
 	  this.npc2Collide.anims.play('flounder-idle')
+	  //helper animations
+	  if(this.sceneKey == "LevelOneScene"){
+		this.helper1.anims.play('flounder-idle')
+		this.helper2.anims.play('flounder-idle')
+		this.helper3.anims.play('flounder-idle')
+	  }
+	  if(this.sceneKey == "LevelTwoScene"){
+		this.helper4.anims.play('flounder-idle')
+		this.helper5.anims.play('flounder-idle')
+	  }
 	  //physics collider
 	  this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
@@ -219,6 +245,37 @@ export default class Level extends Phaser.Scene {
 			this.scene.switch('BattleScene');
 			image.destroy()
 		})
+	})
+
+	//helper overlap
+	this.physics.add.overlap(this.player, this.helper1, () =>{
+		this.helper1.destroy()
+		this.createMessageBox("Helper 1!\nHmm... I wonder what it's for...\nI know you can save us!")
+		this.destroyMessageBox
+	})
+
+	this.physics.add.overlap(this.player, this.helper2, () =>{
+		this.helper2.destroy()
+		this.createMessageBox("Helper 2!\nHmm... I wonder what it's for...\nGood luck friend!")
+		this.destroyMessageBox
+	})
+
+	this.physics.add.overlap(this.player, this.helper3, () =>{
+		this.helper3.destroy()
+		this.createMessageBox("Helper 3!\nHmm... I wonder what it's for...\nPlease, help us!")
+		this.destroyMessageBox
+	})
+
+	this.physics.add.overlap(this.player, this.helper4, () =>{
+		this.helper4.destroy()
+		this.createMessageBox("Helper 4!\nHmm... I wonder what it's for...\nGood luck friend!")
+		this.destroyMessageBox
+	})
+
+	this.physics.add.overlap(this.player, this.helper5, () =>{
+		this.helper5.destroy()
+		this.createMessageBox("Helper 5!\nHmm... I wonder what it's for...\nI believe in you!")
+		this.destroyMessageBox
 	})
 
 	  //score
