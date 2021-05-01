@@ -281,8 +281,13 @@ export default class Level extends Phaser.Scene {
 		this.destroyMessageBox
 	})
 
-	  //score
-	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore} \nPress M for map`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+	//instructions
+	this.help = this.add.text(this.game.canvas.width/2+30, this.game.canvas.height/2 - 60, 'Press H for help').setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+
+	//score
+	this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore} \nPress M for map`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+
+	this.input.keyboard.on("keydown", this.onKeyInput, this);
   }
 
   	onKeyInput(event) {
