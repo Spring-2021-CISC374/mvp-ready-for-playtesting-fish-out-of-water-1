@@ -310,7 +310,7 @@ export default class Level extends Phaser.Scene {
 		this.pauseMovement = false;
     	this.pipeMsg.destroy();
     	this.messageBox.destroy();
-		this.help.visible = false;
+		//this.help.visible = false;
 	  }
 	  
 
