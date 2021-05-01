@@ -3,6 +3,7 @@ export default class InstructionScene extends Phaser.Scene {
     arrowKeyImg: Phaser.GameObjects.Image;
     spaceHelp: Phaser.GameObjects.Image;
     pollHelp: Phaser.GameObjects.Image;
+    prevScene: Phaser.Scene
 
     constructor() {
         super("InstructionScene");
@@ -56,18 +57,22 @@ export default class InstructionScene extends Phaser.Scene {
 
         const exitX = 85;
         const exitY = pollY + 150;
-        var exitText = this.add.text(exitX, exitY, "Press spacebar to exit the instructions.", {font: "bold 20px Courier"});
+        var exitText = this.add.text(exitX, exitY, "Press 'H' to exit the instructions.", {font: "bold 20px Courier"});
         exitText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
 
         // listening for spacebar
         this.input.keyboard.on("keydown", this.onKeyInput, this);
     }
 
+    setHostScene(sceneKey) {
+        this.prevScene = sceneKey;
+    }
+
 
     // close scene when pressed spacebar
     onKeyInput(event) {
-        if(event.code === "Space") {
-            this.scene.sleep();
+        if(event.keyCode === Phaser.Input.Keyboard.KeyCodes.H) {
+            this.scene.switch(this.prevScene);
         } 
         
     }

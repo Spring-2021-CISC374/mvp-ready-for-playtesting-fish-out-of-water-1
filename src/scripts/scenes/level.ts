@@ -1,3 +1,5 @@
+import InstructionScene from "./InstructionScene";
+
 export default class Level extends Phaser.Scene {
 	player: Phaser.Physics.Arcade.Sprite
 	npcptCollide: Phaser.Physics.Arcade.Sprite
@@ -20,6 +22,7 @@ export default class Level extends Phaser.Scene {
 	insufficientLayer: Phaser.Tilemaps.TilemapLayer;
 	sufficientLayer: Phaser.Tilemaps.TilemapLayer;
 	tileset: Phaser.Tilemaps.Tileset;
+	instructions: any
 	mapKey
 	sceneKey
 	nextSceneKey
@@ -34,6 +37,7 @@ export default class Level extends Phaser.Scene {
 	pipechecker;
 	Question;
 	clog;
+	help: Phaser.GameObjects.Text;
 
 	
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
@@ -58,6 +62,7 @@ export default class Level extends Phaser.Scene {
 		this.questionMusic.pause();
 		this.combatMusic.play();
 		this.combatMusic.pause();
+
 	  //Background color
 	  this.cameras.main.setBackgroundColor("0x142702");
 	  //Create map from Tiled and add necessary collisions
@@ -87,6 +92,7 @@ export default class Level extends Phaser.Scene {
 	this.npcptCollide = this.physics.add.sprite(this.npcpt.x,this.npcpt.y,'flounder').setScale(0.06).setBounce(0)
 	this.npc1Collide = this.physics.add.sprite(this.npc1.x,this.npc1.y,'flounder').setScale(0.06).setBounce(0)
 	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06).setBounce(0)
+
 	  //animations
 	  this.npcptCollide.anims.play('flounder-idle')
 	  this.player.anims.play('clown-idle')
@@ -194,9 +200,21 @@ export default class Level extends Phaser.Scene {
 		})
 	})
 
-	  //score
-	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore}`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+	// include help instructions
+	this.help = this.add.text(this.game.canvas.width - 60, this.game.canvas.height/2 - 60, `Press H for help`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+	this.input.keyboard.on("keydown", this.onKeyInput, this);
+
+	//score
+	this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore}`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
   }
+
+  	onKeyInput(event) {
+        if(event.keyCode === Phaser.Input.Keyboard.KeyCodes.H) {
+			this.instructions = this.scene.get("InstructionScene")
+			this.instructions.setHostScene(this.sceneKey);
+            this.scene.switch("InstructionScene");
+        } 
+	  }
   	createMessageBox(message){
     	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
     	this.closeButton = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2 + 5, "closeButton").setScale(0.1).setScrollFactor(0)

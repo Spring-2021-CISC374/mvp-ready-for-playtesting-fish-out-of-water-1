@@ -42,11 +42,14 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('arrowKeyHelp', 'assets/img/arrowKeys.png')
     this.load.image('confirmHelp', 'assets/img/confirmHelp.png')
     this.load.image('pollHelp', 'assets/img/pollHelp.png')
+    this.load.image('helpIcon', 'assets/img/helpIcon.png')
+    this.load.image('helpIconHover', 'assets/img/helpIconHover.png')
+    this.load.image('helpInfo', 'assets/img/helpInfo.png')
     
   }
   create() {
     this.add.text(20, 20, "Loading game...");
-    this.scene.start('InstructionScene');
+    this.scene.start('LevelOneScene');
 
     this.anims.create({
       key: 'clown-idle',
