@@ -201,7 +201,7 @@ export default class Level extends Phaser.Scene {
 	})
 
 	// include help instructions
-	this.help = this.add.text(this.game.canvas.width - 60, this.game.canvas.height/2 - 60, `Press H for help`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
+	this.help = this.add.text(this.game.canvas.width/2 + 30, this.game.canvas.height/2 - 60, `Press H for help`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
 	this.input.keyboard.on("keydown", this.onKeyInput, this);
 
 	//score
@@ -234,12 +234,14 @@ export default class Level extends Phaser.Scene {
 		//zoom out to show more map
 		this.cameras.main.zoom = 2.5;
 		this.text.visible = false;
+		this.help.visible = false;
 		this.time.addEvent({ delay: 2000, callback: this.resetZoom, callbackScope: this });
   	}
 
 	resetZoom(){
 		this.cameras.main.zoom = 5;
 		this.text.visible = true;
+		this.help.visible = true;
 	}
 
   update(){
