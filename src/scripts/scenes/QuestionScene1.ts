@@ -29,8 +29,6 @@ export default class QuestionScene extends Phaser.Scene {
                 this.currentMenu.moveSelectionUp();
             } else if(event.code === "ArrowDown") {
                 this.currentMenu.moveSelectionDown();
-            } else if(event.code === "ArrowLeft") {
-            } else if(event.code === "ArrowRight") {
             } else if(event.code === "Space") {
                 this.currentMenu.confirm();
                 this.game.scene.stop('QuestionScene1');

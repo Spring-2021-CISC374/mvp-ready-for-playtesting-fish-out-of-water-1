@@ -1,3 +1,4 @@
+
 export default class Level extends Phaser.Scene {
 	player: Phaser.Physics.Arcade.Sprite
 	npcptCollide: Phaser.Physics.Arcade.Sprite
@@ -23,6 +24,7 @@ export default class Level extends Phaser.Scene {
 	insufficientLayer: Phaser.Tilemaps.TilemapLayer;
 	sufficientLayer: Phaser.Tilemaps.TilemapLayer;
 	tileset: Phaser.Tilemaps.Tileset;
+	instructions: any
 	mapKey
 	sceneKey
 	nextSceneKey
@@ -43,6 +45,7 @@ export default class Level extends Phaser.Scene {
 	pipecheck;
 	Question;
 	clog;
+	help: Phaser.GameObjects.Text;
 
 	
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
@@ -281,6 +284,14 @@ export default class Level extends Phaser.Scene {
 	  //score
 	  this.text = this.add.text(this.game.canvas.width/2-60, this.game.canvas.height/2 - 60,`Pipe Pieces found : ${this.pipeScore} \nPress M for map`).setScrollFactor(0).setColor('#ffffff').setFontSize(32).setScale(0.1);
   }
+
+  	onKeyInput(event) {
+        if(event.keyCode === Phaser.Input.Keyboard.KeyCodes.H) {
+			this.instructions = this.scene.get("InstructionScene")
+			this.instructions.setHostScene(this.sceneKey);
+            this.scene.switch("InstructionScene");
+        } 
+	  }
   	createMessageBox(message){
     	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
 		this.pipeMsg = this.add.text(this.game.canvas.width/2 -30 , this.game.canvas.height/2 -5, message, { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
@@ -294,12 +305,14 @@ export default class Level extends Phaser.Scene {
 		this.pauseMovement = false;
     	this.pipeMsg.destroy();
     	this.messageBox.destroy();
+		this.help.visible = false;
 	  }
 	  
 
 	resetZoom(){
 		this.cameras.main.zoom = 5;
 		this.text.visible = true;
+		this.help.visible = true;
 	}
 
   update(){
