@@ -42,9 +42,14 @@ export default class Menu extends Phaser.GameObjects.Container {
     select(index) {
         if(!index)
             index = 0;
-        //this.menuItems[this.menuItemIndex].deselect();
+
+        if (this.menuItems[this.menuItemIndex] != null) {
+            this.menuItems[this.menuItemIndex].deselect();
+        }
         this.menuItemIndex = index;
-        //this.menuItems[this.menuItemIndex].select();
+        if (this.menuItems[this.menuItemIndex] != null) {
+            this.menuItems[this.menuItemIndex].select();
+        }
         this.selected = true;
     }
 
