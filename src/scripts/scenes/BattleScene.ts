@@ -19,6 +19,7 @@ export default class BattleScene extends Phaser.Scene {
     victory: boolean;
     surrenderFlag: boolean;
     playerHealth: HealthBar;
+    playerHP: number;
     enemyHealth: HealthBar;
     isFinalBoss: boolean;
     setEnemies: Enemy[];
@@ -61,20 +62,21 @@ export default class BattleScene extends Phaser.Scene {
 
         this.victory = false;
         this.surrenderFlag = false;
+        this.playerHP = 100;
 
         // main combat character
-        var fish = new PlayerCharacter(this, this.fightPos1, fightHeight, "combat", null, "Fish", 100, 20, "fish");        
+        var fish = new PlayerCharacter(this, this.fightPos1, fightHeight, "combat", null, "Fish", this.playerHP, 20, "fish");        
         this.add.existing(fish)
         fish.anims.play('combat-flounder');
 
         // enemy options
         var enemy = new Enemy(this, this.fightPos2, fightHeight, "enemy-jellyfish", null, "Jelly", 100, 15, "jellyfish"); 
 
-        var orca = new PlayerCharacter(this, this.fightPos1, fightHeight, "shift-orca", null, "Orca", 50, 40, "orca");
+        var orca = new PlayerCharacter(this, this.fightPos1, fightHeight, "shift-orca", null, "Orca", this.playerHP, 40, "orca");
         this.add.existing(orca)
         orca.visible = false;
 
-        var shrimp = new PlayerCharacter(this, this.fightPos1, fightHeight, "shift-shrimp", null,"Shrimp", 50, 5, "shrimp");
+        var shrimp = new PlayerCharacter(this, this.fightPos1, fightHeight, "shift-shrimp", null,"Shrimp", this.playerHP, 5, "shrimp");
         this.add.existing(shrimp)
         shrimp.visible = false;
 
@@ -83,7 +85,7 @@ export default class BattleScene extends Phaser.Scene {
         this.isFinalBoss = false;
         this.activeID = 0;
         this.activeHero = this.heroes[this.activeID];
-        this.activeHeroHP = this.activeHero.getHP();
+        this.playerHP;
         // array with enemies
         this.activeEnemy = enemy;
         this.add.existing(this.activeEnemy);
@@ -147,9 +149,9 @@ export default class BattleScene extends Phaser.Scene {
         var tempHP = this.activeHero.getHP();
         var tempHero = this.activeHero;
         this.activeID = index;
-        this.heroes[this.activeID].setHP(tempHP);
+        //this.heroes[this.activeID].setHP(tempHP);
         this.activeHero = this.heroes[this.activeID];
-        //this.activeHero.setHP(tempHP);
+        this.activeHero.setHP(tempHP);
         this.updateUnits();
         this.activeHero.shapeShift(tempHero);
         tempHero.visible = false;
@@ -163,7 +165,7 @@ export default class BattleScene extends Phaser.Scene {
     }
 
     nextTurn() {
-        if(this.checkEndBattle() || this.surrenderFlag) {           
+        if(this.checkEndBattle() || this.surrenderFlag || !this.activeHero.isAlive()) {           
             this.endBattleDisplay();
             return;
         }
@@ -181,6 +183,7 @@ export default class BattleScene extends Phaser.Scene {
                 // add timer for the next turn, so will have smooth gameplay
                 this.time.addEvent({ delay: 3000, callback: this.nextTurn, callbackScope: this });
             }
+            this.playerHP = this.activeHero.getHP();
         }
     }
 

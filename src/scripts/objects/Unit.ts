@@ -60,11 +60,9 @@ export default class Unit extends Phaser.GameObjects.Sprite {
 
     isAlive() {
         if (!this.alive) {
-            this.scene.events.emit("Message", this.type + " faints! Battle is over!");
-            if ("endBattle" in this.scene) {
-                this.scene.endBattle();
-            }
+            return false;
         }
+        return true;
     }
 
     surrenderDisplay() {
