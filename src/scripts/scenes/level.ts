@@ -40,6 +40,9 @@ export default class Level extends Phaser.Scene {
 	helper3;
 	helper4;
 	helper5;
+	helper6;
+	helper7;
+	helper8;
 	clogpt;
 	pipechecker;
 	pipecheck;
@@ -110,13 +113,16 @@ export default class Level extends Phaser.Scene {
 	this.npc2Collide = this.physics.add.sprite(this.npc2.x,this.npc2.y,'flounder').setScale(0.06).setBounce(0)
 	//change later, to where they need/should be
 	if(this.sceneKey == "LevelOneScene"){
-	this.helper1 = this.physics.add.sprite(this.startpt.x + 20,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
-	this.helper2 = this.physics.add.sprite(this.startpt.x + 40,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
-	this.helper3 = this.physics.add.sprite(this.startpt.x + 60,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
+	this.helper1 = this.physics.add.sprite(287.5,310,'surgeon').setScale(0.06).setBounce(0)
+	this.helper2 = this.physics.add.sprite(132.5,342.5,'surgeon').setScale(0.06).setBounce(0)
+	this.helper3 = this.physics.add.sprite(542.5,342.5,'surgeon').setScale(0.06).setBounce(0)
+	this.helper4 = this.physics.add.sprite(440.5,50,'surgeon').setScale(0.06).setBounce(0)
 	}
 	if(this.sceneKey == "LevelTwoScene"){	
-	this.helper4 = this.physics.add.sprite(this.startpt.x + 20,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
-	this.helper5 = this.physics.add.sprite(this.startpt.x + 40,this.startpt.y + 50,'flounder').setScale(0.06).setBounce(0)
+	this.helper5 = this.physics.add.sprite(197,530,'surgeon').setScale(0.06).setBounce(0)
+	this.helper6 = this.physics.add.sprite(199,367.5,'surgeon').setScale(0.06).setBounce(0)
+	this.helper7 = this.physics.add.sprite(17.5,200,'surgeon').setScale(0.06).setBounce(0)
+	this.helper8 = this.physics.add.sprite(537.5,190.5,'surgeon').setScale(0.06).setBounce(0)
 	}
 
 	  //animations
@@ -127,16 +133,21 @@ export default class Level extends Phaser.Scene {
 	  this.npc2Collide.anims.play('flounder-idle')
 	  //helper animations
 	  if(this.sceneKey == "LevelOneScene"){
-		this.helper1.anims.play('flounder-idle')
-		this.helper2.anims.play('flounder-idle')
-		this.helper3.anims.play('flounder-idle')
+		this.helper1.anims.play('surgeon-idle')
+		this.helper2.anims.play('surgeon-idle')
+		this.helper3.anims.play('surgeon-idle')
+		this.helper4.anims.play('surgeon-idle')
+
 	  }
 	  if(this.sceneKey == "LevelTwoScene"){
-		this.helper4.anims.play('flounder-idle')
-		this.helper5.anims.play('flounder-idle')
+		this.helper5.anims.play('surgeon-idle')
+		this.helper6.anims.play('surgeon-idle')
+		this.helper7.anims.play('surgeon-idle')
+		this.helper8.anims.play('surgeon-idle')
+
 	  }
 	  //physics collider
-	  this.physics.add.collider(this.player, this.background)
+	  //this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
 	  this.physics.add.collider(this.player, this.clog, () =>{
@@ -256,32 +267,44 @@ export default class Level extends Phaser.Scene {
 	//helper overlap
 	this.physics.add.overlap(this.player, this.helper1, () =>{
 		this.helper1.destroy()
-		this.createMessageBox("Helper 1!\nHmm... I wonder what it's for...\nI know you can save us!")
-		this.destroyMessageBox
+		this.createMessageBox("Hey friend!\nSmelly odors are NEVER a good \nsign. Beware! Good luck!")
 	})
 
 	this.physics.add.overlap(this.player, this.helper2, () =>{
 		this.helper2.destroy()
-		this.createMessageBox("Helper 2!\nHmm... I wonder what it's for...\nGood luck friend!")
-		this.destroyMessageBox
+		this.createMessageBox("Check out those roots growing into\nour pipes! It’s a shame that hoomans\nplant trees so close to us.")
+
 	})
 
 	this.physics.add.overlap(this.player, this.helper3, () =>{
 		this.helper3.destroy()
-		this.createMessageBox("Helper 3!\nHmm... I wonder what it's for...\nPlease, help us!")
-		this.destroyMessageBox
+		this.createMessageBox("Hoomans don't need to be strangers,\nbut their trees need to give our\nhomes at least 10ft!")
 	})
 
 	this.physics.add.overlap(this.player, this.helper4, () =>{
 		this.helper4.destroy()
-		this.createMessageBox("Helper 4!\nHmm... I wonder what it's for...\nGood luck friend!")
-		this.destroyMessageBox
+		this.createMessageBox("Grease becomes solid once it cools\ndown! This can cause clogs! Soap,\nhowever, dissolves really easily!")
 	})
 
+	
 	this.physics.add.overlap(this.player, this.helper5, () =>{
 		this.helper5.destroy()
-		this.createMessageBox("Helper 5!\nHmm... I wonder what it's for...\nI believe in you!")
-		this.destroyMessageBox
+		this.createMessageBox("I had a childhood friend named\nJimmy. One day, he went very far\ninto the sewers and went missing!!!")
+	})
+
+	this.physics.add.overlap(this.player, this.helper6, () =>{
+		this.helper6.destroy()
+		this.createMessageBox("Eventually, he came back and\ntold us he saw the outside world!\nHe saw a “farm”,“construction”, and\na bunch of hoomans!")
+	})
+
+	this.physics.add.overlap(this.player, this.helper7, () =>{
+		this.helper7.destroy()
+		this.createMessageBox("Did you know? Toliet paper\ncan sometimes cause clogs, but it\nis safe to flush down the toliet!")
+	})
+
+	this.physics.add.overlap(this.player, this.helper8, () =>{
+		this.helper8.destroy()
+		this.createMessageBox("Wastewater can be extremely\ndangerous! Be careful up ahead!\nI believe in you!")
 	})
 
 	//instructions
@@ -304,7 +327,7 @@ export default class Level extends Phaser.Scene {
     	this.messageBox = this.add.image(this.game.canvas.width/2, this.game.canvas.height/2, "messageBox").setScale(0.1).setScrollFactor(0)
 		this.pipeMsg = this.add.text(this.game.canvas.width/2 -30 , this.game.canvas.height/2 -5, message, { font: "20px Arial", align: "left" }).setColor('#000000').setScale(0.2).setScrollFactor(0)
 		if(this.delay) {
-			this.time.addEvent({ delay: 2500, callback: this.destroyMessageBox, callbackScope: this });
+			this.time.addEvent({ delay: 3250, callback: this.destroyMessageBox, callbackScope: this });
 			this.pauseMovement = true;
 		}
    }
@@ -436,7 +459,7 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 415
 			this.player.y = 580
 			this.registry.set("B1", "Done")
-			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+			this.createMessageBox("*Gasp!* You have been teleported!\nGood job! Right answer!")
 
 			//var width = 0;
 			var elem = document.getElementById('pmeterBar');
@@ -465,7 +488,7 @@ export default class Level extends Phaser.Scene {
 			//wrong answer
 			this.player.x = 50
 			this.player.y = 110
-			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+			this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -497,7 +520,7 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 220
 			this.player.y = 245
 			this.registry.set("C1", "Done")
-			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+			this.createMessageBox("*Gasp!* You have been teleported\nGood job! Right answer!")
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -524,7 +547,7 @@ export default class Level extends Phaser.Scene {
 			//wrong answer
 			this.player.x = 625
 			this.player.y = 325
-			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+			this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -559,7 +582,7 @@ export default class Level extends Phaser.Scene {
 					this.scene.start(this.nextSceneKey, {pipeScore: this.pipeScore}); // use this to launch the next scene
 					this.music.destroy()
 				this.registry.set("A1", "Done")
-				this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+				this.createMessageBox("*Gasp!* You have been teleported!\nGood job! Right answer!")
 
 				//var width = 0;
 				var elem = document.getElementById("pmeterBar");
@@ -586,7 +609,7 @@ export default class Level extends Phaser.Scene {
 				//wrong answer				
 				this.player.x = 220
 				this.player.y = 275
-				this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+				this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
 
 				//var width = 0;
 				var elem = document.getElementById("pmeterBar");
@@ -619,7 +642,7 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 335
 			this.player.y = 630
 			this.registry.set("D1", "Done")
-			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+			this.createMessageBox("*Gasp!* You have been teleported!\nGood job! Right answer!")
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -646,7 +669,7 @@ export default class Level extends Phaser.Scene {
 			//wrong answer
 			this.player.x = 295
 			this.player.y = 630
-			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+			this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -678,7 +701,7 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 290
 			this.player.y = 195
 			this.registry.set("E1", "Done")
-			this.createMessageBox("*Gasp!* You have been teleported! \n Good job! Right answer!")
+			this.createMessageBox("*Gasp!* You have been teleported!\nGood job! Right answer!")
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -705,7 +728,7 @@ export default class Level extends Phaser.Scene {
 			//wrong answer		
 			this.player.x = 180
 			this.player.y = 170
-			this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+			this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -765,7 +788,7 @@ export default class Level extends Phaser.Scene {
 				//wrong answer				
 				this.player.x = 370
 				this.player.y = 560
-				this.createMessageBox("You've been teleported... but where? \n Sorry! Wrong answer!")
+				this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
 
 				//var width = 0;
 				var elem = document.getElementById("pmeterBar");
