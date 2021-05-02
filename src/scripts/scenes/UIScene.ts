@@ -123,6 +123,7 @@ export default class UIScene extends Phaser.Scene {
         this.actionsMenu.deselect();
         this.currentMenu = null;
         this.battleScene.receivePlayerSelection("getInfo", index);
+        this.heroesMenu[index].deselect();
     }
 
     onPlayerSelect(id) {
