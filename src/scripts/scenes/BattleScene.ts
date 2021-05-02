@@ -38,7 +38,7 @@ export default class BattleScene extends Phaser.Scene {
         // load background image
         //this.cameras.main.("0x8B8BAE");    
 
-        this.scene.launch("BattleIntro");   
+        this.scene.launch("BattleIntro"); 
 
         this.time.addEvent({ delay: 3000, callback: this.begin, callbackScope: this });
 

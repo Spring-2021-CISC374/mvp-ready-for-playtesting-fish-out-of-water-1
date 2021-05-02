@@ -102,6 +102,8 @@ export default class UIScene extends Phaser.Scene {
         this.events.on("SelectInfo", this.onSelectInfo, this);
 
         this.events.on("GetInfo", this.onGetInfo, this);
+
+        this.events.on("Help", this.onHelp, this);
         
         this.events.on("Enemy", this.onEnemy, this);
         
@@ -119,6 +121,12 @@ export default class UIScene extends Phaser.Scene {
         this.remapEnemies();
         // first move
         this.battleScene.nextTurn(); 
+    }
+
+    onHelp() {
+        this.scene.launch("CombatInstructions");
+        this.battleScene.scene.setVisible(false);
+        this.scene.setVisible(false);
     }
 
     onEnemy(index) {
@@ -190,7 +198,7 @@ export default class UIScene extends Phaser.Scene {
                 this.currentMenu.moveSelectionDown();
             } else if(event.code === "Space") {
                 this.currentMenu.confirm();
-            } 
+            }
         }
     }
 }

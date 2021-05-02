@@ -8,6 +8,7 @@ export class ActionsMenu extends Menu {
         this.addMenuItem("Shapeshift");
         this.addMenuItem("Get Info");
         this.addMenuItem("Surrender");
+        this.addMenuItem("Help")
     }
 
     confirm() {
@@ -25,6 +26,8 @@ export class ActionsMenu extends Menu {
             case 3:
                 this.scene.events.emit("Surrender");
                 break;
+            case 4:
+                this.scene.events.emit("Help");
         }        
     }
     
