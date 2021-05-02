@@ -27,6 +27,8 @@ export default class BattleScene extends Phaser.Scene {
     prevScene: any;
     fightPos1: number;
     fightPos2: number;
+    enemiesList: (PlayerCharacter | Enemy)[];
+    activeEnemyIndex: number;
 
     constructor() {
         super({ key: "BattleScene" });
@@ -68,17 +70,24 @@ export default class BattleScene extends Phaser.Scene {
         var fish = new PlayerCharacter(this, this.fightPos1, fightHeight, "combat", null, "Fish", this.playerHP, 20, "fish");        
         this.add.existing(fish)
         fish.anims.play('combat-flounder');
+        fish.setDescription("Name: Fish\nHealth: 100HP\nYour basic fish.\nNo strengths/weaknesses.")
 
         // enemy options
-        var enemy = new Enemy(this, this.fightPos2, fightHeight, "enemy-jellyfish", null, "Jelly", 100, 15, "jellyfish"); 
+        var jelly = new Enemy(this, this.fightPos2, fightHeight, "enemy-jellyfish", null, "Jelly", this.playerHP, 15, "jellyfish");
+        var orcaE = new Enemy(this, this.fightPos2, fightHeight, "shift-orca", null, "Orca", 100, 30, "orca"); 
+        var shrimpE = new Enemy(this, this.fightPos2, fightHeight, "shift-shrimp", null, "Shrimp", 50, 5, "shrimp");
 
         var orca = new PlayerCharacter(this, this.fightPos1, fightHeight, "shift-orca", null, "Orca", this.playerHP, 40, "orca");
         this.add.existing(orca)
         orca.visible = false;
+        orca.setDescription("Name: Orca\nHealth: 100HP\nStrengths: Apex predator\n Weaknesses: pollution");
 
         var shrimp = new PlayerCharacter(this, this.fightPos1, fightHeight, "shift-shrimp", null,"Shrimp", this.playerHP, 5, "shrimp");
         this.add.existing(shrimp)
         shrimp.visible = false;
+        shrimp.setDescription("Name: Shrimp\nHealth: 100HP\nStrengths: abundant\nWeaknesses: natural prey");
+
+
 
         // array with heroes
         this.heroes = [ fish, orca, shrimp ];
@@ -87,9 +96,12 @@ export default class BattleScene extends Phaser.Scene {
         this.activeHero = this.heroes[this.activeID];
         this.playerHP;
         // array with enemies
-        this.activeEnemy = enemy;
+        this.enemiesList = [ jelly, orcaE, shrimpE ]
+        this.activeEnemyIndex = Math.floor(Math.random() * this.enemiesList.length);
+        this.activeEnemy = this.enemiesList[this.activeEnemyIndex];
+        //this.activeEnemy = orcaE;
         this.add.existing(this.activeEnemy);
-        this.activeEnemy.anims.play('enemy-jellyfish');
+        this.activeEnemy.anims.play(this.activeEnemy.getTexture());
         this.enemies = [ this.activeEnemy ];
         // array with both parties, who will attack
         this.units = [this.activeHero];
@@ -160,6 +172,15 @@ export default class BattleScene extends Phaser.Scene {
         this.activeHero.anims.play('shift-' + tempString);
     }
 
+    getInfo(index) {
+        // displaying info about animal
+        // Name: ____
+        // Health: ____
+        // Strengths: ____
+        // Weaknesses: ____
+        this.events.emit("Message", this.heroes[index].getDescription());
+    }
+
     updateUnits() {
         this.units[0] = this.activeHero;
     }
@@ -194,6 +215,10 @@ export default class BattleScene extends Phaser.Scene {
         }
         else if (action == "shapeshift") {
             this.shapeShiftHero(target);
+        }
+        else if (action == "getInfo") {
+            this.getInfo(target);
+            this.index--;                       // makes sure turn is repeated
         }
         else if (action == "surrender") {
             this.surrenderDisplay();

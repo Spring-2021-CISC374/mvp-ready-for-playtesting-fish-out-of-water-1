@@ -1,3 +1,4 @@
+import { Tilemaps } from "phaser";
 import { ActionsMenu } from "../objects/ActionsMenu";
 import { EnemiesMenu } from "../objects/EnemiesMenu";
 import { HeroesMenu } from "../objects/HeroesMenu";
@@ -79,6 +80,10 @@ export default class UIScene extends Phaser.Scene {
         this.events.on("ShapeShift", this.onShapeShift, this);
 
         this.events.on("Surrender", this.onSurrender, this);
+
+        this.events.on("SelectInfo", this.onSelectInfo, this);
+
+        this.events.on("GetInfo", this.onGetInfo, this);
         
         this.events.on("Enemy", this.onEnemy, this);
         
@@ -109,9 +114,15 @@ export default class UIScene extends Phaser.Scene {
     onShapeShift(index) {
         this.enemiesMenu.deselect();
         this.actionsMenu.deselect();
-        this.enemiesMenu.deselect();
         this.currentMenu = null;
         this.battleScene.receivePlayerSelection("shapeshift", index);
+    }
+
+    onGetInfo(index) {
+        this.enemiesMenu.deselect();
+        this.actionsMenu.deselect();
+        this.currentMenu = null;
+        this.battleScene.receivePlayerSelection("getInfo", index);
     }
 
     onPlayerSelect(id) {
@@ -126,6 +137,13 @@ export default class UIScene extends Phaser.Scene {
     }
 
     onSelectShapes() {
+        this.heroesMenu.setAct("ShapeShift");
+        this.currentMenu = this.heroesMenu;
+        this.heroesMenu.select(0);
+    }
+
+    onSelectInfo() {
+        this.heroesMenu.setAct("GetInfo");
         this.currentMenu = this.heroesMenu;
         this.heroesMenu.select(0);
     }

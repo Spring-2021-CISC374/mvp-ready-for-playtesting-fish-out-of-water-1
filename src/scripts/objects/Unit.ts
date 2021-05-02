@@ -10,6 +10,8 @@ export default class Unit extends Phaser.GameObjects.Sprite {
     scene: BattleScene;
     name: string;
     healthBar: HealthBar;
+    description: string;
+    tex: string;
 
     constructor(scene, x, y, texture, frame, type, hp, damage, name) {
         super(scene, x, y, texture, frame)
@@ -20,6 +22,7 @@ export default class Unit extends Phaser.GameObjects.Sprite {
         this.damage = damage; // default damage      
         this.alive = true;    
         this.name = name;    
+        this.tex = texture;
     }
 
     attack(target) {
@@ -75,5 +78,17 @@ export default class Unit extends Phaser.GameObjects.Sprite {
 
     getDamage() {
         return this.damage;
+    }
+
+    setDescription(desc) {
+        this.description = desc;
+    }
+
+    getDescription() {
+        return this.description;
+    }
+
+    getTexture() {
+        return this.tex;
     }
 }
