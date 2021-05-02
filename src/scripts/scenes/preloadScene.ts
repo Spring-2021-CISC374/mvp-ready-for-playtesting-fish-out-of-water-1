@@ -50,6 +50,8 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('helpIcon', 'assets/img/helpIcon.png')
     this.load.image('helpIconHover', 'assets/img/helpIconHover.png')
     this.load.image('helpInfo', 'assets/img/helpInfo.png')
+    this.load.image('combatFirst', 'assets/img/combatFirst.png')
+    this.load.image('combatSec', 'assets/img/combatSec.png')
     
   }
   create() {

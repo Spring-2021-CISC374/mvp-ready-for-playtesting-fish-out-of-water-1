@@ -1,3 +1,4 @@
+import { Tilemaps } from "phaser";
 import { ActionsMenu } from "../objects/ActionsMenu";
 import { EnemiesMenu } from "../objects/EnemiesMenu";
 import { HeroesMenu } from "../objects/HeroesMenu";
@@ -13,6 +14,9 @@ export default class UIScene extends Phaser.Scene {
     currentMenu: any;
     battleScene: any;
     message: Message;
+    enemiesTitle: Phaser.GameObjects.Text;
+    actionsTitle: Phaser.GameObjects.Text;
+    heroesTitle: Phaser.GameObjects.Text;
 
     constructor() {
         super({ key: "UIScene" });
@@ -22,7 +26,7 @@ export default class UIScene extends Phaser.Scene {
 
         let width = this.game.config.width as number;
         let height = this.game.config.height as number;
-        height = height * 3/5;
+        height = height * 7/10;
 
         let bound1 =  width / 3 - 10;
         let bound2 = bound1 + 20;
@@ -32,7 +36,7 @@ export default class UIScene extends Phaser.Scene {
         let fill1 = bound1;
         let fill2 = bound3 - bound2;
         let fill3 = width - bound4;
-        let vfill = height * 3/5;
+        let vfill = height * 7/10;
 
         this.graphics = this.add.graphics();
         this.graphics.lineStyle(1, 0xffffff);
@@ -47,7 +51,22 @@ export default class UIScene extends Phaser.Scene {
         this.graphics.strokeRect(bound4, height, fill3, vfill);
         this.graphics.fillRect(bound4, height, fill3, vfill);
 
+        // titles for each menu
+        this.graphics.fillStyle(0x150811, 1);
+        this.graphics.strokeRect(0, height - 50, fill1, 50);
+        this.graphics.fillRect(0, height - 50, fill1, 50);
 
+        this.graphics.strokeRect(bound2, height - 50, fill2, 50);
+        this.graphics.fillRect(bound2, height - 50, fill2, 50);
+
+        this.graphics.strokeRect(bound4, height - 50, fill3, 50);
+        this.graphics.fillRect(bound4, height - 50, fill3, 50);
+
+        var specStyle = {font: "32px Courier", fill: 'white', align: 'center'};
+
+        this.enemiesTitle = this.add.text(25, height - 40, "Enemies", specStyle);
+        this.actionsTitle = this.add.text(bound2 + 25, height - 40, "Actions", specStyle);
+        this.heroesTitle = this.add.text(bound4 + 25, height - 40, "Heroes", specStyle);
         
         // basic container to hold all menus
         this.menus = this.add.container();
@@ -79,6 +98,12 @@ export default class UIScene extends Phaser.Scene {
         this.events.on("ShapeShift", this.onShapeShift, this);
 
         this.events.on("Surrender", this.onSurrender, this);
+
+        this.events.on("SelectInfo", this.onSelectInfo, this);
+
+        this.events.on("GetInfo", this.onGetInfo, this);
+
+        this.events.on("Help", this.onHelp, this);
         
         this.events.on("Enemy", this.onEnemy, this);
         
@@ -98,6 +123,12 @@ export default class UIScene extends Phaser.Scene {
         this.battleScene.nextTurn(); 
     }
 
+    onHelp() {
+        this.scene.launch("CombatInstructions");
+        this.battleScene.scene.setVisible(false);
+        this.scene.setVisible(false);
+    }
+
     onEnemy(index) {
         //this.heroesMenu.deselect();
         this.actionsMenu.deselect();
@@ -109,9 +140,16 @@ export default class UIScene extends Phaser.Scene {
     onShapeShift(index) {
         this.enemiesMenu.deselect();
         this.actionsMenu.deselect();
-        this.enemiesMenu.deselect();
         this.currentMenu = null;
         this.battleScene.receivePlayerSelection("shapeshift", index);
+    }
+
+    onGetInfo(index) {
+        this.enemiesMenu.deselect();
+        this.actionsMenu.deselect();
+        this.currentMenu = null;
+        this.battleScene.receivePlayerSelection("getInfo", index);
+        this.heroesMenu[index].deselect();
     }
 
     onPlayerSelect(id) {
@@ -126,6 +164,13 @@ export default class UIScene extends Phaser.Scene {
     }
 
     onSelectShapes() {
+        this.heroesMenu.setAct("ShapeShift");
+        this.currentMenu = this.heroesMenu;
+        this.heroesMenu.select(0);
+    }
+
+    onSelectInfo() {
+        this.heroesMenu.setAct("GetInfo");
         this.currentMenu = this.heroesMenu;
         this.heroesMenu.select(0);
     }
@@ -153,7 +198,7 @@ export default class UIScene extends Phaser.Scene {
                 this.currentMenu.moveSelectionDown();
             } else if(event.code === "Space") {
                 this.currentMenu.confirm();
-            } 
+            }
         }
     }
 }

@@ -46,6 +46,7 @@ export default class Level extends Phaser.Scene {
 	Question;
 	clog;
 	help: Phaser.GameObjects.Text;
+	battlescene: any;
 
 	
 	constructor(sceneKey:string, mapKey:string, nextSceneKey:string) {
@@ -245,6 +246,8 @@ export default class Level extends Phaser.Scene {
 			this.combatMusic.resume()
 			//this.scene.pause(this.sceneKey)
 			//this.scene.launch("BattleScene")
+			this.battlescene = this.scene.get("BattleScene")
+			this.battlescene.setHostScene(this.sceneKey)
 			this.scene.switch('BattleScene');
 			image.destroy()
 		})
