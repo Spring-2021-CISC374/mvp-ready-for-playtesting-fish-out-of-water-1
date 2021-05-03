@@ -15,9 +15,9 @@ export default class PowerUpScene extends Phaser.Scene {
         fish.anims.play('combat-flounder');
  
         this.events.emit("Message", "Power up achieved! The final boss is weak!");
-        this.time.addEvent({ delay: 2000 });  
+        this.time.addEvent({ delay: 3000 });  
 
-        this.game.scene.stop('PowerUpScene');
+        this.scene.sleep();
     }
 
 }

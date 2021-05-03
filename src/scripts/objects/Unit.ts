@@ -1,6 +1,8 @@
 import BattleScene from "../scenes/BattleScene";
+import BossBattleScene from "../scenes/BossBattleScene";
 import Enemy from "./Enemy";
 import HealthBar from "./HealthBar";
+import PlayerCharacter from "./PlayerCharacter";
 
 export default class Unit extends Phaser.GameObjects.Sprite {
     maxHP: number;
@@ -29,9 +31,9 @@ export default class Unit extends Phaser.GameObjects.Sprite {
         target.takeDamage(this.damage);
 
         if (target instanceof Enemy) {
-            this.scene.enemyHealth.update(target);
+            this.scene.getEnemyHealth().update(target);
         } else {
-            this.scene.playerHealth.update(this.scene.activeHero);
+            this.scene.getPlayerHealth().update(this.scene.activeHero);
         }
 
         this.scene.events.emit("Message", this.type + " attacks " + target.type + " for " + this.damage + " damage");
@@ -78,6 +80,10 @@ export default class Unit extends Phaser.GameObjects.Sprite {
 
     getDamage() {
         return this.damage;
+    }
+
+    setDamage(x) {
+        this.damage = x;
     }
 
     setDescription(desc) {

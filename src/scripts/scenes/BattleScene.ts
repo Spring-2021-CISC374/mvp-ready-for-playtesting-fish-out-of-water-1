@@ -118,6 +118,14 @@ export default class BattleScene extends Phaser.Scene {
         this.prevScene = sceneKey;
     }
 
+    getPlayerHealth() {
+        return this.playerHealth;
+    }
+
+    getEnemyHealth() {
+        return this.enemyHealth;
+    }
+
     wake() {
         this.scene.launch("BattleIntro");
         this.time.addEvent({ delay: 3000, callback: this.wakePartTwo, callbackScope: this });

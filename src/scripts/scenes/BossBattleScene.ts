@@ -25,26 +25,40 @@ export default class BossBattleScene extends Phaser.Scene {
     extraDamage:boolean;
     extraHealth:boolean;
     extraLife:boolean;
+    background: Phaser.GameObjects.Image;
+    fightPos1: number;
+    fightPos2: number;
     
     constructor() {
         super({ key: "BossBattleScene" });
     }
 
+    init(data) {
+        this.extraDamage = data.extraDamage;
+        this.extraHealth = data.extraHealth;
+        this.extraLife = data.extraLife;
+    }
+
     create() {
         // load background image
         //this.cameras.main.("0x8B8BAE");
-        this.add.image(0,0,'sewer-combat').setOrigin(0);
+
 
         this.parentScene = this.scene.get("LevelTwoScene");
 
-        if (this.parentScene.getPipeScore() > 3) {
-            this.scene.start("PowerUpScene");
-            this.activeEnemy.setHP(100);
-        }
+        this.scene.launch("BossBattleIntro");
+
+        this.time.addEvent({ delay: 3000, callback: this.begin, callbackScope: this });
 
         this.sys.events.on('wake', this.wake, this);   
-        
-        this.startBattle();   
+    }
+
+    begin() {
+        this.background = this.add.image(0,0,'sewer-combat').setOrigin(0); 
+        // Run UI Scene at the same time
+
+        this.scene.launch("BossUIScene");
+        this.startBattle(); 
     }
 
     startBattle() {
@@ -53,28 +67,45 @@ export default class BossBattleScene extends Phaser.Scene {
         let width = this.game.config.width as number;
 
         let fightHeight = height/2 - 50;
-        let fightPos1 = width * .8;
-        let fightPos2 = width * .2;
+        this.fightPos1 = width * .8;
+        this.fightPos2 = width * .2;
 
         this.victory = false;
         this.surrenderFlag = false;
 
         // main combat character
-        var fish = new PlayerCharacter(this, fightPos1, fightHeight, "combat", null, "Fish", 100, 20, "fish");        
-        this.add.existing(fish)
+        var fish = new PlayerCharacter(this, this.fightPos1, fightHeight, "combat", null, "Fish", 100, 20, "fish");        
+        this.add.existing(fish);
         fish.anims.play('combat-flounder');
+        fish.setDescription("Name: Fish\nHealth: 100HP\nYour basic fish.\nNo strengths/weaknesses.")
 
-        var finalBoss = new Enemy(this, fightPos2, fightHeight, "enemy-pufferfish", null, "Puffer", 150, 20, "pufferfish");
+        var finalBoss = new Enemy(this, this.fightPos2, fightHeight, "enemy-pufferfish", null, "Puffer", 150, 20, "pufferfish");
         this.add.existing(finalBoss);
         finalBoss.anims.play('enemy-pufferfish');
 
-        var orca = new PlayerCharacter(this, fightPos1, fightHeight, "shift-orca", null, "Orca", 50, 40, "orca");
-        this.add.existing(orca)
+        var orca = new PlayerCharacter(this, this.fightPos1, fightHeight, "shift-orca", null, "Orca", 100, 40, "orca");
+        this.add.existing(orca);
         orca.visible = false;
+        orca.setDescription("Name: Orca\nHealth: 100HP\nStrengths: Apex predator\n Weaknesses: pollution");
 
-        var shrimp = new PlayerCharacter(this, fightPos1, fightHeight, "shift-shrimp", null,"Shrimp", 50, 5, "shrimp");
-        this.add.existing(shrimp)
+        var shrimp = new PlayerCharacter(this, this.fightPos1, fightHeight, "shift-shrimp", null,"Shrimp", 100, 5, "shrimp");
+        this.add.existing(shrimp);
         shrimp.visible = false;
+        shrimp.setDescription("Name: Shrimp\nHealth: 100HP\nStrengths: abundant\nWeaknesses: natural prey");
+
+        if (this.extraDamage) {
+            console.log("extra damage");
+            fish.setDamage(30);
+            orca.setDamage(45);
+            shrimp.setDamage(10);
+        }
+
+        if (this.extraHealth) {
+            console.log('extra health');
+            fish.setHP(150);
+            orca.setHP(150);
+            shrimp.setHP(150);
+        }
 
         // array with heroes
         this.heroes = [ fish, orca, shrimp ];
@@ -83,44 +114,53 @@ export default class BossBattleScene extends Phaser.Scene {
         this.activeHeroHP = this.activeHero.getHP();
         // array with enemies
         this.activeEnemy = finalBoss;
+
+        this.playerHealth = new HealthBar(this, this.fightPos1, this.activeHero.y - 100, this.activeHero);
+        this.enemyHealth = new HealthBar(this, this.fightPos2, this.activeEnemy.y - 100, this.activeEnemy);
+
         this.enemies = [ this.activeEnemy ];
         // array with both parties, who will attack
         this.units = [this.activeHero];
         this.units = this.units.concat(this.enemies);
-        
-        this.playerHealth = new HealthBar(this, fightPos1, fish.y - 100, this.activeHero);
-        this.enemyHealth = new HealthBar(this, fightPos2, this.activeEnemy.y - 100, this.activeEnemy);
 
         this.index = -1;
 
         // Run UI Scene at the same time
 
-        this.scene.launch("BossUIScene");
+        //this.scene.launch("BossUIScene");
+    }
+
+    getPlayerHealth() {
+        return this.playerHealth;
+    }
+
+    getEnemyHealth() {
+        return this.enemyHealth;
     }
 
     wake() {
-        this.scene.run('BossUIScene'); 
-        this.activeID = 0;
-        this.activeHero = this.heroes[this.activeID];
-        this.activeHero.visible = true;
-        this.activeEnemy = this.enemies[0];
-        this.victory = false;
+        this.scene.launch("BossBattleIntro");
+        this.time.addEvent({ delay: 3000, callback: this.wakePartTwo, callbackScope: this });     
+    }
+
+    wakePartTwo() {
+        this.victory = false
         this.surrenderFlag = false;
 
-        // reset HP
-        for(var i = 0; i < this.units.length; i++) {
-            this.units[i].setHP(this.units[i].getMaxHP());            
-        }
-        this.time.addEvent({delay: 2000, callback: this.exitBattle, callbackScope: this});        
+        this.background = this.add.image(0,0,'sewer-combat').setOrigin(0); 
+
+        this.scene.wake("BossUIScene");
+
+        this.startBattle();
     }
 
     shapeShiftHero(index) {
         var tempHP = this.activeHero.getHP();
         var tempHero = this.activeHero;
         this.activeID = index;
-        this.heroes[this.activeID].setHP(tempHP);
+        //this.heroes[this.activeID].setHP(tempHP);
         this.activeHero = this.heroes[this.activeID];
-        //this.activeHero.setHP(tempHP);
+        this.activeHero.setHP(tempHP);
         this.updateUnits();
         this.activeHero.shapeShift(tempHero);
         tempHero.visible = false;
@@ -128,15 +168,27 @@ export default class BossBattleScene extends Phaser.Scene {
         let tempString = this.activeHero.name;
         this.activeHero.anims.play('shift-' + tempString);
     }
-
+    getInfo(index) {
+        // displaying info about animal
+        // Name: ____
+        // Health: ____
+        // Strengths: ____
+        // Weaknesses: ____
+        this.events.emit("Message", this.heroes[index].getDescription());
+    }
     updateUnits() {
         this.units[0] = this.activeHero;
     }
 
     nextTurn() {
-        if(this.checkEndBattle() || this.surrenderFlag) {           
-            this.endBattleDisplay();
-            return;
+        if(this.checkEndBattle() || this.surrenderFlag || !this.activeHero.isAlive()) {
+            if (this.extraLife) {
+                this.extraLife = false;
+                this.events.emit("Message", "Power Up: Extra life used!");
+                this.heroes.forEach(this.rebirth);
+            } else {           
+                this.endBattleDisplay();
+            }
         }
         this.index++;
         // if there are no more units, we start again from the first one
@@ -155,6 +207,10 @@ export default class BossBattleScene extends Phaser.Scene {
         }
     }
 
+    rebirth(ind) {
+        ind.setHP(100);
+    }
+
     // when the player have selected the enemy to be attacked
     receivePlayerSelection(action, target) {
         if(action == "attack") {            
@@ -162,6 +218,10 @@ export default class BossBattleScene extends Phaser.Scene {
         }
         else if (action == "shapeshift") {
             this.shapeShiftHero(target);
+        }
+        else if (action == "getInfo") {
+            this.getInfo(target);
+            this.index--;                       // makes sure turn is repeated
         }
         else if (action == "surrender") {
             this.surrenderDisplay();
@@ -220,6 +280,9 @@ export default class BossBattleScene extends Phaser.Scene {
         }
 
         // sleep the UI
+        this.background.destroy();
+        this.playerHealth.destroy();
+        this.enemyHealth.destroy();
         this.scene.sleep('BossUIScene');
         this.scene.switch('LevelTwoScene');
         this.registry.set("Battle", 1);
