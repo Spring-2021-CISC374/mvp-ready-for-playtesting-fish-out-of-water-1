@@ -10,6 +10,7 @@ export default class PipeScene extends Phaser.Scene {
     boost
     message:Message
     pauseMovement;
+
     constructor() {
         super({ key: 'PipeScene' })
         this.extraLife = false
@@ -54,7 +55,10 @@ export default class PipeScene extends Phaser.Scene {
         })
     }
     nextScene() {
-        this.game.scene.start('BossBattleScene', {extraDamage: this.extraDamage,extraHealth: this.extraHealth, extraLife: this.extraLife})
+        //this.player.destroy();
+        //this.boost.destroy();
+        this.scene.sleep();
+        this.game.scene.start('BossBattleScene', {extraDamage: this.extraDamage, extraHealth: this.extraHealth, extraLife: this.extraLife})
     }
     nextMessage() {
         this.message.showMessage("Let's find out what powerup you'll get to fight the boss")

@@ -1,4 +1,4 @@
-importScripts("/mvp-ready-for-playtesting-fish-out-of-water-1/devprecache-manifest.d835cfb42449762a7c4680d8ca72e830.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/github-hosting-directions/devprecache-manifest.7d7432872f3c398f3383505e58d0c9c1.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 /**
  * You should only modify this, if you know what you are doing.

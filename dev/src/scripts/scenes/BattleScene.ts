@@ -41,8 +41,6 @@ export default class BattleScene extends Phaser.Scene {
         this.scene.launch("BattleIntro"); 
 
         this.time.addEvent({ delay: 3000, callback: this.begin, callbackScope: this });
-
-        this.sys.events.on('wake', this.wake, this);  
     }
 
     begin() {
@@ -51,6 +49,8 @@ export default class BattleScene extends Phaser.Scene {
 
         this.scene.launch("UIScene");
         this.startBattle(); 
+
+        this.sys.events.on('wake', this.wake, this);  
     }
 
     startBattle() {
@@ -118,31 +118,24 @@ export default class BattleScene extends Phaser.Scene {
         this.prevScene = sceneKey;
     }
 
+    getPlayerHealth() {
+        return this.playerHealth;
+    }
+
+    getEnemyHealth() {
+        return this.enemyHealth;
+    }
+
     wake() {
         this.scene.launch("BattleIntro");
         this.time.addEvent({ delay: 3000, callback: this.wakePartTwo, callbackScope: this });
     }
 
     wakePartTwo() {
-        //this.scene.run('UIScene');
-        
-        /*this.activeID = 0;
-        this.activeHero = this.heroes[this.activeID];
-        this.activeHero.visible = true;
-        this.activeEnemy.visible = true;
-        this.activeEnemy = this.enemies[0];*/
         this.victory = false
         this.surrenderFlag = false;
 
         this.background = this.add.image(0,0,'sewer-combat').setOrigin(0); 
-
-        //this.playerHealth = new HealthBar(this, this.fightPos1, this.activeHero.y - 100, this.activeHero);
-        //this.enemyHealth = new HealthBar(this, this.fightPos2, this.activeEnemy.y - 100, this.activeEnemy);
-
-        // reset HP
-        /*for(var i = 0; i < this.units.length; i++) {
-            this.units[i].setHP(this.units[i].getMaxHP());        
-        }*/
 
         this.scene.wake("UIScene");
 
