@@ -36,6 +36,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.atlas('orca', 'assets/Sprites/Orca.png', 'assets/Sprites/Orca.json')
     this.load.atlas('shrimp', 'assets/Sprites/PurpleFish.png', 'assets/Sprites/PurpleFish.json')
     this.load.atlas('pufferfish', 'assets/Sprites/PufferFish.png', 'assets/Sprites/PufferFish.json')
+    this.load.atlas('surgeon', 'assets/Sprites/SurgeonFish.png', 'assets/Sprites/SurgeonFish.json')
     
     //Audio
     this.load.audio('sewermusic','assets/Music/sewermusic.mp3')
@@ -103,6 +104,13 @@ export default class PreloadScene extends Phaser.Scene {
     this.anims.create({
       key: 'shift-shrimp',
       frames: this.anims.generateFrameNames('shrimp', {start: 1, end: 2, prefix: 'Purple Fish ', suffix: '.png'}),
+      repeat: -1,
+      frameRate: 5
+    })
+
+    this.anims.create({
+      key: 'surgeon-idle',
+      frames: this.anims.generateFrameNames('surgeon', {start: 1, end: 2, prefix: 'Surgeon Fish ', suffix: '.png'}),
       repeat: -1,
       frameRate: 5
     })
