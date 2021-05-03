@@ -7,6 +7,7 @@ import Unit from "../objects/Unit";
 import LevelTwoScene from "./levelTwoScene";
 
 export default class BossBattleScene extends Phaser.Scene {
+    combatMusic:Phaser.Sound.BaseSound;
     heroes: Unit[];
     activeID: number;
     activeHero: Unit;
@@ -42,7 +43,7 @@ export default class BossBattleScene extends Phaser.Scene {
     create() {
         // load background image
         //this.cameras.main.("0x8B8BAE");
-
+        this.combatMusic = this.sound.add('combatmusic', {loop: true, volume: 0.5});
 
         this.parentScene = this.scene.get("LevelTwoScene");
 
@@ -62,6 +63,7 @@ export default class BossBattleScene extends Phaser.Scene {
     }
 
     startBattle() {
+        this.combatMusic.play
 
         let height = this.game.config.height as number;
         let width = this.game.config.width as number;
@@ -286,6 +288,8 @@ export default class BossBattleScene extends Phaser.Scene {
         this.scene.sleep('BossUIScene');
         this.scene.switch('LevelTwoScene');
         this.registry.set("Battle", 1);
+        this.combatMusic.stop
+
     }
 
     getHeroes() {

@@ -2,7 +2,7 @@ import Message from "../objects/Message";
 
 export default class PipeScene extends Phaser.Scene {
     player: Phaser.Physics.Arcade.Sprite
-    combatMusic:Phaser.Sound.BaseSound;
+    pipeMusic:Phaser.Sound.BaseSound;
     extraLife: boolean
     extraDamage: boolean
     extraHealth: boolean
@@ -10,6 +10,7 @@ export default class PipeScene extends Phaser.Scene {
     boost
     message:Message
     pauseMovement;
+    powerUpSound:Phaser.Sound.BaseSound;
 
     constructor() {
         super({ key: 'PipeScene' })
@@ -18,10 +19,11 @@ export default class PipeScene extends Phaser.Scene {
         this.extraHealth = false
         this.pauseMovement = true
     }
+
     create() {
-        this.combatMusic = this.sound.add('combatmusic', {loop: true, volume: 0.5});
-        this.combatMusic.play();
-		this.combatMusic.pause();
+        this.pipeMusic = this.sound.add('pipemusic', {loop: true, volume: 0.5});
+        this.powerUpSound = this.sound.add('powerupsound', {loop: false, volume: 0.5});
+        this.pipeMusic.play();
         this.add.image(0,0,'sewer-combat').setOrigin(0);
         this.question = this.physics.add.image(550,300,'questionBox').setScale(0.2)
         this.player = this.physics.add.sprite(50, 300,'clown').setScale(0.5)
@@ -31,6 +33,7 @@ export default class PipeScene extends Phaser.Scene {
         this.message.showMessage("You fixed the broken pipes and found a secret room!")
         this.time.addEvent({ delay: 2500, callback: this.nextMessage, callbackScope: this });
         this.physics.add.overlap(this.player, this.question, () =>{
+            this.powerUpSound.play()
             var value = Phaser.Math.Between(1, 3);
             this.question.destroy()
             if(value <= 1) {
@@ -49,7 +52,6 @@ export default class PipeScene extends Phaser.Scene {
                 this.extraHealth = true
             }
             this.time.addEvent({ delay: 2500, callback: this.nextScene, callbackScope: this });
-            this.combatMusic.resume()
             console.log(value)
             
         })
@@ -58,6 +60,8 @@ export default class PipeScene extends Phaser.Scene {
         //this.player.destroy();
         //this.boost.destroy();
         this.scene.sleep();
+        this.pipeMusic.pause();
+        this.pipeMusic.stop();
         this.game.scene.start('BossBattleScene', {extraDamage: this.extraDamage, extraHealth: this.extraHealth, extraLife: this.extraLife})
     }
     nextMessage() {

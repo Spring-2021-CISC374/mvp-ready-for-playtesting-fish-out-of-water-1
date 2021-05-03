@@ -43,6 +43,10 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('questionmusic','assets/Music/questionmusic.mp3')
     this.load.audio('combatmusic','assets/Music/combatmusic.mp3')
     this.load.audio('bumpsound','assets/Music/bumpsound.mp3')
+    this.load.audio('powerupsound','assets/Music/powerupsound.wav')
+    this.load.audio('pipemusic','assets/Music/pipemusic.wav')
+
+
 
     // instructions images
     this.load.image('arrowKeyHelp', 'assets/img/arrowKeys.png')
