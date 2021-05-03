@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "SurgeonFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 196,
+				"h": 332
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Surgeon Fish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 196,
+						"h": 167
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 196,
+						"h": 167
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 196,
+						"h": 167
+					}
+				},
+				{
+					"filename": "Surgeon Fish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 196,
+						"h": 165
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 196,
+						"h": 165
+					},
+					"frame": {
+						"x": 0,
+						"y": 167,
+						"w": 196,
+						"h": 165
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:4d213dbf718fd40244cec62113cd2145:bd4c102508f08ba8c3a439592d52a3f9:da86e3a66c13f5fa85dcb3e38784396b$"
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "WhiteFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 196,
+				"h": 357
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "White Fish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 196,
+						"h": 179
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 196,
+						"h": 179
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 196,
+						"h": 179
+					}
+				},
+				{
+					"filename": "White Fish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 196,
+						"h": 178
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 196,
+						"h": 178
+					},
+					"frame": {
+						"x": 0,
+						"y": 179,
+						"w": 196,
+						"h": 178
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:40879c02a75af0ffa90f08b39b98dcc9:b9e05e09745520b00e0efa2483cf45fd:ba3f1d081ac8864a8ce0cc527db1be8f$"
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "Jellyfish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 330,
+				"h": 150
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Jellyfish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 166,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 166,
+						"h": 150
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 166,
+						"h": 150
+					}
+				},
+				{
+					"filename": "Jellyfish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 164,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 164,
+						"h": 150
+					},
+					"frame": {
+						"x": 166,
+						"y": 0,
+						"w": 164,
+						"h": 150
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:0ac6d4c98e38dba1091c22e1860ac2ac:d64c725ddfdf3c1cf1ef508d81597232:945c931da103060f96ff29810ce2ccad$"
+	}
+}

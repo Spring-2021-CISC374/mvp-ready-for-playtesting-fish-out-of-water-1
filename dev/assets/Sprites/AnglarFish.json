@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "AnglarFish.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 452,
+				"h": 189
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Anglar Fish 1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 226,
+						"h": 189
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 226,
+						"h": 189
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 226,
+						"h": 189
+					}
+				},
+				{
+					"filename": "Anglar Fish 2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 226,
+						"h": 189
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 226,
+						"h": 189
+					},
+					"frame": {
+						"x": 226,
+						"y": 0,
+						"w": 226,
+						"h": 189
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:ef896a25c171e7b6c70b12aadcf9ba1f:12ac4d1a6bf5a0a838b8815d7625c976:f3d0cb2e14902a227c586b7e5dd68fb7$"
+	}
+}
