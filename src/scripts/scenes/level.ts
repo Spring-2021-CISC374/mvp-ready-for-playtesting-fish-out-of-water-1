@@ -148,7 +148,7 @@ export default class Level extends Phaser.Scene {
 
 	  }
 	  //physics collider
-	  //this.physics.add.collider(this.player, this.background)
+	  this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
 	  this.physics.add.collider(this.player, this.clog, () =>{
