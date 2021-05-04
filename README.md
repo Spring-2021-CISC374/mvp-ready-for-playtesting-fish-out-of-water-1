@@ -48,6 +48,13 @@ License: https://filmmusic.io/standard-license
 - 8 Bit Slam by josepharaoh99
 Link: https://freesound.org/people/josepharaoh99/sounds/361636/
 License: https://creativecommons.org/publicdomain/zero/1.0/ 
+- Dilemma - Music Loop by RokZRooM
+Link: https://freesound.org/people/RokZRooM/sounds/344778/
+License: https://creativecommons.org/licenses/by/3.0/
+- Spacey 1up/Power up by GameAudio
+Link: https://freesound.org/people/GameAudio/sounds/220173/#
+License: https://creativecommons.org/publicdomain/zero/1.0/
+
 
 ## Gameplay video link
 
