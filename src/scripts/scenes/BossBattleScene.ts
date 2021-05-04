@@ -184,11 +184,12 @@ export default class BossBattleScene extends Phaser.Scene {
     }
 
     nextTurn() {
-        if(this.checkEndBattle() || this.surrenderFlag || !this.activeHero.isAlive()) {
+        if(this.checkEndBattle() || this.surrenderFlag) {
             if (this.extraLife) {
                 this.extraLife = false;
                 this.events.emit("Message", "Power Up: Extra life used!");
                 this.heroes.forEach(this.rebirth);
+                this.playerHealth.update(this.activeHero);
             } else {           
                 this.endBattleDisplay();
             }
@@ -262,10 +263,11 @@ export default class BossBattleScene extends Phaser.Scene {
         }
         var loss = true;
         // if all heroes are dead we have game over
-        for(var i = 0; i < this.heroes.length; i++) {
-            if(this.heroes[i].alive)
-                loss = false;
+        
+        if(this.activeHero.getHP() > 0) {
+            loss = false;
         }
+
 
         if (vict) {
             this.victory = true;

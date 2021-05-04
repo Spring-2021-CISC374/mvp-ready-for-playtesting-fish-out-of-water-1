@@ -172,12 +172,12 @@ export default class Level extends Phaser.Scene {
 	this.bossLayer.forEach(object => {
 		const image = this.physics.add.image(object.x, object.y, "transparent").setScale(0.05);
 		this.physics.add.overlap(this.player, image, () =>{
-			this.combatMusic.resume()
 			if(this.pipeScore > 3) {
 				this.scene.switch('PipeScene')
 			}
 			else {
 				   this.game.scene.start('BossBattleScene', {extraDamage: false, extraHealth: false, extraLife: false}) 
+				   this.combatMusic.resume()
 			}
 			this.music.pause()
 			this.bumpSound.play()
