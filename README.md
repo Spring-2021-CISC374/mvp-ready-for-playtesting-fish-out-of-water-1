@@ -17,7 +17,7 @@
 
 ## Jumpstarting Game Development
 - *Ishika Govil: Created the repository with a Phaser 3 template. Used Tiled to create map designs for our different levels. Found a variety of different sprites for fish to use for our game, and created an Atlas for those using TexturePacker. Implemented camaras so that the scene moves with the player. Created objects and locations in map that perform actions when collided with player. Finally, created the pipe checking mechanism for the boost scene.*
-- *Dea Harjianto: Created combat sequence, including basic attack/shapeshifting logic. Placeholder images are used and are nondescriptive of the actual gameplay; very general. Only issue is healthbar generation, but health is kept track of within game.*
+- *Dea Harjianto: Created combat sequence, including basic attack/shapeshifting logic. Implemented visual healthbar tracking system. Variety of QoL additions such as instruction scenes, combat help, information tabs for animals, and ending scene/replayability.
 - *Aidan Conley: Added movement, including changing where player "looks". Also added some sounds that will occur when playing the game, along with music for normal movement on the map, question mode, and combat mode. Also implemented in questions (and their answers) and logic that controls how they work. Also worked with Ishika in NPC/player interaction and teleporting post-answer. Additionally helped debug other aspects of game.*
 - *Taylor Fields: Added pollution meter graphics and functionality to the questions provided. Created introduction screens, which are not yet fully implemented.*
 ## Blurb
