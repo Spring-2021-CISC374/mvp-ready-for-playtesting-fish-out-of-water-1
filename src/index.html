@@ -102,6 +102,36 @@
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
       }
+
+          /* The alert message box */
+.alert {
+  padding: 30px;
+  background-color: orange;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  top: 0;
+  margin-right: 150px;
+  z-index: 3;
+  position: absolute;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 50px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: red;
+}
     </style>
 
     <noscript>Please enable javascript to continue using this application.</noscript>
@@ -119,6 +149,15 @@
     <div id="phaser-game"></div>
     <div id="pmeter">
       <div id="pmeterBar"> 0% </div>
+    </div>
+
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      OH NO! You've been flushed down the toilet by your owner's nemesis: THE POLLUTER! 
+      You are now in Sewertopia & the mayor has agreed to help you... 
+      but first you need to solve the clog that is backing up the sewer.
+      Search for other fish to find out how to help!
+      Can you find your way back home?
     </div>
     
   </body>
