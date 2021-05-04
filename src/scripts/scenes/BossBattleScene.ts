@@ -44,6 +44,8 @@ export default class BossBattleScene extends Phaser.Scene {
         // load background image
         //this.cameras.main.("0x8B8BAE");
         this.combatMusic = this.sound.add('combatmusic', {loop: true, volume: 0.5});
+        this.combatMusic.play
+
 
         this.parentScene = this.scene.get("LevelTwoScene");
 
@@ -63,8 +65,7 @@ export default class BossBattleScene extends Phaser.Scene {
     }
 
     startBattle() {
-        this.combatMusic.play
-
+        
         let height = this.game.config.height as number;
         let width = this.game.config.width as number;
 
