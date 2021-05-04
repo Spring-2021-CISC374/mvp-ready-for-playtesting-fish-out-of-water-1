@@ -147,7 +147,7 @@ export default class Level extends Phaser.Scene {
 
 	  }
 	  //physics collider
-	  this.physics.add.collider(this.player, this.background)
+	  //this.physics.add.collider(this.player, this.background)
 	  this.player.setCollideWorldBounds(true);
 	  this.npcptCollide.angle = 180;
 	  this.physics.add.collider(this.player, this.clog, () =>{
@@ -346,6 +346,12 @@ export default class Level extends Phaser.Scene {
 		this.help.visible = true;
 	}
 
+	zoomOut(){
+		this.cameras.main.zoom = 2.5;
+		this.text.visible = false;
+		this.help.visible = false;
+	}
+
   update(){
 	if (this.input.keyboard.addKey('M').isDown) {
 		this.minimap.setVisible(true)
@@ -460,6 +466,8 @@ export default class Level extends Phaser.Scene {
 			this.player.y = 580
 			this.registry.set("B1", "Done")
 			this.createMessageBox("*Gasp!* You have been teleported!\nGood job! Right answer!")
+			this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+			this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 			//var width = 0;
 			var elem = document.getElementById('pmeterBar');
@@ -489,6 +497,8 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 50
 			this.player.y = 110
 			this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
+			this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+			this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -521,6 +531,8 @@ export default class Level extends Phaser.Scene {
 			this.player.y = 245
 			this.registry.set("C1", "Done")
 			this.createMessageBox("*Gasp!* You have been teleported\nGood job! Right answer!")
+			this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+			this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -548,6 +560,8 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 625
 			this.player.y = 325
 			this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
+			this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+			this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -583,6 +597,8 @@ export default class Level extends Phaser.Scene {
 					this.music.destroy()
 				this.registry.set("A1", "Done")
 				this.createMessageBox("*Gasp!* You have been teleported!\nGood job! Right answer!")
+				this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+				this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 				//var width = 0;
 				var elem = document.getElementById("pmeterBar");
@@ -610,6 +626,8 @@ export default class Level extends Phaser.Scene {
 				this.player.x = 220
 				this.player.y = 275
 				this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
+				this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+				this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 				//var width = 0;
 				var elem = document.getElementById("pmeterBar");
@@ -643,6 +661,8 @@ export default class Level extends Phaser.Scene {
 			this.player.y = 630
 			this.registry.set("D1", "Done")
 			this.createMessageBox("*Gasp!* You have been teleported!\nGood job! Right answer!")
+			this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+			this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -670,6 +690,8 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 295
 			this.player.y = 630
 			this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
+			this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+			this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -702,6 +724,8 @@ export default class Level extends Phaser.Scene {
 			this.player.y = 195
 			this.registry.set("E1", "Done")
 			this.createMessageBox("*Gasp!* You have been teleported!\nGood job! Right answer!")
+			this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+			this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -729,6 +753,8 @@ export default class Level extends Phaser.Scene {
 			this.player.x = 180
 			this.player.y = 170
 			this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
+			this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+			this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 			//var width = 0;
 			var elem = document.getElementById("pmeterBar");
@@ -789,6 +815,8 @@ export default class Level extends Phaser.Scene {
 				this.player.x = 370
 				this.player.y = 560
 				this.createMessageBox("You've been teleported... but where?\nSorry! Wrong answer!")
+				this.time.addEvent({ delay: 3250, callback: this.zoomOut, callbackScope: this });
+				this.time.addEvent({ delay: 5500, callback: this.resetZoom, callbackScope: this });
 
 				//var width = 0;
 				var elem = document.getElementById("pmeterBar");
