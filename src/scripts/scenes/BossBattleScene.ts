@@ -246,6 +246,7 @@ export default class BossBattleScene extends Phaser.Scene {
         }
         else {
             endMessage = "You fainted!"
+            this.victory = false;
         }
 
         this.events.emit("Message", endMessage);
@@ -287,7 +288,8 @@ export default class BossBattleScene extends Phaser.Scene {
         this.playerHealth.destroy();
         this.enemyHealth.destroy();
         this.scene.sleep('BossUIScene');
-        this.scene.switch('LevelTwoScene');
+        this.scene.sleep();
+        this.game.scene.start('EndingScene', {victory: this.victory});
         this.registry.set("Battle", 1);
         this.combatMusic.stop
 
